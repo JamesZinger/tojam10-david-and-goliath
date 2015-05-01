@@ -41,6 +41,7 @@ sysinfo.txt
 edb.chk
 storage.ide
 edb*.log
+*.jrs
 
 # Window Auto Generated Files
 Thumbs.db
