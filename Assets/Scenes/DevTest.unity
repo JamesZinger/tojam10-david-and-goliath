@@ -552,6 +552,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 465032851}
+  - 114: {fileID: 465032852}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -597,6 +598,17 @@ Transform:
   - {fileID: 1185996706}
   m_Father: {fileID: 0}
   m_RootOrder: 1
+--- !u!114 &465032852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 465032850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84747cd089e743344b8c6140dc85c9eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &465420321
 GameObject:
   m_ObjectHideFlags: 0
@@ -771,8 +783,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 542823207}
-  m_LocalRotation: {x: 0, y: 0, z: .707106829, w: -.707106829}
-  m_LocalPosition: {x: 1.14600003, y: .924000025, z: .349999994}
+  m_LocalRotation: {x: -.5, y: -.5, z: -.5, w: .5}
+  m_LocalPosition: {x: 1.14600003, y: .486000001, z: .349999994}
   m_LocalScale: {x: .100000001, y: .100000001, z: .100000001}
   m_Children:
   - {fileID: 2120237013}
@@ -3528,7 +3540,7 @@ MeshCollider:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2015591901}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_SmoothSphereCollisions: 0
