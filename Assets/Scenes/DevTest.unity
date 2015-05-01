@@ -261,7 +261,7 @@ GameObject:
   - 23: {fileID: 242370665}
   m_Layer: 0
   m_Name: Quad
-  m_TagString: Untagged
+  m_TagString: Active Quad
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -428,7 +428,7 @@ GameObject:
   - 4: {fileID: 359633265}
   - 65: {fileID: 359633267}
   - 54: {fileID: 359633266}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: XAxis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -487,7 +487,7 @@ GameObject:
   - 23: {fileID: 434777094}
   m_Layer: 0
   m_Name: Quad
-  m_TagString: Untagged
+  m_TagString: Active Quad
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -664,6 +664,7 @@ Transform:
   - {fileID: 1259415181}
   - {fileID: 933479134}
   - {fileID: 1990949041}
+  - {fileID: 1644594507}
   m_Father: {fileID: 0}
   m_RootOrder: 6
 --- !u!1 &524102103
@@ -736,6 +737,47 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 524102103}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &542823207
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 542823209}
+  - 114: {fileID: 542823208}
+  m_Layer: 8
+  m_Name: The Goat
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &542823208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 542823207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c632467592277042ae8fb588efcd966, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoveSpeed: 1
+--- !u!4 &542823209
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 542823207}
+  m_LocalRotation: {x: 0, y: 0, z: .707106829, w: -.707106829}
+  m_LocalPosition: {x: 1.14600003, y: .924000025, z: .349999994}
+  m_LocalScale: {x: .100000001, y: .100000001, z: .100000001}
+  m_Children:
+  - {fileID: 2120237013}
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
 --- !u!1 &576172696
 GameObject:
   m_ObjectHideFlags: 0
@@ -882,7 +924,7 @@ GameObject:
   - 23: {fileID: 608104380}
   m_Layer: 0
   m_Name: Quad
-  m_TagString: Untagged
+  m_TagString: Active Quad
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -952,7 +994,7 @@ GameObject:
   - 23: {fileID: 642449845}
   m_Layer: 0
   m_Name: Quad
-  m_TagString: Untagged
+  m_TagString: Active Quad
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1471,7 +1513,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294967039
   m_Lightmapping: 1
   m_ShadowSamples: 1
   m_ShadowRadius: 0
@@ -1500,7 +1542,7 @@ GameObject:
   - 4: {fileID: 942472563}
   - 65: {fileID: 942472565}
   - 54: {fileID: 942472564}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ZAxis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1663,7 +1705,7 @@ GameObject:
   - 23: {fileID: 1082285984}
   m_Layer: 0
   m_Name: Quad
-  m_TagString: Untagged
+  m_TagString: Active Quad
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1799,7 +1841,7 @@ GameObject:
   - 23: {fileID: 1185996707}
   m_Layer: 0
   m_Name: Quad
-  m_TagString: Untagged
+  m_TagString: Active Quad
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2079,7 +2121,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294967039
   m_Lightmapping: 1
   m_ShadowSamples: 1
   m_ShadowRadius: 0
@@ -2108,7 +2150,7 @@ GameObject:
   - 4: {fileID: 1299623933}
   - 65: {fileID: 1299623935}
   - 54: {fileID: 1299623934}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: YAxis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2167,7 +2209,7 @@ GameObject:
   - 23: {fileID: 1312173972}
   m_Layer: 0
   m_Name: Quad
-  m_TagString: Untagged
+  m_TagString: Active Quad
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2581,7 +2623,7 @@ GameObject:
   - 23: {fileID: 1540046534}
   m_Layer: 0
   m_Name: Quad
-  m_TagString: Untagged
+  m_TagString: Active Quad
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2651,7 +2693,7 @@ GameObject:
   - 23: {fileID: 1626343121}
   m_Layer: 0
   m_Name: Quad
-  m_TagString: Untagged
+  m_TagString: Active Quad
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2812,6 +2854,69 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1636753841}
+--- !u!1 &1644594506
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 1644594507}
+  - 108: {fileID: 1644594508}
+  m_Layer: 0
+  m_Name: Sun
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1644594507
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1644594506}
+  m_LocalRotation: {x: .259725332, y: -.720562577, z: .36689651, w: .527938783}
+  m_LocalPosition: {x: 5.75, y: 0, z: 3.38000011}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 504905578}
+  m_RootOrder: 3
+--- !u!108 &1644594508
+Light:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1644594506}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Type: 1
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: .159999996
+  m_Range: 10
+  m_SpotAngle: 30
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_Strength: 1
+    m_Bias: .0500000007
+    m_Softness: 4
+    m_SoftnessFade: 1
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_ActuallyLightmapped: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 256
+  m_Lightmapping: 1
+  m_ShadowSamples: 1
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_IndirectIntensity: 1
+  m_AreaSize: {x: 1, y: 1}
 --- !u!1 &1652274186
 GameObject:
   m_ObjectHideFlags: 0
@@ -2965,7 +3070,7 @@ GameObject:
   - 23: {fileID: 1695483163}
   m_Layer: 0
   m_Name: Quad
-  m_TagString: Untagged
+  m_TagString: Active Quad
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3035,7 +3140,7 @@ GameObject:
   - 23: {fileID: 1826703830}
   m_Layer: 0
   m_Name: Quad
-  m_TagString: Untagged
+  m_TagString: Active Quad
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3347,7 +3452,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294967039
   m_Lightmapping: 1
   m_ShadowSamples: 1
   m_ShadowRadius: 0
@@ -3379,7 +3484,7 @@ GameObject:
   - 23: {fileID: 2015591903}
   m_Layer: 0
   m_Name: Quad
-  m_TagString: Untagged
+  m_TagString: Active Quad
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3436,3 +3541,73 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 2015591901}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &2120237009
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 2120237013}
+  - 33: {fileID: 2120237012}
+  - 136: {fileID: 2120237011}
+  - 23: {fileID: 2120237010}
+  m_Layer: 8
+  m_Name: Capsule
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!23 &2120237010
+Renderer:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2120237009}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_LightmapIndex: 255
+  m_LightmapTilingOffset: {x: 1, y: 1, z: 0, w: 0}
+  m_Materials:
+  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_UseLightProbes: 0
+  m_LightProbeAnchor: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+--- !u!136 &2120237011
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2120237009}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: .5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!33 &2120237012
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2120237009}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!4 &2120237013
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2120237009}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 542823209}
+  m_RootOrder: 0
