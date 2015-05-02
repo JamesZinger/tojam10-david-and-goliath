@@ -22,6 +22,7 @@ public class GameInputController : MonoBehaviour
 	void Update()
 	{
 		// The following "if" statement allows for selecting menue buttons through controls
+
 		if (UIcontrols.menuOP.gameObject.activeSelf == true) {
 			// When menu is active the following is allowed
 			if (Xbox360GamepadState.Instance.AxisJustPastThreshold(Xbox.Axis.LAnalogY, -0.5f) || Input.GetKeyDown(KeyCode.S)) {
@@ -67,7 +68,10 @@ public class GameInputController : MonoBehaviour
 		}
 		if (UIcontrols.menuOP.gameObject.activeSelf == false) {
 
+
+			
 		if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.B) || Input.GetKeyDown(KeyCode.M)) {
+
 				UIcontrols.menuOP.gameObject.SetActive(true);
 			}
 			//cube.RotateY();
@@ -83,7 +87,6 @@ public class GameInputController : MonoBehaviour
 		}
 
 		if (UIcontrols.levelSelect.gameObject.activeSelf == true) {
-			es.SetSelectedGameObject(UIcontrols.levelOp[lvlSel].gameObject, new BaseEventData(es));
 			if (Xbox360GamepadState.Instance.AxisJustPastThreshold(Xbox.Axis.LAnalogY, -0.5f) || Input.GetKeyDown(KeyCode.S)) {
 				lvlSel +=1;
 				if (UIcontrols.levelOp.Length == lvlSel)
@@ -100,6 +103,19 @@ public class GameInputController : MonoBehaviour
 				}
 				es.SetSelectedGameObject(UIcontrols.levelOp[lvlSel].gameObject, new BaseEventData(es));
 			}
+			if (lvlSel == 0 && Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A) || lvlSel == 0 && Input.GetKeyDown(KeyCode.A)) {
+				Application.LoadLevel(1);
+			}
+			/*
+			else if (lvlSel == 1 && Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A)|| lvlSel == 1 && Input.GetKeyDown(KeyCode.A)) {
+				Application.LoadLevel(2);
+			}
+			else if (lvlSel == 2 && Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A)|| lvlSel == 2 && Input.GetKeyDown(KeyCode.A)) {
+				Application.LoadLevel(3);
+			}
+			else if (lvlSel == 3 && Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A)|| lvlSel == 3 && Input.GetKeyDown(KeyCode.A)) {
+				Application.LoadLevel(4);
+			}*/
 			if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A) || Input.GetKeyDown (KeyCode.Space)) {
 				UIcontrols.levelSelect.gameObject.SetActive (false);
 				UIcontrols.menuOP.gameObject.SetActive(true);
