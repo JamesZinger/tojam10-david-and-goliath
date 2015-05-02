@@ -6,25 +6,21 @@ using System.Collections.Generic;
 
 public class GameUIController : MonoBehaviour {
 
-	public List <Button> Options;
 	public Image menuOP;
+
+	public Button[] Options; // Make an array of button options
+	public Button[] levelOp;
+
 	public Image credits;
 	public Image howTo;
-	public Image options;
 	public Image levelSelect;
 	// Use this for initialization
 	void Start () {
-
-
-		menuOP.gameObject.SetActive(true);
-		credits.gameObject.SetActive(true);
-		howTo.gameObject.SetActive(true);
-		options.gameObject.SetActive(true);
-		levelSelect.gameObject.SetActive(true);
+	
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
+
 	}
 }
