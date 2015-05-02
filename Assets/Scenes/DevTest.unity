@@ -73,6 +73,7 @@ NavMeshSettings:
     minRegionArea: 2
     widthInaccuracy: 16.666666
     heightInaccuracy: 10
+    tileSizeHint: 0
   m_NavMesh: {fileID: 0}
 --- !u!1 &1012038
 GameObject:
@@ -3065,7 +3066,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4822ded988ec6fd439de24d27cfd9107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Axis: 0
 --- !u!1 &376419073
 GameObject:
   m_ObjectHideFlags: 0
@@ -3879,6 +3879,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DeathCount: 0
+  GoatCollider: {fileID: 2120237011}
+  StartPointCollider: {fileID: 0}
+  EndPointCollider: {fileID: 0}
+  XRotationCollider: {fileID: 359633268}
+  YRotationCollider: {fileID: 1299623936}
+  ZRotationCollider: {fileID: 942472566}
   CenterTransform: {fileID: 1229932949}
   RotationCurve:
     serializedVersion: 2
@@ -3898,30 +3904,30 @@ MonoBehaviour:
   SpinSpeed: 2
   HasStarted: 0
   QuadArray:
-  - {fileID: 487011787}
-  - {fileID: 1234378698}
-  - {fileID: 2074274322}
-  - {fileID: 2104512713}
   - {fileID: 192400628}
-  - {fileID: 640438998}
-  - {fileID: 1877994129}
-  - {fileID: 84884823}
-  - {fileID: 546093902}
-  - {fileID: 172616652}
-  - {fileID: 175372429}
-  - {fileID: 1840871690}
-  - {fileID: 2133679553}
-  - {fileID: 1208503733}
-  - {fileID: 1248183046}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 932485607}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 1369694198}
   - {fileID: 1748637908}
   - {fileID: 474772953}
   - {fileID: 1461508405}
-  - {fileID: 1857502783}
-  - {fileID: 316519146}
-  - {fileID: 40223481}
-  - {fileID: 1529042719}
 --- !u!1 &465420321
 GameObject:
   m_ObjectHideFlags: 0
@@ -4462,7 +4468,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 542823209}
   - 114: {fileID: 542823208}
-  - 65: {fileID: 542823210}
   m_Layer: 8
   m_Name: The Goat
   m_TagString: Untagged
@@ -4499,19 +4504,6 @@ Transform:
   - {fileID: 714052912}
   m_Father: {fileID: 0}
   m_RootOrder: 7
---- !u!65 &542823210
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 6551592, guid: fd8d07a272487ea4194c6f57d31f8807,
-    type: 2}
-  m_PrefabInternal: {fileID: 1229391120}
-  m_GameObject: {fileID: 542823207}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 2, z: 1}
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &546093900
 GameObject:
   m_ObjectHideFlags: 0
@@ -5111,8 +5103,8 @@ MonoBehaviour:
   m_Script: {fileID: 1301386320, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ignoreReversedGraphics: 1
-  blockingObjects: 0
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -8647,7 +8639,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4822ded988ec6fd439de24d27cfd9107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Axis: 2
 --- !u!1 &984753366
 GameObject:
   m_ObjectHideFlags: 0
@@ -10523,14 +10514,6 @@ Prefab:
       propertyPath: GoatCollider
       value: 
       objectReference: {fileID: 2120237011}
-    - target: {fileID: 11460782, guid: bf9e057e5aab0de4f9d71e9d468e91aa, type: 2}
-      propertyPath: Axis
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 11460780, guid: bf9e057e5aab0de4f9d71e9d468e91aa, type: 2}
-      propertyPath: Axis
-      value: 2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bf9e057e5aab0de4f9d71e9d468e91aa, type: 2}
   m_RootGameObject: {fileID: 465032850}
@@ -11211,7 +11194,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4822ded988ec6fd439de24d27cfd9107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Axis: 1
 --- !u!1 &1311358525
 GameObject:
   m_ObjectHideFlags: 0
