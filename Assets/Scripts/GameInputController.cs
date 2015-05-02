@@ -61,7 +61,7 @@ public class GameInputController : MonoBehaviour
 			else if ((opSel == 3 && Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A))|| (opSel == 3 && Input.GetKeyDown(KeyCode.A))) {
 				Application.Quit();
 			}
-			if(Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.Back) || Input.GetKeyDown(KeyCode.Space)) {
+			if(Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.Back) || Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.Start)|| Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.B)|| Input.GetKeyDown(KeyCode.Space)) {
 				UIcontrols.menuOP.gameObject.SetActive(false);
 				opSel = 0;
 				es.SetSelectedGameObject(UIcontrols.Options[opSel].gameObject, new BaseEventData(es));
@@ -149,6 +149,10 @@ public class GameInputController : MonoBehaviour
 						if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.X)) {
 								cube.RotateZ ();
 						}
+						
+						if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.Y)) {
+								cube.StartMovingGoat ();
+			}
 			return;
 				}
 	}
