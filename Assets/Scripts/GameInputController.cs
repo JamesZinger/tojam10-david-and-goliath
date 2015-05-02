@@ -14,14 +14,14 @@ public class GameInputController : MonoBehaviour
 	void Update()
 	{
 		if (UIcontrols.menuOP == true) {
-			if(Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A)) {
+			if(Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A) || Input.GetKeyDown(KeyCode.Space)) {
 				UIcontrols.menuOP = false;
 			}
 		}
 		if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A)) {
 			cube.RotateX();
 		}
-		if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.B)) {
+		if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.B) || Input.GetKeyDown(KeyCode.M)) {
 			UIcontrols.menuOP = true;
 			//cube.RotateY();
 		}
