@@ -102,18 +102,6 @@ public class TheGoat: MonoBehaviour
 				yield return null;
 				continue;
 			}
-
-			// check if the plane that was collided with is a valid plane to move to.
-			var go = rayHitInfo.collider.gameObject;
-			//if ( go.tag != "Active Quad" )
-			//{
-			//	// than the goat has run off of the edge of the map
-			//	// therefore it must die because the plane closest to it is not an active quad
-			//	Kill();
-			//	yield return null;
-			//	continue;
-			//}
-
 		
 			var downVector = -transform.up;
 

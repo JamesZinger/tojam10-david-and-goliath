@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 
 public class Graph
@@ -34,11 +35,11 @@ public class Graph
 	{
 		#region Barf out a rectangular array of nodes.
 
-		for ( var i = 0; i < 4; i++ )
+		for ( var row = 0; row < 4; row++ )
 		{
-			for ( var j = 0; j < 8; j++ )
+			for ( var col = 0; col < 8; col++ )
 			{
-				Nodes[ i, j ] = new Node();
+				Nodes[ row, col ] = new Node();
 			}
 		}
 
@@ -46,171 +47,147 @@ public class Graph
 		
 		#region Link the nodes into a cube map.
 
-		// Row 0
+		//// Row 0
 		
-		// Non-connected node
+		//// Non-connected node
+
+		//Nodes[ 0, 1 ].AddNeighbor( Nodes[ 0, 2 ] );
+		//Nodes[ 0, 1 ].AddNeighbor( Nodes[ 0, 6 ] );
+		//Nodes[ 0, 1 ].AddNeighbor( Nodes[ 1, 1 ] );
+		//Nodes[ 0, 1 ].AddNeighbor( Nodes[ 1, 0 ] );
 		
-		Nodes[ 0, 1 ].Type  = NodeTypeEnum.Normal;
-		Nodes[ 0, 1 ].East  = new Edge( Nodes[ 0, 1 ], Nodes[ 0, 2 ], false );
-		Nodes[ 0, 1 ].North = new Edge( Nodes[ 0, 1 ], Nodes[ 0, 6 ], false );
-		Nodes[ 0, 1 ].South = new Edge( Nodes[ 0, 1 ], Nodes[ 1, 1 ], false );
-		Nodes[ 0, 1 ].West  = new Edge( Nodes[ 0, 1 ], Nodes[ 1, 0 ], false );
+		//Nodes[ 0, 2 ].AddNeighbor( Nodes[ 1, 3 ] );
+		//Nodes[ 0, 2 ].AddNeighbor( Nodes[ 0, 5 ] );
+		//Nodes[ 0, 2 ].AddNeighbor( Nodes[ 1, 2 ] );
+		//Nodes[ 0, 2 ].AddNeighbor( Nodes[ 0, 1 ] );
 		
-		Nodes[ 0, 2 ].Type  = NodeTypeEnum.Normal;
-		Nodes[ 0, 2 ].East  = new Edge( Nodes[ 1, 2 ], Nodes[ 1, 3 ], false );
-		Nodes[ 0, 2 ].North = new Edge( Nodes[ 1, 2 ], Nodes[ 0, 5 ], false );
-		Nodes[ 0, 2 ].South = new Edge( Nodes[ 1, 2 ], Nodes[ 1, 2 ], false );
-		Nodes[ 0, 2 ].West  = new Edge( Nodes[ 1, 2 ], Nodes[ 0, 1 ], false );
+		//// Non-connected node
+		//// Non-connected node
 		
-		// Non-connected node
-		// Non-connected node
+		//Nodes[ 0, 5 ].AddNeighbor( Nodes[ 0, 6 ] );
+		//Nodes[ 0, 5 ].AddNeighbor( Nodes[ 0, 2 ] );
+		//Nodes[ 0, 5 ].AddNeighbor( Nodes[ 1, 5 ] );
+		//Nodes[ 0, 5 ].AddNeighbor( Nodes[ 1, 4 ] );
 		
-		Nodes[ 0, 5 ].Type  = NodeTypeEnum.Normal;
-		Nodes[ 0, 5 ].East  = new Edge( Nodes[ 0, 5 ], Nodes[ 0, 6 ], false );
-		Nodes[ 0, 5 ].North = new Edge( Nodes[ 0, 5 ], Nodes[ 0, 2 ], false );
-		Nodes[ 0, 5 ].South = new Edge( Nodes[ 0, 5 ], Nodes[ 1, 5 ], false );
-		Nodes[ 0, 5 ].West  = new Edge( Nodes[ 0, 5 ], Nodes[ 1, 4 ], false );
+		//Nodes[ 0, 6 ].AddNeighbor( Nodes[ 1, 7 ] );
+		//Nodes[ 0, 6 ].AddNeighbor( Nodes[ 0, 1 ] );
+		//Nodes[ 0, 6 ].AddNeighbor( Nodes[ 1, 6 ] );
+		//Nodes[ 0, 6 ].AddNeighbor( Nodes[ 0, 5 ] );
 		
-		Nodes[ 0, 6 ].Type  = NodeTypeEnum.Normal;
-		Nodes[ 0, 6 ].East  = new Edge( Nodes[ 0, 6 ], Nodes[ 1, 7 ], false );
-		Nodes[ 0, 6 ].North = new Edge( Nodes[ 0, 6 ], Nodes[ 0, 1 ], false );
-		Nodes[ 0, 6 ].South = new Edge( Nodes[ 0, 6 ], Nodes[ 1, 6 ], false );
-		Nodes[ 0, 6 ].West  = new Edge( Nodes[ 0, 6 ], Nodes[ 0, 5 ], false );
+		//// Non-connected node
 		
-		// Non-connected node
+		//// Row 1
 		
-		// Row 1
+		//Nodes[ 1, 0 ].AddNeighbor( Nodes[ 1, 1 ] );
+		//Nodes[ 1, 0 ].AddNeighbor( Nodes[ 0, 1 ] );
+		//Nodes[ 1, 0 ].AddNeighbor( Nodes[ 2, 1 ] );
+		//Nodes[ 1, 0 ].AddNeighbor( Nodes[ 1, 7 ] );
 		
-		Nodes[ 1, 0 ].Type  = NodeTypeEnum.Normal;
-		Nodes[ 1, 0 ].East  = new Edge( Nodes[ 1, 0 ], Nodes[ 1, 1 ], false );
-		Nodes[ 1, 0 ].North = new Edge( Nodes[ 1, 0 ], Nodes[ 0, 1 ], false );
-		Nodes[ 1, 0 ].South = new Edge( Nodes[ 1, 0 ], Nodes[ 2, 1 ], false );
-		Nodes[ 1, 0 ].West  = new Edge( Nodes[ 1, 0 ], Nodes[ 1, 7 ], false );
+		//Nodes[ 1, 1 ].AddNeighbor( Nodes[ 1, 2 ] );
+		//Nodes[ 1, 1 ].AddNeighbor( Nodes[ 0, 1 ] );
+		//Nodes[ 1, 1 ].AddNeighbor( Nodes[ 2, 1 ] );
+		//Nodes[ 1, 1 ].AddNeighbor( Nodes[ 1, 0 ] );
 		
-		Nodes[ 1, 1 ].Type  = NodeTypeEnum.Normal;
-		Nodes[ 1, 1 ].East  = new Edge( Nodes[ 1, 1 ], Nodes[ 1, 2 ], false );
-		Nodes[ 1, 1 ].North = new Edge( Nodes[ 1, 1 ], Nodes[ 0, 1 ], false );
-		Nodes[ 1, 1 ].South = new Edge( Nodes[ 1, 1 ], Nodes[ 2, 1 ], false );
-		Nodes[ 1, 1 ].West  = new Edge( Nodes[ 1, 1 ], Nodes[ 1, 0 ], false );
+		//Nodes[ 1, 2 ].AddNeighbor( Nodes[ 1, 3 ] );
+		//Nodes[ 1, 2 ].AddNeighbor( Nodes[ 0, 2 ] );
+		//Nodes[ 1, 2 ].AddNeighbor( Nodes[ 2, 2 ] );
+		//Nodes[ 1, 2 ].AddNeighbor( Nodes[ 1, 1 ] );
 		
-		Nodes[ 1, 2 ].Type  = NodeTypeEnum.Normal;
-		Nodes[ 1, 2 ].East  = new Edge( Nodes[ 1, 2 ], Nodes[ 1, 3 ], false );
-		Nodes[ 1, 2 ].North = new Edge( Nodes[ 1, 2 ], Nodes[ 0, 2 ], false );
-		Nodes[ 1, 2 ].South = new Edge( Nodes[ 1, 2 ], Nodes[ 2, 2 ], false );
-		Nodes[ 1, 2 ].West  = new Edge( Nodes[ 1, 2 ], Nodes[ 1, 1 ], false );
+		//Nodes[ 1, 3 ].AddNeighbor( Nodes[ 1, 4 ] );
+		//Nodes[ 1, 3 ].AddNeighbor( Nodes[ 0, 2 ] );
+		//Nodes[ 1, 3 ].AddNeighbor( Nodes[ 2, 3 ] );
+		//Nodes[ 1, 3 ].AddNeighbor( Nodes[ 1, 2 ] );
 		
-		Nodes[ 1, 3 ].Type  = NodeTypeEnum.Normal;
-		Nodes[ 1, 3 ].East  = new Edge( Nodes[ 1, 3 ], Nodes[ 1, 4 ], false );
-		Nodes[ 1, 3 ].North = new Edge( Nodes[ 1, 3 ], Nodes[ 0, 2 ], false );
-		Nodes[ 1, 3 ].South = new Edge( Nodes[ 1, 3 ], Nodes[ 2, 3 ], false );
-		Nodes[ 1, 3 ].West  = new Edge( Nodes[ 1, 3 ], Nodes[ 1, 2 ], false );
+		//Nodes[ 1, 4 ].AddNeighbor( Nodes[ 1, 5 ] );
+		//Nodes[ 1, 4 ].AddNeighbor( Nodes[ 0, 5 ] );
+		//Nodes[ 1, 4 ].AddNeighbor( Nodes[ 2, 4 ] );
+		//Nodes[ 1, 4 ].AddNeighbor( Nodes[ 1, 3 ] );
 		
-		Nodes[ 1, 4 ].Type  = NodeTypeEnum.Normal;
-		Nodes[ 1, 4 ].East  = new Edge( Nodes[ 1, 4 ], Nodes[ 1, 5 ], false );
-		Nodes[ 1, 4 ].North = new Edge( Nodes[ 1, 4 ], Nodes[ 0, 5 ], false );
-		Nodes[ 1, 4 ].South = new Edge( Nodes[ 1, 4 ], Nodes[ 2, 4 ], false );
-		Nodes[ 1, 4 ].West  = new Edge( Nodes[ 1, 4 ], Nodes[ 1, 3 ], false );
+		//Nodes[ 1, 5 ].AddNeighbor( Nodes[ 1, 6 ] );
+		//Nodes[ 1, 5 ].AddNeighbor( Nodes[ 0, 5 ] );
+		//Nodes[ 1, 5 ].AddNeighbor( Nodes[ 2, 5 ] );
+		//Nodes[ 1, 5 ].AddNeighbor( Nodes[ 1, 4 ] );
 		
-		Nodes[ 1, 5 ].Type  = NodeTypeEnum.Normal;
-		Nodes[ 1, 5 ].East  = new Edge( Nodes[ 1, 5 ], Nodes[ 1, 6 ], false );
-		Nodes[ 1, 5 ].North = new Edge( Nodes[ 1, 5 ], Nodes[ 0, 5 ], false );
-		Nodes[ 1, 5 ].South = new Edge( Nodes[ 1, 5 ], Nodes[ 2, 5 ], false );
-		Nodes[ 1, 5 ].West  = new Edge( Nodes[ 1, 5 ], Nodes[ 1, 4 ], false );
+		//Nodes[ 1, 6 ].AddNeighbor( Nodes[ 1, 7 ] );
+		//Nodes[ 1, 6 ].AddNeighbor( Nodes[ 0, 6 ] );
+		//Nodes[ 1, 6 ].AddNeighbor( Nodes[ 2, 6 ] );
+		//Nodes[ 1, 6 ].AddNeighbor( Nodes[ 1, 5 ] );
 		
-		Nodes[ 1, 6 ].Type  = NodeTypeEnum.Normal;
-		Nodes[ 1, 6 ].East  = new Edge( Nodes[ 1, 6 ], Nodes[ 1, 7 ], false );
-		Nodes[ 1, 6 ].North = new Edge( Nodes[ 1, 6 ], Nodes[ 0, 6 ], false );
-		Nodes[ 1, 6 ].South = new Edge( Nodes[ 1, 6 ], Nodes[ 2, 6 ], false );
-		Nodes[ 1, 6 ].West  = new Edge( Nodes[ 1, 6 ], Nodes[ 1, 5 ], false );
+		//Nodes[ 1, 7 ].AddNeighbor( Nodes[ 1, 0 ] );
+		//Nodes[ 1, 7 ].AddNeighbor( Nodes[ 0, 6 ] );
+		//Nodes[ 1, 7 ].AddNeighbor( Nodes[ 2, 7 ] );
+		//Nodes[ 1, 7 ].AddNeighbor( Nodes[ 1, 6 ] );
 		
-		Nodes[ 1, 7 ].Type  = NodeTypeEnum.Normal;
-		Nodes[ 1, 7 ].East  = new Edge( Nodes[ 1, 7 ], Nodes[ 1, 0 ], false );
-		Nodes[ 1, 7 ].North = new Edge( Nodes[ 1, 7 ], Nodes[ 0, 6 ], false );
-		Nodes[ 1, 7 ].South = new Edge( Nodes[ 1, 7 ], Nodes[ 2, 7 ], false );
-		Nodes[ 1, 7 ].West  = new Edge( Nodes[ 1, 7 ], Nodes[ 1, 6 ], false );
+		//// Row 2
 		
-		// Row 2
+		//Nodes[ 2, 0 ].AddNeighbor( Nodes[ 2, 1 ] );
+		//Nodes[ 2, 0 ].AddNeighbor( Nodes[ 1, 0 ] );
+		//Nodes[ 2, 0 ].AddNeighbor( Nodes[ 3, 1 ] );
+		//Nodes[ 2, 0 ].AddNeighbor( Nodes[ 2, 7 ] );
 		
-		Nodes[ 2, 0 ].Type  = NodeTypeEnum.Normal;
-		Nodes[ 2, 0 ].East  = new Edge( Nodes[ 2, 0 ], Nodes[ 2, 1 ], false );
-		Nodes[ 2, 0 ].North = new Edge( Nodes[ 2, 0 ], Nodes[ 1, 0 ], false );
-		Nodes[ 2, 0 ].South = new Edge( Nodes[ 2, 0 ], Nodes[ 3, 1 ], false );
-		Nodes[ 2, 0 ].West  = new Edge( Nodes[ 2, 0 ], Nodes[ 2, 7 ], false );
+		//Nodes[ 2, 1 ].AddNeighbor( Nodes[ 2, 2 ] );
+		//Nodes[ 2, 1 ].AddNeighbor( Nodes[ 1, 1 ] );
+		//Nodes[ 2, 1 ].AddNeighbor( Nodes[ 3, 1 ] );
+		//Nodes[ 2, 1 ].AddNeighbor( Nodes[ 2, 0 ] );
 		
-		Nodes[ 2, 1 ].Type  = NodeTypeEnum.Normal;
-		Nodes[ 2, 1 ].East  = new Edge( Nodes[ 2, 1 ], Nodes[ 2, 2 ], false );
-		Nodes[ 2, 1 ].North = new Edge( Nodes[ 2, 1 ], Nodes[ 1, 1 ], false );
-		Nodes[ 2, 1 ].South = new Edge( Nodes[ 2, 1 ], Nodes[ 3, 1 ], false );
-		Nodes[ 2, 1 ].West  = new Edge( Nodes[ 2, 1 ], Nodes[ 2, 0 ], false );
+		//Nodes[ 2, 2 ].AddNeighbor( Nodes[ 2, 3 ] );
+		//Nodes[ 2, 2 ].AddNeighbor( Nodes[ 1, 2 ] );
+		//Nodes[ 2, 2 ].AddNeighbor( Nodes[ 3, 2 ] );
+		//Nodes[ 2, 2 ].AddNeighbor( Nodes[ 2, 1 ] );
 		
-		Nodes[ 2, 2 ].Type  = NodeTypeEnum.Normal;
-		Nodes[ 2, 2 ].East  = new Edge( Nodes[ 2, 2 ], Nodes[ 2, 3 ], false );
-		Nodes[ 2, 2 ].North = new Edge( Nodes[ 2, 2 ], Nodes[ 1, 2 ], false );
-		Nodes[ 2, 2 ].South = new Edge( Nodes[ 2, 2 ], Nodes[ 3, 2 ], false );
-		Nodes[ 2, 2 ].West  = new Edge( Nodes[ 2, 2 ], Nodes[ 2, 1 ], false );
+		//Nodes[ 2, 3 ].AddNeighbor( Nodes[ 2, 4 ] );
+		//Nodes[ 2, 3 ].AddNeighbor( Nodes[ 1, 3 ] );
+		//Nodes[ 2, 3 ].AddNeighbor( Nodes[ 3, 2 ] );
+		//Nodes[ 2, 3 ].AddNeighbor( Nodes[ 2, 2 ] );
 		
-		Nodes[ 2, 3 ].Type  = NodeTypeEnum.Normal;
-		Nodes[ 2, 3 ].East  = new Edge( Nodes[ 2, 3 ], Nodes[ 2, 4 ], false );
-		Nodes[ 2, 3 ].North = new Edge( Nodes[ 2, 3 ], Nodes[ 1, 3 ], false );
-		Nodes[ 2, 3 ].South = new Edge( Nodes[ 2, 3 ], Nodes[ 3, 2 ], false );
-		Nodes[ 2, 3 ].West  = new Edge( Nodes[ 2, 3 ], Nodes[ 2, 2 ], false );
+		//Nodes[ 2, 4 ].AddNeighbor( Nodes[ 2, 5 ] );
+		//Nodes[ 2, 4 ].AddNeighbor( Nodes[ 1, 4 ] );
+		//Nodes[ 2, 4 ].AddNeighbor( Nodes[ 3, 5 ] );
+		//Nodes[ 2, 4 ].AddNeighbor( Nodes[ 2, 3 ] );
 		
-		Nodes[ 2, 4 ].Type  = NodeTypeEnum.Normal;
-		Nodes[ 2, 4 ].East  = new Edge( Nodes[ 2, 4 ], Nodes[ 2, 5 ], false );
-		Nodes[ 2, 4 ].North = new Edge( Nodes[ 2, 4 ], Nodes[ 1, 4 ], false );
-		Nodes[ 2, 4 ].South = new Edge( Nodes[ 2, 4 ], Nodes[ 3, 5 ], false );
-		Nodes[ 2, 4 ].West  = new Edge( Nodes[ 2, 4 ], Nodes[ 2, 3 ], false );
+		//Nodes[ 2, 5 ].AddNeighbor( Nodes[ 2, 6 ] );
+		//Nodes[ 2, 5 ].AddNeighbor( Nodes[ 1, 5 ] );
+		//Nodes[ 2, 5 ].AddNeighbor( Nodes[ 3, 5 ] );
+		//Nodes[ 2, 5 ].AddNeighbor( Nodes[ 2, 4 ] );
 		
-		Nodes[ 2, 5 ].Type  = NodeTypeEnum.Normal;
-		Nodes[ 2, 5 ].East  = new Edge( Nodes[ 2, 5 ], Nodes[ 2, 6 ], false );
-		Nodes[ 2, 5 ].North = new Edge( Nodes[ 2, 5 ], Nodes[ 1, 5 ], false );
-		Nodes[ 2, 5 ].South = new Edge( Nodes[ 2, 5 ], Nodes[ 3, 5 ], false );
-		Nodes[ 2, 5 ].West  = new Edge( Nodes[ 2, 5 ], Nodes[ 2, 4 ], false );
+		//Nodes[ 2, 6 ].AddNeighbor( Nodes[ 2, 7 ] );
+		//Nodes[ 2, 6 ].AddNeighbor( Nodes[ 1, 6 ] );
+		//Nodes[ 2, 6 ].AddNeighbor( Nodes[ 3, 6 ] );
+		//Nodes[ 2, 6 ].AddNeighbor( Nodes[ 2, 5 ] );
 		
-		Nodes[ 2, 6 ].Type  = NodeTypeEnum.Normal;
-		Nodes[ 2, 6 ].East  = new Edge( Nodes[ 2, 6 ], Nodes[ 2, 7 ], false );
-		Nodes[ 2, 6 ].North = new Edge( Nodes[ 2, 6 ], Nodes[ 1, 6 ], false );
-		Nodes[ 2, 6 ].South = new Edge( Nodes[ 2, 6 ], Nodes[ 3, 6 ], false );
-		Nodes[ 2, 6 ].West  = new Edge( Nodes[ 2, 6 ], Nodes[ 2, 5 ], false );
+		//Nodes[ 2, 7 ].AddNeighbor( Nodes[ 2, 0 ] );
+		//Nodes[ 2, 7 ].AddNeighbor( Nodes[ 1, 7 ] );
+		//Nodes[ 2, 7 ].AddNeighbor( Nodes[ 3, 6 ] );
+		//Nodes[ 2, 7 ].AddNeighbor( Nodes[ 2, 6 ] );
 		
-		Nodes[ 2, 7 ].Type  = NodeTypeEnum.Normal;
-		Nodes[ 2, 7 ].East  = new Edge( Nodes[ 2, 7 ], Nodes[ 2, 0 ], false );
-		Nodes[ 2, 7 ].North = new Edge( Nodes[ 2, 7 ], Nodes[ 1, 7 ], false );
-		Nodes[ 2, 7 ].South = new Edge( Nodes[ 2, 7 ], Nodes[ 3, 6 ], false );
-		Nodes[ 2, 7 ].West  = new Edge( Nodes[ 2, 7 ], Nodes[ 2, 6 ], false );
+		//// Row 3
 		
-		// Row 3
+		//// Non-connected node
 		
-		// Non-connected node
+		//Nodes[ 3, 1 ].AddNeighbor( Nodes[ 0, 2 ] );
+		//Nodes[ 3, 1 ].AddNeighbor( Nodes[ 0, 6 ] );
+		//Nodes[ 3, 1 ].AddNeighbor( Nodes[ 1, 1 ] );
+		//Nodes[ 3, 1 ].AddNeighbor( Nodes[ 1, 0 ] );
 		
-		Nodes[ 3, 1 ].Type  = NodeTypeEnum.Normal;
-		Nodes[ 3, 1 ].East  = new Edge( Nodes[ 0, 1 ], Nodes[ 0, 2 ], false );
-		Nodes[ 3, 1 ].North = new Edge( Nodes[ 0, 1 ], Nodes[ 0, 6 ], false );
-		Nodes[ 3, 1 ].South = new Edge( Nodes[ 0, 1 ], Nodes[ 1, 1 ], false );
-		Nodes[ 3, 1 ].West  = new Edge( Nodes[ 0, 1 ], Nodes[ 1, 0 ], false );
+		//Nodes[ 3, 2 ].AddNeighbor( Nodes[ 1, 3 ] );
+		//Nodes[ 3, 2 ].AddNeighbor( Nodes[ 0, 5 ] );
+		//Nodes[ 3, 2 ].AddNeighbor( Nodes[ 1, 2 ] );
+		//Nodes[ 3, 2 ].AddNeighbor( Nodes[ 0, 1 ] );
 		
-		Nodes[ 3, 1 ].Type  = NodeTypeEnum.Normal;
-		Nodes[ 3, 2 ].East  = new Edge( Nodes[ 1, 2 ], Nodes[ 1, 3 ], false );
-		Nodes[ 3, 2 ].North = new Edge( Nodes[ 1, 2 ], Nodes[ 0, 5 ], false );
-		Nodes[ 3, 2 ].South = new Edge( Nodes[ 1, 2 ], Nodes[ 1, 2 ], false );
-		Nodes[ 3, 2 ].West  = new Edge( Nodes[ 1, 2 ], Nodes[ 0, 1 ], false );
+		//// Non-connected node
+		//// Non-connected node
 		
-		// Non-connected node
-		// Non-connected node
+		//Nodes[ 3, 5 ].AddNeighbor( Nodes[ 0, 6 ] );
+		//Nodes[ 3, 5 ].AddNeighbor( Nodes[ 0, 2 ] );
+		//Nodes[ 3, 5 ].AddNeighbor( Nodes[ 1, 5 ] );
+		//Nodes[ 3, 5 ].AddNeighbor( Nodes[ 1, 4 ] );
 		
-		Nodes[ 3, 5 ].Type  = NodeTypeEnum.Normal;
-		Nodes[ 3, 5 ].East  = new Edge( Nodes[ 0, 5 ], Nodes[ 0, 6 ], false );
-		Nodes[ 3, 5 ].North = new Edge( Nodes[ 0, 5 ], Nodes[ 0, 2 ], false );
-		Nodes[ 3, 5 ].South = new Edge( Nodes[ 0, 5 ], Nodes[ 1, 5 ], false );
-		Nodes[ 3, 5 ].West  = new Edge( Nodes[ 0, 5 ], Nodes[ 1, 4 ], false );
+		//Nodes[ 3, 6 ].AddNeighbor( Nodes[ 1, 7 ] );
+		//Nodes[ 3, 6 ].AddNeighbor( Nodes[ 0, 1 ] );
+		//Nodes[ 3, 6 ].AddNeighbor( Nodes[ 1, 6 ] );
+		//Nodes[ 3, 6 ].AddNeighbor( Nodes[ 0, 5 ] );
 		
-		Nodes[ 3, 6 ].Type  = NodeTypeEnum.Normal;
-		Nodes[ 3, 6 ].East  = new Edge( Nodes[ 0, 6 ], Nodes[ 1, 7 ], false );
-		Nodes[ 3, 6 ].North = new Edge( Nodes[ 0, 6 ], Nodes[ 0, 1 ], false );
-		Nodes[ 3, 6 ].South = new Edge( Nodes[ 0, 6 ], Nodes[ 1, 6 ], false );
-		Nodes[ 3, 6 ].West  = new Edge( Nodes[ 0, 6 ], Nodes[ 0, 5 ], false );
-		
-		// Non-connected node
+		//// Non-connected node
 
 		#endregion
 	}
@@ -219,23 +196,118 @@ public class Graph
 
 	private void RotateX( RotationEnum direction )
 	{
-		// TODO Handle rotation direction.
+		if ( direction == RotationEnum.Clockwise )
+		{
+			// Update all of the edge nodes with their new neighbors.
+			Nodes[ 0, 5 ].ReplaceNeighbor( Nodes[ 1, 0 ], Nodes[ 0, 2 ] );
+			Nodes[ 0, 6 ].ReplaceNeighbor( Nodes[ 2, 0 ], Nodes[ 0, 1 ] );
+			Nodes[ 1, 7 ].ReplaceNeighbor( Nodes[ 3, 1 ], Nodes[ 1, 0 ] );
+			Nodes[ 2, 7 ].ReplaceNeighbor( Nodes[ 3, 2 ], Nodes[ 2, 0 ] );
+			Nodes[ 3, 6 ].ReplaceNeighbor( Nodes[ 2, 4 ], Nodes[ 3, 1 ] );
+			Nodes[ 3, 5 ].ReplaceNeighbor( Nodes[ 1, 4 ], Nodes[ 3, 2 ] );
+			Nodes[ 2, 4 ].ReplaceNeighbor( Nodes[ 0, 1 ], Nodes[ 2, 3 ] );
+			Nodes[ 1, 4 ].ReplaceNeighbor( Nodes[ 0, 2 ], Nodes[ 1, 3 ] );
 
-
+			// Transform all of the affected nodes by 90 degrees in the array.
+			var temp = Nodes[ 0, 5 ];
+			Nodes[ 0, 5 ] = Nodes[ 2, 4 ];
+			Nodes[ 2, 4 ] = Nodes[ 3, 6 ];
+			Nodes[ 3, 6 ] = Nodes[ 1, 7 ];
+			Nodes[ 1, 7 ] = temp;
+			temp = Nodes[ 0, 6 ];
+			Nodes[ 0, 6 ] = Nodes[ 1, 4 ];
+			Nodes[ 1, 4 ] = Nodes[ 3, 5 ];
+			Nodes[ 3, 5 ] = Nodes[ 2, 7 ];
+			Nodes[ 2, 7 ] = temp;
+			temp = Nodes[ 1, 5 ];
+			Nodes[ 1, 5 ] = Nodes[ 2, 5 ];
+			Nodes[ 2, 5 ] = Nodes[ 2, 6 ];
+			Nodes[ 2, 6 ] = Nodes[ 1, 6 ];
+			Nodes[ 1, 6 ] = temp;
+		}
+		else
+		{
+			throw new NotImplementedException( "CCW rotation isn't in yet!" );
+		}
 	}
 
 	private void RotateY( RotationEnum direction )
 	{
-		// TODO Handle rotation direction.
-
-
+		if ( direction == RotationEnum.Clockwise )
+		{
+			// Update all of the edge nodes with their new neighbors.
+			Nodes[ 0, 2 ].ReplaceNeighbor( Nodes[ 1, 6 ], Nodes[ 0, 1 ] );
+			Nodes[ 0, 5 ].ReplaceNeighbor( Nodes[ 2, 6 ], Nodes[ 0, 6 ] );
+			Nodes[ 1, 5 ].ReplaceNeighbor( Nodes[ 3, 6 ], Nodes[ 1, 6 ] );
+			Nodes[ 2, 5 ].ReplaceNeighbor( Nodes[ 3, 1 ], Nodes[ 2, 6 ] );
+			Nodes[ 3, 5 ].ReplaceNeighbor( Nodes[ 2, 1 ], Nodes[ 3, 6 ] );
+			Nodes[ 3, 2 ].ReplaceNeighbor( Nodes[ 1, 1 ], Nodes[ 3, 1 ] );
+			Nodes[ 2, 2 ].ReplaceNeighbor( Nodes[ 0, 1 ], Nodes[ 2, 1 ] );
+			Nodes[ 1, 2 ].ReplaceNeighbor( Nodes[ 0, 6 ], Nodes[ 1, 1 ] );
+			
+			// Transform all of the affected nodes by 90 degrees in the array.
+			var temp = Nodes[ 0, 2 ];
+			Nodes[ 0, 2 ] = Nodes[ 2, 2 ];
+			Nodes[ 2, 2 ] = Nodes[ 3, 5 ];
+			Nodes[ 3, 5 ] = Nodes[ 1, 5 ];
+			Nodes[ 2, 2 ] = temp;
+			temp = Nodes[ 0, 5 ];
+			Nodes[ 0, 5 ] = Nodes[ 1, 2 ];
+			Nodes[ 1, 2 ] = Nodes[ 3, 2 ];
+			Nodes[ 3, 2 ] = Nodes[ 2, 5 ];
+			Nodes[ 1, 2 ] = temp;
+			temp = Nodes[ 1, 3 ];
+			Nodes[ 1, 3 ] = Nodes[ 2, 3 ];
+			Nodes[ 2, 3 ] = Nodes[ 2, 4 ];
+			Nodes[ 2, 4 ] = Nodes[ 1, 4 ];
+			Nodes[ 1, 4 ] = temp;
+		}
+		else
+		{
+			throw new NotImplementedException( "CCW rotation isn't in yet!" );
+		}
 	}
 
 	private void RotateZ( RotationEnum direction )
 	{
-		// TODO Handle rotation direction.
+		if ( direction == RotationEnum.Clockwise )
+		{
+			// TODO The whole thing!!!
 
+			//Nodes[ 0, 5 ].ReplaceNeighbor( Nodes[ 1, 0 ], Nodes[ 0, 2 ] );
+			//Nodes[ 0, 6 ].ReplaceNeighbor( Nodes[ 2, 0 ], Nodes[ 0, 1 ] );
 
+			//Nodes[ 1, 7 ].ReplaceNeighbor( Nodes[ 3, 1 ], Nodes[ 1, 0 ] );
+			//Nodes[ 2, 7 ].ReplaceNeighbor( Nodes[ 3, 2 ], Nodes[ 2, 0 ] );
+
+			//Nodes[ 3, 6 ].ReplaceNeighbor( Nodes[ 2, 4 ], Nodes[ 3, 1 ] );
+			//Nodes[ 3, 5 ].ReplaceNeighbor( Nodes[ 1, 4 ], Nodes[ 3, 2 ] );
+
+			//Nodes[ 2, 4 ].ReplaceNeighbor( Nodes[ 0, 1 ], Nodes[ 2, 3 ] );
+			//Nodes[ 1, 4 ].ReplaceNeighbor( Nodes[ 0, 2 ], Nodes[ 1, 3 ] );
+
+			// Transform all of the affected nodes by moving them horizontally in the array.
+			//for ( var i = 0; i < 2; i++ )
+			//{
+			//	for ( var j = 0; j < 2; j++ )
+			//	{
+			//		var iMin = i;
+			//		var iMax = 3 - i;
+			//		var jMin = j + 2;
+			//		var jMax = 3 - j + 2;
+
+			//		var temp = Nodes[ i, j ];
+			//		Nodes[ iMin, jMin ] = Nodes[ iMax, jMin ];
+			//		Nodes[ iMax, jMin ] = Nodes[ iMax, jMax ];
+			//		Nodes[ iMax, jMax ] = Nodes[ iMin, jMax ];
+			//		Nodes[ iMin, jMax ] = temp;
+			//	}
+			//}
+		}
+		else
+		{
+			throw new NotImplementedException( "CCW rotation isn't in yet!" );
+		}
 	}
 
 	#endregion
