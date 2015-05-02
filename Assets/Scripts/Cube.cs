@@ -44,7 +44,7 @@ public class Cube : MonoBehaviour
 
 		var goat = FindObjectOfType<TheGoat>();
 
-		GoatCollider = goat.transform.GetChild( 0 ).collider;
+		GoatCollider = goat.GetComponent<BoxCollider>();
 
 		QuadArray = GetComponentsInChildren<Quad>();
 		originalQuadPositions = new Vector3[ QuadArray.Length ];
@@ -184,7 +184,7 @@ public class Cube : MonoBehaviour
 
 		HasStarted = false;
 
-		GoatCollider.transform.parent.GetComponent<TheGoat>().Reset();
+		GoatCollider.GetComponent<TheGoat>().Reset();
 
 		for ( int i = 0; i < QuadArray.Length; i ++ )
 		{

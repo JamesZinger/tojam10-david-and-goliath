@@ -28,7 +28,7 @@ public class RotationCollider : MonoBehaviour
 		{
 			results.AddRange(
 				didHit.Where( hit => hit.collider.gameObject == gameObject )
-				.Select( hit => Cube.GoatCollider.transform.parent.gameObject )
+				.Select( hit => Cube.GoatCollider.gameObject )
 			);
 		}
 		return results.ToArray();

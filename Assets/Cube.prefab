@@ -13541,6 +13541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4822ded988ec6fd439de24d27cfd9107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Axis: 0
 --- !u!114 &11460780
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -13552,6 +13553,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4822ded988ec6fd439de24d27cfd9107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Axis: 2
 --- !u!114 &11460782
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -13563,6 +13565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4822ded988ec6fd439de24d27cfd9107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Axis: 1
 --- !u!114 &11495312
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -13575,12 +13578,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DeathCount: 0
-  GoatCollider: {fileID: 0}
-  StartPointCollider: {fileID: 0}
-  EndPointCollider: {fileID: 0}
-  XRotationCollider: {fileID: 11460778}
-  YRotationCollider: {fileID: 11460782}
-  ZRotationCollider: {fileID: 11460780}
   CenterTransform: {fileID: 495256}
   RotationCurve:
     serializedVersion: 2
@@ -13600,30 +13597,30 @@ MonoBehaviour:
   SpinSpeed: 2
   HasStarted: 0
   QuadArray:
+  - {fileID: 11432208}
+  - {fileID: 11432210}
+  - {fileID: 11432212}
+  - {fileID: 11432214}
   - {fileID: 11432250}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11432220}
+  - {fileID: 11432218}
+  - {fileID: 11432216}
+  - {fileID: 11432222}
+  - {fileID: 11432224}
+  - {fileID: 11432228}
+  - {fileID: 11432226}
+  - {fileID: 11432234}
+  - {fileID: 11432232}
+  - {fileID: 11432230}
   - {fileID: 11432254}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 11432252}
   - {fileID: 11432248}
   - {fileID: 11432246}
   - {fileID: 11432244}
+  - {fileID: 11432242}
+  - {fileID: 11432240}
+  - {fileID: 11432238}
+  - {fileID: 11432236}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
