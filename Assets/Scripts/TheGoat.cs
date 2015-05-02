@@ -133,17 +133,24 @@ public class TheGoat: MonoBehaviour
 	void Kill()
 	{
  		Debug.Log( "Goat is dead" );
-		transform.position = StartPosition;
-		transform.rotation = StartRotation;
 		cube.Reset();
 	}
+
+	public void Reset()
+	{
+		transform.position = StartPosition;
+		transform.rotation = StartRotation;
+	}
+
 
 	void NormalMovingBehaviour( RaycastHit rayHitInfo )
 	{
 		// If there is a quad underneath the goat than ground it.
 		transform.position = rayHitInfo.point + transform.up * 0.05f;
 		transform.rotation = Quaternion.LookRotation( transform.forward, rayHitInfo.normal );
-		
+
+
+		if ( !cube.hasStarted ) return;
 		// for now just go forward.
 		transform.position += transform.forward * Time.deltaTime * MoveSpeed;
 	}

@@ -17,6 +17,7 @@ public class Cube : MonoBehaviour
 	public AnimationCurve RotationCurve;
 	public float SpinSpeed;
 	public Graph graph;
+	public bool hasStarted;
 
 	public Quad[] QuadArray;
 	private Vector3[] OriginalQuadPositions;
@@ -33,6 +34,7 @@ public class Cube : MonoBehaviour
 	void Awake()
 	{
 		graph = new Graph( 4, 8 );
+		hasStarted = false;
 	}
 
 	void Start()
@@ -61,6 +63,11 @@ public class Cube : MonoBehaviour
 			}
 		}
 		
+	}
+
+	public void StartMovingGoat()
+	{
+		hasStarted = true;
 	}
 
 	void Update()
@@ -173,10 +180,14 @@ public class Cube : MonoBehaviour
 	{
 		deathCount++;
 
+		hasStarted = false;
+
 		StartPointCollider.transform.position = OriginalBeginningPosition;
 		StartPointCollider.transform.rotation = OriginalBeginningRotation;
 		EndPointCollider.transform.position = OriginalEndingPosition;
 		EndPointCollider.transform.rotation = OriginalEndingRotation;
+
+		GoatCollider.transform.parent.GetComponent<TheGoat>().Reset();
 
 		for ( int i = 0; i < QuadArray.Length; i ++ )
 		{
