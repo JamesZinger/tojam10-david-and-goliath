@@ -28,6 +28,8 @@ public class Cube : MonoBehaviour
 	private Quaternion originalBeginningRotation;
 	private Quaternion originalEndingRotation;
 
+	private AudioSource rotateSound;
+
 	public bool IsRotating { get; private set; }
 
 	private enum RotationAxis { X, Y, Z }
@@ -40,6 +42,11 @@ public class Cube : MonoBehaviour
 
 	void Start()
 	{
+		Transform t = transform.FindChild( "RotateSound" );
+		if ( t != null )
+		{
+			rotateSound = t.audio;
+		}
 		originalBeginningPosition = StartPointCollider.transform.position;
 		originalBeginningRotation = StartPointCollider.transform.rotation;
 		originalEndingPosition = EndPointCollider.transform.position;
@@ -61,6 +68,8 @@ public class Cube : MonoBehaviour
 	public void StartMovingGoat()
 	{
 		HasStarted = true;
+		GoatCollider.GetComponent<TheGoat>().StartSound.Play();
+		GoatCollider.GetComponent<TheGoat>().MoveSound.Play();
 	}
 
 	void Update()
@@ -70,26 +79,30 @@ public class Cube : MonoBehaviour
 
 	public void RotateX()
 	{
+		rotateSound.Play();
 		StartCoroutine( Rotate( RotationAxis.X ) );
 	}
 
 	public void RotateY()
 	{
+		rotateSound.Play();
 		StartCoroutine( Rotate( RotationAxis.Y ) );
 	}
 
 	public void RotateZ()
 	{
+		rotateSound.Play();
 		StartCoroutine( Rotate( RotationAxis.Z ) );
 	}
 
 	IEnumerator Rotate( RotationAxis axis )
 	{
-
 		if ( IsRotating )
 		{
 			yield break;
 		}
+
+
 
 		if ( SpinSpeed < float.Epsilon )
 		{

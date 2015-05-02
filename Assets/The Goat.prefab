@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 425728}
   - 82: {fileID: 8225728}
   m_Layer: 8
-  m_Name: Start
+  m_Name: StartSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,7 +26,7 @@ GameObject:
   - 4: {fileID: 425730}
   - 82: {fileID: 8225730}
   m_Layer: 8
-  m_Name: Death
+  m_Name: DeathSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,7 +42,7 @@ GameObject:
   - 4: {fileID: 425732}
   - 82: {fileID: 8225732}
   m_Layer: 8
-  m_Name: Move
+  m_Name: MoveSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
