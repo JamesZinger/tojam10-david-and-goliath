@@ -22,6 +22,7 @@ public class GameInputController : MonoBehaviour
 			cube.RotateX();
 		}
 		if (UIcontrols.menuOP.gameObject.activeSelf == false) {
+
 		if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.B) || Input.GetKeyDown(KeyCode.M)) {
 				UIcontrols.menuOP.gameObject.SetActive(true);
 			}
