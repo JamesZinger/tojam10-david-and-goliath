@@ -116,8 +116,7 @@ public class TheGoat: MonoBehaviour
 			if ( !didHit )
 			{
 				// Something weird happened but prolly should just kill the goat.
-				Kill();
-				yield return null;
+				yield return Kill();
 				continue;
 			}
 		
@@ -130,10 +129,12 @@ public class TheGoat: MonoBehaviour
 		}
 	}
 
-	void Kill()
+	IEnumerator Kill()
 	{
  		Debug.Log( "Goat is dead" );
 		cube.Reset();
+		yield return null;
+		// DDDOOO EETTTt
 	}
 
 	public void Reset()
@@ -150,7 +151,7 @@ public class TheGoat: MonoBehaviour
 		transform.rotation = Quaternion.LookRotation( transform.forward, rayHitInfo.normal );
 
 
-		if ( !cube.hasStarted ) return;
+		if ( !cube.HasStarted ) return;
 		// for now just go forward.
 		transform.position += transform.forward * Time.deltaTime * MoveSpeed;
 	}

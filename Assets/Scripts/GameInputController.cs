@@ -12,8 +12,8 @@ public class GameInputController : MonoBehaviour
 
 	void Start()
 	{
-		cube = FindObjectOfType<Cube> ();
-		UIcontrols = FindObjectOfType<GameUIController> ();
+		cube = FindObjectOfType<Cube>();
+		UIcontrols = FindObjectOfType<GameUIController>();
 		opSel = 0;
 		es.SetSelectedGameObject(UIcontrols.Options[opSel].gameObject, new BaseEventData(es));
 		lvlSel = 0;

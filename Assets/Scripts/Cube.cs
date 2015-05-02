@@ -7,7 +7,7 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class Cube : MonoBehaviour
 {
-	public int deathCount;
+	public int DeathCount;
 	public Collider GoatCollider;
 	public Collider StartPointCollider;
 	public Collider EndPointCollider;
@@ -18,15 +18,15 @@ public class Cube : MonoBehaviour
 	public AnimationCurve RotationCurve;
 	public float SpinSpeed;
 	public Graph graph;
-	public bool hasStarted;
-
+	public bool HasStarted;
 	public Quad[] QuadArray;
-	private Vector3[] OriginalQuadPositions;
-	private Quaternion[] OriginalQuadRotations;
-	private Vector3 OriginalBeginningPosition;
-	private Vector3 OriginalEndingPosition;
-	private Quaternion OriginalBeginningRotation;
-	private Quaternion OriginalEndingRotation;
+
+	private Vector3[] originalQuadPositions;
+	private Quaternion[] originalQuadRotations;
+	private Vector3 originalBeginningPosition;
+	private Vector3 originalEndingPosition;
+	private Quaternion originalBeginningRotation;
+	private Quaternion originalEndingRotation;
 
 	public bool IsRotating { get; private set; }
 
@@ -35,40 +35,32 @@ public class Cube : MonoBehaviour
 	void Awake()
 	{
 		graph = new Graph( 4, 8 );
-		hasStarted = false;
+		HasStarted = false;
 	}
 
 	void Start()
 	{
-		OriginalBeginningPosition = StartPointCollider.transform.position;
-		OriginalBeginningRotation = StartPointCollider.transform.rotation;
-		OriginalEndingPosition = EndPointCollider.transform.position;
-		OriginalEndingRotation = EndPointCollider.transform.rotation;
+		originalBeginningPosition = StartPointCollider.transform.position;
+		originalBeginningRotation = StartPointCollider.transform.rotation;
+		originalEndingPosition = EndPointCollider.transform.position;
+		originalEndingRotation = EndPointCollider.transform.rotation;
 		QuadArray = GetComponentsInChildren<Quad>();
-		OriginalQuadPositions = new Vector3[ QuadArray.Length ];
-		OriginalQuadRotations = new Quaternion[ QuadArray.Length ];
-		int x = 0, y = 0;
+		originalQuadPositions = new Vector3[ QuadArray.Length ];
+		originalQuadRotations = new Quaternion[ QuadArray.Length ];
 		for ( int i = 0; i < QuadArray.Length; i++ )
 		{
-			OriginalQuadPositions[ i ] = QuadArray[ i ].transform.position;
-			OriginalQuadRotations[ i ] = QuadArray[ i ].transform.rotation;
+			originalQuadPositions[ i ] = QuadArray[ i ].transform.position;
+			originalQuadRotations[ i ] = QuadArray[ i ].transform.rotation;
 			var childQuad = QuadArray[ i ];
 
 			childQuad.Node = graph.GetNodeByName( childQuad.NodeName );
-			y++;
-			var width = graph.Nodes.GetLength( 1 );
-			if ( y == width )
-			{
-				x++;
-				y = 0;
-			}
 		}
 		
 	}
 
 	public void StartMovingGoat()
 	{
-		hasStarted = true;
+		HasStarted = true;
 	}
 
 	void Update()
@@ -140,10 +132,16 @@ public class Cube : MonoBehaviour
 
 		if ( rotationAxis == null )
 		{
-			Debug.Log( "WWWHHAATTT" );
+			Debug.Log( "WWWHHHHAATTT" );
 			yield break;
 		}
 
+		switch ( axis )
+		{
+			case RotationAxis.X: graph.RotateX( RotationEnum.Clockwise ); break;
+			case RotationAxis.Y: graph.RotateY( RotationEnum.Clockwise ); break;
+			//case RotationAxis.Z: graph.RotateZ( RotationEnum.Clockwise ); break;
+        }
 		
 		IsRotating = true;
 		CenterTransform.rotation = Quaternion.identity;
@@ -152,7 +150,6 @@ public class Cube : MonoBehaviour
 			transformArray[ i ].parent = CenterTransform;
 		}
 
-		IsRotating = true;
 		var progress = 0f;
 
 		while ( progress < 1f )
@@ -179,22 +176,22 @@ public class Cube : MonoBehaviour
 	
 	public void Reset()
 	{
-		deathCount++;
+		DeathCount++;
 
-		hasStarted = false;
+		HasStarted = false;
 
-		StartPointCollider.transform.position = OriginalBeginningPosition;
-		StartPointCollider.transform.rotation = OriginalBeginningRotation;
-		EndPointCollider.transform.position = OriginalEndingPosition;
-		EndPointCollider.transform.rotation = OriginalEndingRotation;
+		StartPointCollider.transform.position = originalBeginningPosition;
+		StartPointCollider.transform.rotation = originalBeginningRotation;
+		EndPointCollider.transform.position = originalEndingPosition;
+		EndPointCollider.transform.rotation = originalEndingRotation;
 
 		GoatCollider.transform.parent.GetComponent<TheGoat>().Reset();
 
 		for ( int i = 0; i < QuadArray.Length; i ++ )
 		{
 			var quad = QuadArray[ i ];
-			quad.transform.position = OriginalQuadPositions[ i ];
-			quad.transform.rotation = OriginalQuadRotations[ i ];
+			quad.transform.position = originalQuadPositions[ i ];
+			quad.transform.rotation = originalQuadRotations[ i ];
 		}
 	}
 }
