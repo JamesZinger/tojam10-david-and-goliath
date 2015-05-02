@@ -116,7 +116,7 @@ public class TheGoat: MonoBehaviour
 			if ( !didHit )
 			{
 				// Something weird happened but prolly should just kill the goat.
-				yield return Kill();
+				yield return Die();
 				continue;
 			}
 		
@@ -129,7 +129,7 @@ public class TheGoat: MonoBehaviour
 		}
 	}
 
-	IEnumerator Kill()
+	IEnumerator Die()
 	{
  		Debug.Log( "Goat is dead" );
 		cube.Reset();
