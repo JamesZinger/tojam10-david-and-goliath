@@ -1,11 +1,16 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
+[Serializable]
 public class Node
 {
-	public List<Node> Neighbors;
+	public string Name;
 	public NodeTypeEnum Type;
+
+	[NonSerialized] 
+	public List<Node> Neighbors;
 
 	public Node()
 	{
