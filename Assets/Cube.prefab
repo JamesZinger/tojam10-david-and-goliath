@@ -3733,7 +3733,7 @@ MonoBehaviour:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  SpinSpeed: 1
+  SpinSpeed: 2
   QuadList: []
 --- !u!1001 &100100000
 Prefab:

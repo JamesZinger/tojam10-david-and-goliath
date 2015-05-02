@@ -1,17 +1,28 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 [SelectionBase]
 public class TheGoat: MonoBehaviour
 {
-	private Cube Cube;
 	public float MoveSpeed = 1;
 
+	public Vector3 StartPosition { get; private set; }
+
+	public Quaternion StartRotation { get; private set; }
+
 	private IEnumerator updateHandle;
+	private Cube cube;
+
+	void Awake()
+	{
+		StartPosition = transform.position;
+		StartRotation = transform.rotation;
+	}
 
 	void Start()
 	{
-		Cube = FindObjectOfType<Cube>();
+		cube = FindObjectOfType<Cube>();
 	}
 
 	void OnEnable()
@@ -27,10 +38,15 @@ public class TheGoat: MonoBehaviour
 
 	IEnumerator UpdateCoroutine()
 	{
-		if ( Cube == null )
+		if ( cube == null )
 			yield return null;
 		while ( true )
 		{
+			if ( cube.IsRotating )
+			{
+				yield return null;
+				continue;
+			}
 			// Check that a quad is under the goat
 			var ray = new Ray( transform.position, -transform.up );
 			
@@ -43,17 +59,20 @@ public class TheGoat: MonoBehaviour
 			var didHit = Physics.Raycast( ray, out rayHitInfo, 1f, layerMask );
 			if ( didHit )
 			{
-				// If there is a quad underneath the goat than ground it.
-				transform.position = rayHitInfo.point + transform.up * 0.05f;
-				transform.rotation = Quaternion.LookRotation( transform.forward, rayHitInfo.normal );
+				var shouldLive = IsOnValidSurface( rayHitInfo );
+
+				if ( !shouldLive  )
+				{
+					Kill();
+					yield return null;
+					continue;
+				}
 				
 				// then continue moving forward
-				ContinueMoving();
+				NormalMovingBehaviour( rayHitInfo );
 				yield return null;
 				continue;
 			}
-
-			Debug.Log( "Goat is off of the edge" );
 
 			// move the ray origin to father down the old ray to prepare for the sampling of each direction
 			ray.origin += transform.up * -0.5f;
@@ -95,6 +114,7 @@ public class TheGoat: MonoBehaviour
 			//	continue;
 			//}
 
+		
 			var downVector = -transform.up;
 
 			// Move and rotate to align with the normal of the quad.
@@ -106,13 +126,35 @@ public class TheGoat: MonoBehaviour
 
 	void Kill()
 	{
-		Cube.Reset();
+ 		Debug.Log( "Goat is dead" );
+		transform.position = StartPosition;
+		transform.rotation = StartRotation;
+		cube.Reset();
 	}
 
-	void ContinueMoving()
+	void NormalMovingBehaviour( RaycastHit rayHitInfo )
 	{
-		if ( Cube.IsRotating ) return;
+		// If there is a quad underneath the goat than ground it.
+		transform.position = rayHitInfo.point + transform.up * 0.05f;
+		transform.rotation = Quaternion.LookRotation( transform.forward, rayHitInfo.normal );
+		
 		// for now just go forward.
 		transform.position += transform.forward * Time.deltaTime * MoveSpeed;
+	}
+
+	bool IsOnValidSurface( RaycastHit rayHitInfo )
+	{
+		var nonZeroNormalNumber = 0f;
+		if ( Math.Abs( rayHitInfo.normal.x )      > .5f ) nonZeroNormalNumber = rayHitInfo.normal.x;
+		else if ( Math.Abs( rayHitInfo.normal.y ) > .5f ) nonZeroNormalNumber = rayHitInfo.normal.y;
+		else if ( Math.Abs( rayHitInfo.normal.z ) > .5f ) nonZeroNormalNumber = rayHitInfo.normal.z;
+
+		if ( Math.Abs( nonZeroNormalNumber ) < float.Epsilon )
+		{
+			Debug.Log( "Something weird happened" );
+			return false;
+		}
+
+		return !( nonZeroNormalNumber < 0 );
 	}
 }

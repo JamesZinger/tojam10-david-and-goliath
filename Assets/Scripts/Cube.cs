@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -62,8 +63,15 @@ public class Cube : MonoBehaviour
 
 	IEnumerator Rotate( RotationAxis axis )
 	{
+
 		if ( IsRotating )
 		{
+			yield break;
+		}
+
+		if ( SpinSpeed < float.Epsilon )
+		{
+			Debug.LogError( "SpinSpeed is less than or equal to 0" );
 			yield break;
 		}
 
@@ -84,13 +92,9 @@ public class Cube : MonoBehaviour
 		Transform[] transformArray;
 		Transform[] transformParentArray;
 		{
-			var quadList = activeCollider.GetQuadsInCollision();
-
-			var otherObjects = activeCollider.GetOthersInCollision();
-			var otherTransforms = otherObjects.Select( o => o.transform );
+			var quadList = activeCollider.GetAllObjectsToMove();
 
 			transformArray = quadList.Select( o => o.transform )
-				.Concat( otherTransforms )
 				.ToArray();
 
 			transformParentArray = transformArray.Select( t => t.parent ).ToArray();
@@ -140,7 +144,6 @@ public class Cube : MonoBehaviour
 		CenterTransform.rotation = Quaternion.identity;
 
 		IsRotating = false;
-		
 		yield return null;
 	}
 	
