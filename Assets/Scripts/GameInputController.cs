@@ -22,6 +22,7 @@ public class GameInputController : MonoBehaviour
 	void Update()
 	{
 		// The following "if" statement allows for selecting menue buttons through controls
+
 		if (UIcontrols.menuOP.gameObject.activeSelf == true) {
 			// When menu is active the following is allowed
 			if (Xbox360GamepadState.Instance.AxisJustPastThreshold(Xbox.Axis.LAnalogY, -0.5f) || Input.GetKeyDown(KeyCode.S)) {
@@ -67,7 +68,10 @@ public class GameInputController : MonoBehaviour
 		}
 		if (UIcontrols.menuOP.gameObject.activeSelf == false) {
 
+
+			
 		if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.B) || Input.GetKeyDown(KeyCode.M)) {
+
 				UIcontrols.menuOP.gameObject.SetActive(true);
 			}
 			//cube.RotateY();
