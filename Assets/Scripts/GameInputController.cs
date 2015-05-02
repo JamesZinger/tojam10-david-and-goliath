@@ -1,6 +1,6 @@
-﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems; // This "using" method is mandatory for selecting buttons without mouse input
+using UnityEngine;
 
 public class GameInputController : MonoBehaviour
 {
@@ -66,7 +66,8 @@ public class GameInputController : MonoBehaviour
 			}
 		}
 		if (UIcontrols.menuOP.gameObject.activeSelf == false) {
-			if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.B) || Input.GetKeyDown(KeyCode.M)) {
+
+		if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.B) || Input.GetKeyDown(KeyCode.M)) {
 				UIcontrols.menuOP.gameObject.SetActive(true);
 			}
 			//cube.RotateY();
