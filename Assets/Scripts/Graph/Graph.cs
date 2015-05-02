@@ -42,6 +42,7 @@ public class Graph
 			for ( var col = 0; col < 8; col++ )
 			{
 				Nodes[ row, col ] = new Node();
+				Nodes[ row, col ].Name = row + "," + col;
 			}
 		}
 	}
@@ -54,6 +55,21 @@ public class Graph
 
 		Nodes[ 2, 6 ].AddNeighbor( Nodes[ 2, 5 ] );
 		Nodes[ 2, 5 ].AddNeighbor( Nodes[ 2, 4 ] );
+	}
+
+	public Node GetNodeByName( string name )
+	{
+		for ( var row = 0; row < 4; row++ )
+		{
+			for ( var col = 0; col < 8; col++ )
+			{
+				if ( name == Nodes[ row, col ].Name )
+				{
+					return Nodes[ row, col ];
+				}
+			}
+		}
+		return null;
 	}
 
 	#endregion

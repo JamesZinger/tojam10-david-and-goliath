@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class Cube : MonoBehaviour
 {
 	public int deathCount;
@@ -53,7 +54,7 @@ public class Cube : MonoBehaviour
 			OriginalQuadRotations[ i ] = QuadArray[ i ].transform.rotation;
 			var childQuad = QuadArray[ i ];
 
-			childQuad.Node = graph.Nodes[ x, y ];
+			childQuad.Node = graph.GetNodeByName( childQuad.NodeName );
 			y++;
 			var width = graph.Nodes.GetLength( 1 );
 			if ( y == width )
