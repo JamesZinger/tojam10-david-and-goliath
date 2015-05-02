@@ -8,6 +8,7 @@ public class Node
 {
 	public string Name;
 	public NodeTypeEnum Type;
+	public Quad Quad;
 
 	[NonSerialized] 
 	public List<Node> Neighbors;

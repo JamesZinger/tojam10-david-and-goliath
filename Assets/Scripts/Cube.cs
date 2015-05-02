@@ -8,35 +8,32 @@ using UnityEngine;
 public class Cube : MonoBehaviour
 {
 	public int DeathCount;
-	public Collider GoatCollider;
-	public Collider StartPointCollider;
-	public Collider EndPointCollider;
-	public RotationCollider XRotationCollider;
-	public RotationCollider YRotationCollider;
-	public RotationCollider ZRotationCollider;
+	
 	public Transform CenterTransform;
 	public AnimationCurve RotationCurve;
 	public float SpinSpeed;
-	public Graph graph;
+	public Graph Graph;
 	public bool HasStarted;
 	public Quad[] QuadArray;
 
 	private Vector3[] originalQuadPositions;
 	private Quaternion[] originalQuadRotations;
-	private Vector3 originalBeginningPosition;
-	private Vector3 originalEndingPosition;
-	private Quaternion originalBeginningRotation;
-	private Quaternion originalEndingRotation;
 
 	private AudioSource rotateSound;
 
 	public bool IsRotating { get; private set; }
 
-	private enum RotationAxis { X, Y, Z }
+	public Collider GoatCollider { get; private set; }
+
+	public RotationCollider XRotationCollider { get; private set; }
+	public RotationCollider YRotationCollider { get; private set; }
+	public RotationCollider ZRotationCollider { get; private set; }
+
+	public enum RotationAxis { X, Y, Z }
 
 	void Awake()
 	{
-		graph = Graph.LoadGraphFromCsv( "" );
+		Graph = Graph.LoadGraphFromCsv( "" );
 		HasStarted = false;
 	}
 
@@ -47,21 +44,30 @@ public class Cube : MonoBehaviour
 		{
 			rotateSound = t.audio;
 		}
-		originalBeginningPosition = StartPointCollider.transform.position;
-		originalBeginningRotation = StartPointCollider.transform.rotation;
-		originalEndingPosition = EndPointCollider.transform.position;
-		originalEndingRotation = EndPointCollider.transform.rotation;
+
+		var Colliders = GetComponentsInChildren<RotationCollider>();
+		
+		XRotationCollider = Colliders.Single( c => c.Axis == RotationAxis.X );
+		YRotationCollider = Colliders.Single( c => c.Axis == RotationAxis.Y );
+		ZRotationCollider = Colliders.Single( c => c.Axis == RotationAxis.Z );
+
+		var goat = FindObjectOfType<TheGoat>();
+
+		GoatCollider = goat.GetComponent<BoxCollider>();
+
 		QuadArray = GetComponentsInChildren<Quad>();
 		originalQuadPositions = new Vector3[ QuadArray.Length ];
 		originalQuadRotations = new Quaternion[ QuadArray.Length ];
-		for ( int i = 0; i < QuadArray.Length; i++ )
+		for ( var i = 0; i < QuadArray.Length; i++ )
 		{
 			originalQuadPositions[ i ] = QuadArray[ i ].transform.position;
 			originalQuadRotations[ i ] = QuadArray[ i ].transform.rotation;
 			var childQuad = QuadArray[ i ];
 
-			childQuad.Node = graph.GetNodeByName( childQuad.NodeName );
+			childQuad.Node = Graph.GetNodeByName( childQuad.NodeName );
 		}
+
+
 		
 	}
 
@@ -151,9 +157,9 @@ public class Cube : MonoBehaviour
 
 		switch ( axis )
 		{
-			case RotationAxis.X: graph.RotateX( RotationEnum.Clockwise ); break;
-			case RotationAxis.Y: graph.RotateY( RotationEnum.Clockwise ); break;
-			//case RotationAxis.Z: graph.RotateZ( RotationEnum.Clockwise ); break;
+			case RotationAxis.X: Graph.RotateX( RotationEnum.Clockwise ); break;
+			case RotationAxis.Y: Graph.RotateY( RotationEnum.Clockwise ); break;
+			//case RotationAxis.Z: Graph.RotateZ( RotationEnum.Clockwise ); break;
         }
 		
 		IsRotating = true;
@@ -193,12 +199,7 @@ public class Cube : MonoBehaviour
 
 		HasStarted = false;
 
-		StartPointCollider.transform.position = originalBeginningPosition;
-		StartPointCollider.transform.rotation = originalBeginningRotation;
-		EndPointCollider.transform.position = originalEndingPosition;
-		EndPointCollider.transform.rotation = originalEndingRotation;
-
-		GoatCollider.transform.parent.GetComponent<TheGoat>().Reset();
+		GoatCollider.GetComponent<TheGoat>().Reset();
 
 		for ( int i = 0; i < QuadArray.Length; i ++ )
 		{

@@ -30,7 +30,7 @@ public class TheGoat: MonoBehaviour
 
 	void Awake()
 	{
-		animator = GetComponent<Animator>();
+		animator = GetComponentInChildren<Animator>();
 		layerMask = ~LayerMask.GetMask( "Rotaters", "Goat Ignored" );
 	}
 
@@ -52,7 +52,18 @@ public class TheGoat: MonoBehaviour
 			StartSound = t.audio;
 		}
 
-		var hits = RaycastCube()
+		// Determine start node
+		cube = FindObjectOfType<Cube>();
+
+		var startNode = cube.Graph.Nodes.Cast<Node>()
+			.Single( node => node.Type == NodeTypeEnum.Start );
+
+		transform.position = startNode.Quad.transform.position + startNode.Quad.transform.up * 0.1f;
+
+		var meshCenter = GetComponentInChildren<MeshRenderer>().bounds.center;
+		var ray = new Ray( meshCenter, -meshCenter.normalized );
+		Debug.DrawRay( ray.origin, ray.direction, Color.red, 1000 );
+		var hits = Physics.RaycastAll( ray, 1.5f, layerMask )
 			.Where( hit => hit.collider.gameObject.GetComponent<Quad>() != null )
 			.Where( hit => hit.normal.x > HitNormalThreshold )
 			.Where( hit => hit.normal.y > HitNormalThreshold )
@@ -65,10 +76,8 @@ public class TheGoat: MonoBehaviour
 			gameObject.SetActive( false );
 			return;
 		}
-
 		StartPosition = transform.position;
 		StartRotation = transform.rotation = Quaternion.LookRotation( transform.forward, hits[ 0 ].normal );
-		cube = FindObjectOfType<Cube>();
 	}
 
 	void OnEnable()

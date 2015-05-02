@@ -57,6 +57,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 459680}
   - 114: {fileID: 11459680}
+  - 65: {fileID: 6551592}
   m_Layer: 8
   m_Name: The Goat
   m_TagString: Untagged
@@ -174,6 +175,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 159682}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &6551592
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 159680}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 2, z: 1}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!82 &8225728
 AudioSource:
   m_ObjectHideFlags: 1
