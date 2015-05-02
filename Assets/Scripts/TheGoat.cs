@@ -12,6 +12,8 @@ public class TheGoat: MonoBehaviour
 
 	public Quaternion StartRotation { get; private set; }
 
+	private Animator animator;
+
 	private IEnumerator updateHandle;
 	private Cube cube;
 	private int layerMask;
@@ -20,6 +22,7 @@ public class TheGoat: MonoBehaviour
 
 	void Awake()
 	{
+		animator = GetComponent<Animator>();
 		layerMask = ~LayerMask.GetMask( "Rotaters", "Goat Ignored" );
 	}
 
@@ -134,12 +137,14 @@ public class TheGoat: MonoBehaviour
 	IEnumerator Die()
 	{
  		Debug.Log( "Goat is dead" );
+		animator.SetBool( "isDead", true );
 		cube.Reset();
 		Reset();
 		yield return null;
 		// DDDOOO EETTTt
 
 		isDeathComplete = true;
+		animator.SetBool( "isDead", false );
 	}
 
 	public void Reset()

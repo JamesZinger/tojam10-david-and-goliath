@@ -50,8 +50,8 @@ public class Graph
 	private void CreateTestPath()
 	{
 		// TODO Hardcode a path here until file loading works.
-		Nodes[ 2, 6 ].Type = NodeTypeEnum.Start;
-		Nodes[ 1, 3 ].Type = NodeTypeEnum.End;
+		Nodes[ 0, 6 ].Type = NodeTypeEnum.Start;
+		Nodes[ 0, 5 ].Type = NodeTypeEnum.End;
 
 		Nodes[ 2, 6 ].AddNeighbor( Nodes[ 2, 5 ] );
 		Nodes[ 2, 5 ].AddNeighbor( Nodes[ 2, 4 ] );

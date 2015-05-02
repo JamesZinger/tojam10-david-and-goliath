@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-[Serializable]
+//[Serializable]
 public class Node
 {
 	public string Name;

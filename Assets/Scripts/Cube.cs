@@ -34,7 +34,7 @@ public class Cube : MonoBehaviour
 
 	void Awake()
 	{
-		graph = new Graph( 4, 8 );
+		graph = Graph.LoadGraphFromCsv( "" );
 		HasStarted = false;
 	}
 
