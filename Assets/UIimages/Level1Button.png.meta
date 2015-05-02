@@ -1,8 +1,8 @@
 fileFormatVersion: 2
-guid: 203d7234cc9a87a479e2c510fdccd1c9
+guid: a849bdcd86722c241931afef223bdd89
 TextureImporter:
   fileIDToRecycleName:
-    21300000: OptionButton
+    21300000: Level1Button
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0

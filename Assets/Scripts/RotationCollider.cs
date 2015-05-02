@@ -12,17 +12,13 @@ public class RotationCollider : MonoBehaviour
 		Cube = FindObjectOfType<Cube>();
 	}
 
-	public GameObject[] GetQuadsInCollision()
+	public GameObject[] GetAllObjectsToMove()
 	{
-		return Cube.QuadList
+		var results = Cube.QuadArray
 			.Where( quad => collider.bounds.Contains( quad.transform.position ) )
-			.ToArray();
-	}
-
-	public GameObject[] GetOthersInCollision()
-	{
-		List<GameObject> results = new List<GameObject>();
-
+			.Select( quad => quad.gameObject )
+			.ToList();
+		
 		if ( Cube.EndPointCollider.bounds.Intersects( collider.bounds ) )
 		{
 			results.Add( Cube.EndPointCollider.gameObject );
@@ -33,11 +29,17 @@ public class RotationCollider : MonoBehaviour
 			results.Add( Cube.StartPointCollider.gameObject );
 		}
 
-		if ( Cube.GoatCollider.renderer.bounds.Intersects( collider.bounds ) )
-		{
-			results.Add( Cube.GoatCollider.transform.parent.gameObject );
-		}
+		var ray = new Ray( Cube.GoatCollider.transform.position + Cube.GoatCollider.transform.up, -Cube.GoatCollider.transform.up );
+		var layerMask = LayerMask.GetMask( "Rotaters" );
 
+		var didHit = Physics.RaycastAll( ray, 1.5f, layerMask );
+		if ( didHit.Length > 0 )
+		{
+			results.AddRange(
+				didHit.Where( hit => hit.collider.gameObject == gameObject )
+				.Select( hit => Cube.GoatCollider.transform.parent.gameObject )
+			);
+		}
 		return results.ToArray();
 	}
 }

@@ -60,7 +60,7 @@ public class Graph
 
 	#region Rotations
 
-	private void RotateX( RotationEnum direction )
+	public void RotateX( RotationEnum direction )
 	{
 		if ( direction == RotationEnum.Clockwise )
 		{
@@ -97,7 +97,7 @@ public class Graph
 		}
 	}
 
-	private void RotateY( RotationEnum direction )
+	public void RotateY( RotationEnum direction )
 	{
 		if ( direction == RotationEnum.Clockwise )
 		{
