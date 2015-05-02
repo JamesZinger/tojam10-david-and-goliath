@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Linq;
 using UnityEngine;
 
@@ -28,6 +27,12 @@ public class TheGoat: MonoBehaviour
 
 	void Start()
 	{
+		// Determine start node
+		cube = FindObjectOfType<Cube>();
+
+		var startNode = cube.Graph.Nodes.Cast<Node>()
+			.Single( node => node.Type == NodeTypeEnum.Start );
+
 		var hits = RaycastCube()
 			.Where( hit => hit.collider.gameObject.GetComponent<Quad>() != null )
 			.Where( hit => hit.normal.x > HitNormalThreshold )
@@ -42,9 +47,9 @@ public class TheGoat: MonoBehaviour
 			return;
 		}
 
-		StartPosition = transform.position;
+		StartPosition = transform.position = startNode.Quad.transform.position; 
 		StartRotation = transform.rotation = Quaternion.LookRotation( transform.forward, hits[ 0 ].normal );
-		cube = FindObjectOfType<Cube>();
+
 	}
 
 	void OnEnable()

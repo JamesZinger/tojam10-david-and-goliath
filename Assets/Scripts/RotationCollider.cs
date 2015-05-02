@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RotationCollider : MonoBehaviour
 {
+	public Cube.RotationAxis Axis;
 
 	private Cube Cube;
 	
@@ -19,16 +20,6 @@ public class RotationCollider : MonoBehaviour
 			.Select( quad => quad.gameObject )
 			.ToList();
 		
-		if ( Cube.EndPointCollider.bounds.Intersects( collider.bounds ) )
-		{
-			results.Add( Cube.EndPointCollider.gameObject );
-		}
-
-		if ( Cube.StartPointCollider.bounds.Intersects( collider.bounds ) )
-		{
-			results.Add( Cube.StartPointCollider.gameObject );
-		}
-
 		var ray = new Ray( Cube.GoatCollider.transform.position + Cube.GoatCollider.transform.up, -Cube.GoatCollider.transform.up );
 		var layerMask = LayerMask.GetMask( "Rotaters" );
 
