@@ -21,14 +21,14 @@ public class Graph
 		// Fore now just use this function to hardcode a path.
 		graph.CreateTestPath();
 		
-		// TODO Load graph from the CSV file.
+		// TODO Load Graph from the CSV file.
 
 		return graph;
 	}
 
 	public static void SaveGraphToCsv( string csvPath )
 	{
-		// TODO Save graph as CSV file.
+		// TODO Save Graph as CSV file.
 	}
 
 	#endregion

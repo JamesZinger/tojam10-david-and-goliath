@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 425728}
   - 82: {fileID: 8225728}
   m_Layer: 8
-  m_Name: Start
+  m_Name: StartSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26,7 +26,7 @@ GameObject:
   - 4: {fileID: 425730}
   - 82: {fileID: 8225730}
   m_Layer: 8
-  m_Name: Death
+  m_Name: DeathSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,7 +42,7 @@ GameObject:
   - 4: {fileID: 425732}
   - 82: {fileID: 8225732}
   m_Layer: 8
-  m_Name: Move
+  m_Name: MoveSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -57,6 +57,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 459680}
   - 114: {fileID: 11459680}
+  - 65: {fileID: 6551592}
   m_Layer: 8
   m_Name: The Goat
   m_TagString: Untagged
@@ -174,6 +175,18 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 159682}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &6551592
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 159680}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 2, z: 1}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!82 &8225728
 AudioSource:
   m_ObjectHideFlags: 1
@@ -241,7 +254,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 3
   m_audioClip: {fileID: 8300000, guid: f8344f6deb533e044809517556971254, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -299,7 +312,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 3
   m_audioClip: {fileID: 8300000, guid: 6dfdaa0fa404a8347981724748a9d39a, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: .100000001
   m_Pitch: 1
   Loop: 1

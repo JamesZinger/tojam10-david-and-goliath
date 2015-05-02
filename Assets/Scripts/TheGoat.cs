@@ -20,15 +20,50 @@ public class TheGoat: MonoBehaviour
 	private const float HitNormalThreshold = -0.5f;
 	private bool isDeathComplete;
 
+	private AudioSource deathSound;
+	
+	[NonSerialized]
+	public AudioSource MoveSound;
+
+	[NonSerialized]
+	public AudioSource StartSound;
+
 	void Awake()
 	{
-		animator = GetComponent<Animator>();
+		animator = GetComponentInChildren<Animator>();
 		layerMask = ~LayerMask.GetMask( "Rotaters", "Goat Ignored" );
 	}
 
 	void Start()
 	{
-		var hits = RaycastCube()
+		Transform t = transform.FindChild( "DeathSound" );
+		if ( t != null )
+		{
+			deathSound = t.audio;
+		}		
+		t = transform.FindChild( "MoveSound" );
+		if ( t != null )
+		{
+			MoveSound = t.audio;
+		}
+		t = transform.FindChild( "StartSound" );
+		if ( t != null )
+		{
+			StartSound = t.audio;
+		}
+
+		// Determine start node
+		cube = FindObjectOfType<Cube>();
+
+		var startNode = cube.Graph.Nodes.Cast<Node>()
+			.Single( node => node.Type == NodeTypeEnum.Start );
+
+		transform.position = startNode.Quad.transform.position + startNode.Quad.transform.up * 0.1f;
+
+		var meshCenter = GetComponentInChildren<MeshRenderer>().bounds.center;
+		var ray = new Ray( meshCenter, -meshCenter.normalized );
+		Debug.DrawRay( ray.origin, ray.direction, Color.red, 1000 );
+		var hits = Physics.RaycastAll( ray, 1.5f, layerMask )
 			.Where( hit => hit.collider.gameObject.GetComponent<Quad>() != null )
 			.Where( hit => hit.normal.x > HitNormalThreshold )
 			.Where( hit => hit.normal.y > HitNormalThreshold )
@@ -41,10 +76,8 @@ public class TheGoat: MonoBehaviour
 			gameObject.SetActive( false );
 			return;
 		}
-
 		StartPosition = transform.position;
 		StartRotation = transform.rotation = Quaternion.LookRotation( transform.forward, hits[ 0 ].normal );
-		cube = FindObjectOfType<Cube>();
 	}
 
 	void OnEnable()
@@ -137,6 +170,8 @@ public class TheGoat: MonoBehaviour
 	IEnumerator Die()
 	{
  		Debug.Log( "Goat is dead" );
+		deathSound.Play();
+		MoveSound.Stop();
 		animator.SetBool( "isDead", true );
 		cube.Reset();
 		Reset();
