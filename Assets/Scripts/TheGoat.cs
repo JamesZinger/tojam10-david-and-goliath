@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 
@@ -19,6 +20,14 @@ public class TheGoat: MonoBehaviour
 	private const float HitNormalThreshold = -0.5f;
 	private bool isDeathComplete;
 
+	private AudioSource deathSound;
+	
+	[NonSerialized]
+	public AudioSource MoveSound;
+
+	[NonSerialized]
+	public AudioSource StartSound;
+
 	void Awake()
 	{
 		animator = GetComponentInChildren<Animator>();
@@ -27,6 +36,22 @@ public class TheGoat: MonoBehaviour
 
 	void Start()
 	{
+		Transform t = transform.FindChild( "DeathSound" );
+		if ( t != null )
+		{
+			deathSound = t.audio;
+		}		
+		t = transform.FindChild( "MoveSound" );
+		if ( t != null )
+		{
+			MoveSound = t.audio;
+		}
+		t = transform.FindChild( "StartSound" );
+		if ( t != null )
+		{
+			StartSound = t.audio;
+		}
+
 		// Determine start node
 		cube = FindObjectOfType<Cube>();
 
@@ -145,6 +170,8 @@ public class TheGoat: MonoBehaviour
 	IEnumerator Die()
 	{
  		Debug.Log( "Goat is dead" );
+		deathSound.Play();
+		MoveSound.Stop();
 		animator.SetBool( "isDead", true );
 		cube.Reset();
 		Reset();
