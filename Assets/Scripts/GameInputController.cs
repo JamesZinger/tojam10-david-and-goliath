@@ -103,7 +103,7 @@ public class GameInputController : MonoBehaviour
 				}
 				es.SetSelectedGameObject(UIcontrols.levelOp[lvlSel].gameObject, new BaseEventData(es));
 			}
-			if (lvlSel == 0 && Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A) || lvlSel == 0 && Input.GetKeyDown(KeyCode.A)) {
+			if (lvlSel == 0 && Xbox360GamepadState.Instance.IsButtonDown(Xbox.Button.A) || lvlSel == 0 && Input.GetKeyDown(KeyCode.A)) {
 				Application.LoadLevel(1);
 			}
 			/*
