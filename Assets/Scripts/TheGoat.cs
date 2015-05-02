@@ -12,6 +12,8 @@ public class TheGoat: MonoBehaviour
 
 	public Quaternion StartRotation { get; private set; }
 
+	private Animator animator;
+
 	private IEnumerator updateHandle;
 	private Cube cube;
 	private int layerMask;
@@ -19,6 +21,7 @@ public class TheGoat: MonoBehaviour
 
 	void Awake()
 	{
+		animator = GetComponent<Animator>();
 		layerMask = ~LayerMask.GetMask( "Rotaters", "Goat Ignored" );
 	}
 
@@ -116,8 +119,7 @@ public class TheGoat: MonoBehaviour
 			if ( !didHit )
 			{
 				// Something weird happened but prolly should just kill the goat.
-				Kill();
-				yield return null;
+				yield return Die();
 				continue;
 			}
 		
@@ -130,10 +132,14 @@ public class TheGoat: MonoBehaviour
 		}
 	}
 
-	void Kill()
+	IEnumerator Die()
 	{
  		Debug.Log( "Goat is dead" );
+		animator.SetBool( "isDead", true );
 		cube.Reset();
+		yield return null;
+		// DDDOOO EETTTt
+		animator.SetBool( "isDead", false );
 	}
 
 	public void Reset()
@@ -150,7 +156,7 @@ public class TheGoat: MonoBehaviour
 		transform.rotation = Quaternion.LookRotation( transform.forward, rayHitInfo.normal );
 
 
-		if ( !cube.hasStarted ) return;
+		if ( !cube.HasStarted ) return;
 		// for now just go forward.
 		transform.position += transform.forward * Time.deltaTime * MoveSpeed;
 	}
