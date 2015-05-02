@@ -4,9 +4,16 @@ using UnityEngine;
 [SelectionBase]
 public class TheGoat: MonoBehaviour
 {
+	public Cube cube;
 	public float MoveSpeed = 1;
 
 	private IEnumerator updateHandle;
+
+	void Start()
+	{
+		cube = FindObjectOfType<Cube>();
+
+	}
 
 	void OnEnable()
 	{
@@ -95,7 +102,7 @@ public class TheGoat: MonoBehaviour
 
 	void Kill()
 	{
-
+		cube.Reset ();
 	}
 
 	void ContinueMoving()

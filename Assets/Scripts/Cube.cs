@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Cube : MonoBehaviour
 {
+	public int deathCount;
 	public RotationCollider XRotationCollider;
 	public RotationCollider YRotationCollider;
 	public RotationCollider ZRotationCollider;
@@ -103,12 +104,19 @@ public class Cube : MonoBehaviour
 		for ( var i = 0; i < quadList.Count; i++ )
 		{
 			quadList[ i ].transform.parent = parent;
+		deathCount++;
+
 		}
 
 		CenterTransform.rotation = Quaternion.identity;
 
 		isRotating = false;
-
+		
 		yield return null;
+	}
+	
+	public void Reset()
+	{
+		deathCount++;
 	}
 }
