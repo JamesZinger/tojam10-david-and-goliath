@@ -8,7 +8,7 @@ public class GameInputController : MonoBehaviour
 	private int opSel = 0; // Variable for selecting through array
 	private int lvlSel = 0;
 	Cube cube;
-	GameUIController UIcontrols;
+	private GameUIController UIcontrols;
 
 	void Start()
 	{
@@ -91,9 +91,9 @@ public class GameInputController : MonoBehaviour
 		}
 
 		if (UIcontrols.levelSelect.gameObject.activeSelf == true) {
-
+			es.SetSelectedGameObject(UIcontrols.levelOp[lvlSel].gameObject, new BaseEventData(es));
 			if (Xbox360GamepadState.Instance.AxisJustPastThreshold(Xbox.Axis.LAnalogY, -0.5f) || Input.GetKeyDown(KeyCode.S)) {
-				lvlSel +=1;
+				lvlSel += 1;
 				if (UIcontrols.levelOp.Length == lvlSel)
 				{
 					lvlSel = 0;
@@ -101,7 +101,7 @@ public class GameInputController : MonoBehaviour
 				es.SetSelectedGameObject(UIcontrols.levelOp[lvlSel].gameObject, new BaseEventData(es));
 			}
 			if (Xbox360GamepadState.Instance.AxisJustPastThreshold(Xbox.Axis.LAnalogY, 0.5f) || Input.GetKeyDown(KeyCode.W)) {
-				lvlSel -=1;
+				lvlSel -= 1;
 				if (lvlSel < 0)
 				{
 					lvlSel = 3;
@@ -154,6 +154,6 @@ public class GameInputController : MonoBehaviour
 								cube.StartMovingGoat ();
 			}
 			return;
-				}
+		}
 	}
 }

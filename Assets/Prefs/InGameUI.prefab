@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 400000}
   - 114: {fileID: 11400000}
   m_Layer: 0
-  m_Name: UI Controller
+  m_Name: InGameUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36,23 +36,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 100000}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fd4d9900797fa244bb151f36a1273c1, type: 3}
+  m_Script: {fileID: 11500000, guid: be82b4a21db2ffd499cc46611a39aa07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuOP: {fileID: 0}
-  Options:
+  pauseMenu: {fileID: 0}
+  inGameHowTo: {fileID: 0}
+  gameOptions:
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  levelOp:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  credits: {fileID: 0}
-  howTo: {fileID: 0}
-  levelSelect: {fileID: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
