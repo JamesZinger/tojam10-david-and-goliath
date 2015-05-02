@@ -15,6 +15,7 @@ public class TheGoat: MonoBehaviour
 	private IEnumerator updateHandle;
 	private Cube cube;
 	private int layerMask;
+	private const float HitNormalThreshold = -0.5f;
 
 	void Awake()
 	{
@@ -25,9 +26,9 @@ public class TheGoat: MonoBehaviour
 	{
 		var hits = RaycastCube()
 			.Where( hit => hit.collider.gameObject.GetComponent<Quad>() != null )
-			.Where( hit => hit.normal.x > -0.5f )
-			.Where( hit => hit.normal.y > -0.5f )
-			.Where( hit => hit.normal.z > -0.5f )
+			.Where( hit => hit.normal.x > HitNormalThreshold )
+			.Where( hit => hit.normal.y > HitNormalThreshold )
+			.Where( hit => hit.normal.z > HitNormalThreshold )
 			.ToArray();
 
 		if ( hits.Length == 0 )
@@ -71,22 +72,13 @@ public class TheGoat: MonoBehaviour
 			var originalHits = RaycastCube();
 			var hits = originalHits
 				.Where( hit => hit.collider.gameObject.GetComponent<Quad>() != null )
-				.Where( hit => hit.normal.x > -0.5f )
-				.Where( hit => hit.normal.y > -0.5f )
-				.Where( hit => hit.normal.z > -0.5f )
+				.Where( hit => hit.normal.x > HitNormalThreshold )
+				.Where( hit => hit.normal.y > HitNormalThreshold )
+				.Where( hit => hit.normal.z > HitNormalThreshold )
 				.ToArray();
 
 			if ( hits.Length > 0 )
 			{
-				var shouldLive = IsOnValidSurface( hits[ 0 ] );
-
-				if ( !shouldLive  )
-				{
-					Kill();
-					yield return null;
-					continue;
-				}
-				
 				// then continue moving forward
 				NormalMovingBehaviour( hits [ 0 ] );
 				yield return null;
@@ -123,14 +115,6 @@ public class TheGoat: MonoBehaviour
 
 			if ( !didHit )
 			{
-				for ( var i = 0; i < directions.Length; i++ )
-				{
-					Debug.DrawRay( ray.origin, directions[ i ] * 2, Color.red, 1000 );
-				}
-				for ( var i = 0; i < originalHits.Length; i++ )
-				{
-					Debug.Log( "Hit: " + originalHits [ i ] );
-				}
 				// Something weird happened but prolly should just kill the goat.
 				Kill();
 				yield return null;
@@ -174,21 +158,5 @@ public class TheGoat: MonoBehaviour
 		var hits = Physics.RaycastAll( ray, 1f, layerMask );
 
 		return hits;
-	}
-
-	bool IsOnValidSurface( RaycastHit rayHitInfo )
-	{
-		var nonZeroNormalNumber = 0f;
-		if ( Math.Abs( rayHitInfo.normal.x )      > .5f ) nonZeroNormalNumber = rayHitInfo.normal.x;
-		else if ( Math.Abs( rayHitInfo.normal.y ) > .5f ) nonZeroNormalNumber = rayHitInfo.normal.y;
-		else if ( Math.Abs( rayHitInfo.normal.z ) > .5f ) nonZeroNormalNumber = rayHitInfo.normal.z;
-
-		if ( Math.Abs( nonZeroNormalNumber ) < float.Epsilon )
-		{
-			Debug.Log( "Something weird happened" );
-			return false;
-		}
-
-		return !( nonZeroNormalNumber < 0 );
 	}
 }

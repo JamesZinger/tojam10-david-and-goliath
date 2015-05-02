@@ -19,6 +19,12 @@ public class Cube : MonoBehaviour
 	public Graph graph;
 
 	public Quad[] QuadArray;
+	private Vector3[] OriginalQuadPositions;
+	private Quaternion[] OriginalQuadRotations;
+	private Vector3 OriginalBeginningPosition;
+	private Vector3 OriginalEndingPosition;
+	private Quaternion OriginalBeginningRotation;
+	private Quaternion OriginalEndingRotation;
 
 	public bool IsRotating { get; private set; }
 
@@ -31,10 +37,18 @@ public class Cube : MonoBehaviour
 
 	void Start()
 	{
+		OriginalBeginningPosition = StartPointCollider.transform.position;
+		OriginalBeginningRotation = StartPointCollider.transform.rotation;
+		OriginalEndingPosition = EndPointCollider.transform.position;
+		OriginalEndingRotation = EndPointCollider.transform.rotation;
 		QuadArray = GetComponentsInChildren<Quad>();
+		OriginalQuadPositions = new Vector3[ QuadArray.Length ];
+		OriginalQuadRotations = new Quaternion[ QuadArray.Length ];
 		int x = 0, y = 0;
 		for ( int i = 0; i < QuadArray.Length; i++ )
 		{
+			OriginalQuadPositions[ i ] = QuadArray[ i ].transform.position;
+			OriginalQuadRotations[ i ] = QuadArray[ i ].transform.rotation;
 			var childQuad = QuadArray[ i ];
 
 			childQuad.Node = graph.Nodes[ x, y ];
@@ -158,5 +172,17 @@ public class Cube : MonoBehaviour
 	public void Reset()
 	{
 		deathCount++;
+
+		StartPointCollider.transform.position = OriginalBeginningPosition;
+		StartPointCollider.transform.rotation = OriginalBeginningRotation;
+		EndPointCollider.transform.position = OriginalEndingPosition;
+		EndPointCollider.transform.rotation = OriginalEndingRotation;
+
+		for ( int i = 0; i < QuadArray.Length; i ++ )
+		{
+			var quad = QuadArray[ i ];
+			quad.transform.position = OriginalQuadPositions[ i ];
+			quad.transform.rotation = OriginalQuadRotations[ i ];
+		}
 	}
 }
