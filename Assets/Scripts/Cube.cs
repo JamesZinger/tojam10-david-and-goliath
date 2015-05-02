@@ -73,6 +73,9 @@ public class Cube : MonoBehaviour
 
 	public void StartMovingGoat()
 	{
+		if (HasStarted)
+			return;
+	
 		HasStarted = true;
 		GoatCollider.GetComponent<TheGoat>().StartSound.Play();
 		GoatCollider.GetComponent<TheGoat>().MoveSound.Play();
