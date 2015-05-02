@@ -5,3 +5,10 @@ public enum NodeTypeEnum
 	Start,
 	End
 }
+
+public enum MainMenuScreenEnum
+{
+	Nothing,
+	MainMenu,
+	LevelSelect
+}
