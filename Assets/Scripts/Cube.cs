@@ -2,6 +2,8 @@
 
 public class Cube : MonoBehaviour
 {
+	public int deathCount;
+
 	void Start()
 	{
 		
@@ -25,6 +27,12 @@ public class Cube : MonoBehaviour
 	public void RotateZ()
 	{
 		
+	}
+
+	public void Reset()
+	{
+		deathCount++;
+
 	}
 
 }
