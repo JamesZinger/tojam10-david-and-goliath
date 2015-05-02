@@ -16,8 +16,9 @@ public class Cube : MonoBehaviour
 	public Transform CenterTransform;
 	public AnimationCurve RotationCurve;
 	public float SpinSpeed;
+	public Graph graph;
 
-	public List<GameObject> QuadList;
+	public Quad[] QuadArray;
 
 	public bool IsRotating { get; private set; }
 
@@ -25,18 +26,25 @@ public class Cube : MonoBehaviour
 
 	void Awake()
 	{
-		QuadList = new List<GameObject>();
+		graph = new Graph( 4, 8 );
 	}
 
 	void Start()
 	{
-		var transforms = GetComponentsInChildren<Transform>();
-		for ( int i = 0; i < transforms.Length; i++ )
+		QuadArray = GetComponentsInChildren<Quad>();
+		int x = 0, y = 0;
+		for ( int i = 0; i < QuadArray.Length; i++ )
 		{
-			var childTransform = transforms[ i ];
-			if ( childTransform.gameObject.name != "Quad" ) continue;
+			var childQuad = QuadArray[ i ];
 
-			QuadList.Add( childTransform.gameObject );
+			childQuad.Node = graph.Nodes[ x, y ];
+			y++;
+			var width = graph.Nodes.GetLength( 1 );
+			if ( y == width )
+			{
+				x++;
+				y = 0;
+			}
 		}
 		
 	}

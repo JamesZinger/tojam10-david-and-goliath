@@ -14,8 +14,9 @@ public class RotationCollider : MonoBehaviour
 
 	public GameObject[] GetAllObjectsToMove()
 	{
-		var results = Cube.QuadList
+		var results = Cube.QuadArray
 			.Where( quad => collider.bounds.Contains( quad.transform.position ) )
+			.Select( quad => quad.gameObject )
 			.ToList();
 		
 		if ( Cube.EndPointCollider.bounds.Intersects( collider.bounds ) )
