@@ -22,7 +22,7 @@ public class GameInputController : MonoBehaviour
 	void Update()
 	{
 		// The following "if" statement allows for selecting menue buttons through controls
-
+		//Xbox360GamepadState.Instance.UpdateState ();
 		if (UIcontrols.menuOP.gameObject.activeSelf == true) {
 			// When menu is active the following is allowed
 			if (Xbox360GamepadState.Instance.AxisJustPastThreshold(Xbox.Axis.LAnalogY, -0.5f) || Input.GetKeyDown(KeyCode.S)) {
@@ -45,19 +45,19 @@ public class GameInputController : MonoBehaviour
 				}
 				es.SetSelectedGameObject(UIcontrols.Options[opSel].gameObject, new BaseEventData(es));
 			}
-			if (opSel == 0 && Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A)|| opSel == 0 && Input.GetKeyDown(KeyCode.A)) {
+			if ((opSel == 0 && Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A))|| (opSel == 0 && Input.GetKeyDown(KeyCode.A))) {
 				UIcontrols.menuOP.gameObject.SetActive (false);
 				UIcontrols.howTo.gameObject.SetActive(true);
 			}
-			else if (opSel == 1 && Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A)|| opSel == 1 && Input.GetKeyDown(KeyCode.A)) {
+			else if ((opSel == 1 && Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A))|| (opSel == 1 && Input.GetKeyDown(KeyCode.A))) {
 				UIcontrols.menuOP.gameObject.SetActive (false);
 				UIcontrols.levelSelect.gameObject.SetActive(true);
 			}
-			else if (opSel == 2 && Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A)|| opSel == 2 && Input.GetKeyDown(KeyCode.A)) {
+			else if ((opSel == 2 && Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A))|| (opSel == 2 && Input.GetKeyDown(KeyCode.A))) {
 				UIcontrols.menuOP.gameObject.SetActive (false);
 				UIcontrols.credits.gameObject.SetActive(true);
 			}
-			else if (opSel == 3 && Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A)|| opSel == 3 && Input.GetKeyDown(KeyCode.A)) {
+			else if ((opSel == 3 && Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A))|| (opSel == 3 && Input.GetKeyDown(KeyCode.A))) {
 				Application.Quit();
 			}
 			if(Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A) || Input.GetKeyDown(KeyCode.Space)) {
@@ -103,7 +103,7 @@ public class GameInputController : MonoBehaviour
 				}
 				es.SetSelectedGameObject(UIcontrols.levelOp[lvlSel].gameObject, new BaseEventData(es));
 			}
-			if (lvlSel == 0 && Xbox360GamepadState.Instance.IsButtonDown(Xbox.Button.A) || lvlSel == 0 && Input.GetKeyDown(KeyCode.A)) {
+			if ((lvlSel == 0 && Xbox360GamepadState.Instance.IsButtonDown(Xbox.Button.A)) || (lvlSel == 0 && Input.GetKeyDown(KeyCode.A))) {
 				Application.LoadLevel(1);
 			}
 			/*
@@ -133,12 +133,12 @@ public class GameInputController : MonoBehaviour
 				es.SetSelectedGameObject(UIcontrols.Options[opSel].gameObject, new BaseEventData(es));
 			}
 		}
-		
+
 		if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A)) {
 			cube.RotateX();
 		}
-		if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.X)) {
-			cube.RotateX();
+		if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.B)) {
+			cube.RotateY();
 		}
 
 		if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.X)) {

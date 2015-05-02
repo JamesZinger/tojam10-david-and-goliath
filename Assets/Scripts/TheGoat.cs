@@ -159,8 +159,7 @@ public class TheGoat: MonoBehaviour
 	{
 		// Check that a quad is under the goat
 		var ray = new Ray( transform.position, -transform.up );
-
-		RaycastHit rayHitInfo;
+		
 		// Check if there is a quad underneath the goat
 		var hits = Physics.RaycastAll( ray, 1f, layerMask );
 
