@@ -60,5 +60,20 @@ public class InGameInput : MonoBehaviour {
 			}
 			return;
 		}
+		if (UIcontrols.pauseMenu.gameObject.activeSelf == false) {
+			if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.Start) || Input.GetKeyDown(KeyCode.M)) {
+				UIcontrols.pauseMenu.gameObject.SetActive(true);
+				Time.timeScale = 0;
+			}
+			//cube.RotateY();
+		}
+		if (UIcontrols.inGameHowTo.gameObject.activeSelf == true) {
+			if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.B) || Input.GetKeyDown (KeyCode.Space)) {
+				UIcontrols.inGameHowTo.gameObject.SetActive (false);
+				UIcontrols.pauseMenu.gameObject.SetActive(true);
+				opSel = 0;
+				es.SetSelectedGameObject(UIcontrols.gameOptions[opSel].gameObject, new BaseEventData(es));
+			}
+		}
 	}
 }
