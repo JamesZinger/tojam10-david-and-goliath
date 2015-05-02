@@ -3720,10 +3720,20 @@ MonoBehaviour:
   CenterTransform: {fileID: 495256}
   RotationCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: -218.632858
+      outSlope: -218.632858
+      tangentMode: 0
+    - time: 1
+      value: 90
+      inSlope: -175.358597
+      outSlope: -175.358597
+      tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-  SpinSpeed: 0
+  SpinSpeed: 2
   QuadList: []
 --- !u!1001 &100100000
 Prefab:
