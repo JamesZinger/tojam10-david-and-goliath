@@ -1,26 +1,43 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class RotationCollider : MonoBehaviour
 {
 
-	public List<GameObject> collisionQuads;
-
-	void Awake()
+	private Cube Cube;
+	
+	private void Awake()
 	{
-		collisionQuads = new List<GameObject>();
+		Cube = FindObjectOfType<Cube>();
 	}
 
-	void OnTriggerEnter( Collider c )
+	public GameObject[] GetQuadsInCollision()
 	{
-		if ( collisionQuads.Contains( c.gameObject ) ) return;
-
-		collisionQuads.Add( c.gameObject );
+		return Cube.QuadList
+			.Where( quad => collider.bounds.Contains( quad.transform.position ) )
+			.ToArray();
 	}
 
-	void OnTriggerExit( Collider c )
+	public GameObject[] GetOthersInCollision()
 	{
-		Debug.Log( "Exiting!" );
-		collisionQuads.Remove( c.gameObject );
+		List<GameObject> results = new List<GameObject>();
+
+		if ( Cube.EndPointCollider.bounds.Intersects( collider.bounds ) )
+		{
+			results.Add( Cube.EndPointCollider.gameObject );
+		}
+
+		if ( Cube.StartPointCollider.bounds.Intersects( collider.bounds ) )
+		{
+			results.Add( Cube.StartPointCollider.gameObject );
+		}
+
+		if ( Cube.GoatCollider.renderer.bounds.Intersects( collider.bounds ) )
+		{
+			results.Add( Cube.GoatCollider.transform.parent.gameObject );
+		}
+
+		return results.ToArray();
 	}
 }

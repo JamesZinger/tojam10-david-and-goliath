@@ -1,10 +1,14 @@
 ﻿using System.Collections;
-using System.IO.IsolatedStorage;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Cube : MonoBehaviour
 {
 	public int deathCount;
+	public Collider GoatCollider;
+	public Collider StartPointCollider;
+	public Collider EndPointCollider;
 	public RotationCollider XRotationCollider;
 	public RotationCollider YRotationCollider;
 	public RotationCollider ZRotationCollider;
@@ -12,12 +16,27 @@ public class Cube : MonoBehaviour
 	public AnimationCurve RotationCurve;
 	public float SpinSpeed;
 
-	private bool isRotating = false;
+	public List<GameObject> QuadList;
+
+	public bool IsRotating { get; private set; }
 
 	private enum RotationAxis { X, Y, Z }
 
+	void Awake()
+	{
+		QuadList = new List<GameObject>();
+	}
+
 	void Start()
 	{
+		var transforms = GetComponentsInChildren<Transform>();
+		for ( int i = 0; i < transforms.Length; i++ )
+		{
+			var childTransform = transforms[ i ];
+			if ( childTransform.gameObject.name != "Quad" ) continue;
+
+			QuadList.Add( childTransform.gameObject );
+		}
 		
 	}
 
@@ -43,7 +62,7 @@ public class Cube : MonoBehaviour
 
 	IEnumerator Rotate( RotationAxis axis )
 	{
-		if ( isRotating )
+		if ( IsRotating )
 		{
 			yield break;
 		}
@@ -62,8 +81,20 @@ public class Cube : MonoBehaviour
 			yield break;
 		}
 
-		var quadList = activeCollider.collisionQuads;
-		var parent = quadList[ 0 ].transform.parent;
+		Transform[] transformArray;
+		Transform[] transformParentArray;
+		{
+			var quadList = activeCollider.GetQuadsInCollision();
+
+			var otherObjects = activeCollider.GetOthersInCollision();
+			var otherTransforms = otherObjects.Select( o => o.transform );
+
+			transformArray = quadList.Select( o => o.transform )
+				.Concat( otherTransforms )
+				.ToArray();
+
+			transformParentArray = transformArray.Select( t => t.parent ).ToArray();
+		}
 
 		Vector3? rotationAxis = null;
 		switch ( axis )
@@ -79,14 +110,15 @@ public class Cube : MonoBehaviour
 			yield break;
 		}
 
-		isRotating = true;
-		CenterTransform.rotation = Quaternion.identity;
-		for ( var i = 0; i < quadList.Count; i++ )
-		{
-			quadList[ i ].transform.parent = CenterTransform;
-		}
 		
-		isRotating = true;
+		IsRotating = true;
+		CenterTransform.rotation = Quaternion.identity;
+		for ( var i = 0; i < transformArray.Length; i++ )
+		{
+			transformArray[ i ].parent = CenterTransform;
+		}
+
+		IsRotating = true;
 		var progress = 0f;
 
 		while ( progress < 1f )
@@ -100,17 +132,14 @@ public class Cube : MonoBehaviour
 
 		CenterTransform.rotation = Quaternion.Euler( 90 * rotationAxis.Value ); 
 
-		Debug.Log( "Got HERE!" );
-		for ( var i = 0; i < quadList.Count; i++ )
+		for ( var i = 0; i < transformArray.Length; i++ )
 		{
-			quadList[ i ].transform.parent = parent;
-		deathCount++;
-
+			transformArray[ i ].parent = transformParentArray[ i ];
 		}
 
 		CenterTransform.rotation = Quaternion.identity;
 
-		isRotating = false;
+		IsRotating = false;
 		
 		yield return null;
 	}
