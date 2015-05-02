@@ -16,6 +16,7 @@ public class TheGoat: MonoBehaviour
 	private Cube cube;
 	private int layerMask;
 	private const float HitNormalThreshold = -0.5f;
+	private bool isDeathComplete;
 
 	void Awake()
 	{
@@ -112,11 +113,12 @@ public class TheGoat: MonoBehaviour
 					break;
 				}
 			}
-
 			if ( !didHit )
-			{
-				// Something weird happened but prolly should just kill the goat.
-				yield return Die();
+			{ 
+				StartCoroutine( Die() );
+				while ( !isDeathComplete )
+					yield return null;
+				isDeathComplete = false;
 				continue;
 			}
 		
@@ -133,8 +135,11 @@ public class TheGoat: MonoBehaviour
 	{
  		Debug.Log( "Goat is dead" );
 		cube.Reset();
+		Reset();
 		yield return null;
 		// DDDOOO EETTTt
+
+		isDeathComplete = true;
 	}
 
 	public void Reset()
