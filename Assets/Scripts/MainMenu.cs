@@ -29,11 +29,13 @@ public class MainMenu : MonoBehaviour {
 
 		UIcontrols = FindObjectOfType<GameUIController>();
 
-		Xbox360GamepadState.Instance.UpdateState ();
+		
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		Xbox360GamepadState.Instance.UpdateState();
+
 		// The following "if" statement allows for selecting menue buttons through controls
 		if (UIcontrols.menuOP.gameObject.activeSelf == true) 
 		{
@@ -101,7 +103,7 @@ public class MainMenu : MonoBehaviour {
 				lvlSel -= 1;
 				if (lvlSel < 0)
 				{
-					lvlSel = 7;
+					lvlSel = UIcontrols.levelOp.Length - 1;
 				}
 				es.SetSelectedGameObject(UIcontrols.levelOp[lvlSel].gameObject, new BaseEventData(es));
 			}
