@@ -139,14 +139,14 @@ public class GameInputController : MonoBehaviour
 			}
 		}
 		if (UIcontrols.menuOP.gameObject.activeSelf == false) {
-						if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A)) {
+						if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.X)) {
 								cube.RotateX ();
 						}
-						if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.B)) {
+						if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A)) {
 								cube.RotateY ();
 						}
 
-						if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.X)) {
+						if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.B)) {
 								cube.RotateZ ();
 						}
 						

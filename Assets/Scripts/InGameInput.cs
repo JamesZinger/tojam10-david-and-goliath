@@ -6,11 +6,11 @@ public class InGameInput : MonoBehaviour {
 
 	public EventSystem es;
 	private int opSel = 0;
-	//Cube cube;
+	Cube cube;
 	private InGameUI UIcontrols;
 	// Use this for initialization
 	void Start () {
-		//cube = FindObjectOfType<Cube>();
+		cube = FindObjectOfType<Cube>();
 		UIcontrols = FindObjectOfType<InGameUI>();
 		opSel = 0;
 		es.SetSelectedGameObject(UIcontrols.gameOptions[opSel].gameObject, new BaseEventData(es));
@@ -74,6 +74,23 @@ public class InGameInput : MonoBehaviour {
 				opSel = 0;
 				es.SetSelectedGameObject(UIcontrols.gameOptions[opSel].gameObject, new BaseEventData(es));
 			}
+		}
+		if (UIcontrols.pauseMenu.gameObject.activeSelf == false) {
+			if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.X)) {
+				cube.RotateX ();
+			}
+			if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A)) {
+				cube.RotateY ();
+			}
+			
+			if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.B)) {
+				cube.RotateZ ();
+			}
+			
+			if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.Y)) {
+				cube.StartMovingGoat ();
+			}
+			return;
 		}
 	}
 }
