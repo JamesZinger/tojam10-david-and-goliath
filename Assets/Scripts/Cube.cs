@@ -239,6 +239,7 @@ public class Cube : MonoBehaviour
 	{
 		DeathCount++;
 		HasStarted = false;
+		yield return new WaitForSeconds( 1f );
 
 		// Reverse through each of the rotationds the user has made until they're all gone.
 		while ( rotationHistory.Count > 0 )

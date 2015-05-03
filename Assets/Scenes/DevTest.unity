@@ -2813,6 +2813,7 @@ GameObject:
   - 114: {fileID: 690896688}
   - 114: {fileID: 690896687}
   - 114: {fileID: 690896690}
+  - 95: {fileID: 690896691}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2836,7 +2837,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 1.20000005}
   m_SizeDelta: {x: 4, y: 4}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &690896687
@@ -2909,6 +2910,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Camera: {fileID: 1227754551}
+--- !u!95 &690896691
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 690896685}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f383bdc5978d630419e3e359326c52ab, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &712762323
 GameObject:
   m_ObjectHideFlags: 0
@@ -7786,7 +7802,6 @@ GameObject:
   - 33: {fileID: 2120237012}
   - 136: {fileID: 2120237011}
   - 23: {fileID: 2120237010}
-  - 95: {fileID: 2120237014}
   m_Layer: 8
   m_Name: Icon
   m_TagString: Untagged
@@ -7850,22 +7865,6 @@ Transform:
   - {fileID: 690896686}
   m_Father: {fileID: 542823209}
   m_RootOrder: 0
---- !u!95 &2120237014
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 9559680, guid: fd8d07a272487ea4194c6f57d31f8807,
-    type: 2}
-  m_PrefabInternal: {fileID: 2130873258}
-  m_GameObject: {fileID: 2120237009}
-  m_Enabled: 0
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 885760233c45718449186169500be3cd, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1001 &2130873258
 Prefab:
   m_ObjectHideFlags: 0
@@ -7913,7 +7912,16 @@ Prefab:
       propertyPath: Camera
       value: 
       objectReference: {fileID: 1227754551}
-    m_RemovedComponents: []
+    - target: {fileID: 9559680, guid: fd8d07a272487ea4194c6f57d31f8807, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 22499364, guid: fd8d07a272487ea4194c6f57d31f8807, type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 1.20000005
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 9559680, guid: fd8d07a272487ea4194c6f57d31f8807, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: fd8d07a272487ea4194c6f57d31f8807, type: 2}
   m_RootGameObject: {fileID: 542823207}
   m_IsPrefabParent: 0

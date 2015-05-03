@@ -25,12 +25,12 @@ AnimationClip:
         value: {x: -0, y: 1.20000005, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 1701734760
+        tangentMode: 154039752
       - time: 1
         value: {x: -0, y: 1, z: 0}
         inSlope: {x: 0, y: -.400000095, z: 0}
         outSlope: {x: 0, y: -.400000095, z: 0}
-        tangentMode: 40178
+        tangentMode: 155429300
       m_PreInfinity: 2
       m_PostInfinity: 2
     path: 
