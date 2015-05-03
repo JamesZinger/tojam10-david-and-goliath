@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public class GameUIController : MonoBehaviour {
 
-	public InGameMenuController menuOP;
+	public Image menuOP;
 
 	public Button[] Options; // Make an array of button options
 	public Button[] levelOp;
