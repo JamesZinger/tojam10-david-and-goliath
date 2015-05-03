@@ -136,13 +136,13 @@ public class MainMenu : MonoBehaviour {
 				Application.LoadLevel (1);
 			}
 			if ((lvlSel == 6 && Xbox360GamepadState.Instance.IsButtonDown(Xbox.Button.A)) || (lvlSel == 6 && Input.GetKeyDown(KeyCode.KeypadEnter))) {
-				onClick.Play();
+				onBack.Play();
 				UIcontrols.levelSelect.gameObject.SetActive (false);
 				UIcontrols.menuOP.gameObject.SetActive(true);
 				opSel = 1;
 			}
 			if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A) || Input.GetKeyDown (KeyCode.KeypadEnter)) {
-				onClick.Play();
+				onBack.Play();
 				UIcontrols.levelSelect.gameObject.SetActive (false);
 				UIcontrols.menuOP.gameObject.SetActive(true);
 				opSel = 1;

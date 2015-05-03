@@ -89,7 +89,7 @@ public class InGameInput : MonoBehaviour {
 			{
 				Time.timeScale = 0;
 				// When menu is active the following is allowed
-				if (Xbox360GamepadState.Instance.AxisJustPastThreshold(Xbox.Axis.LAnalogY, -0.5f) || Input.GetKeyDown(KeyCode.S)) {
+				if (Xbox360GamepadState.Instance.AxisJustPastThreshold(Xbox.Axis.LAnalogX, 0.5f) || Input.GetKeyDown(KeyCode.D)) {
 					winSel +=1; // Increment the array by 1 as you move down the list
 					// This statement allows for returning back to top option once you reach the bottom of the list
 					if (UIcontrols.winOptions.Length == winSel)
@@ -101,7 +101,7 @@ public class InGameInput : MonoBehaviour {
 					es.SetSelectedGameObject(UIcontrols.winOptions[winSel].gameObject, new BaseEventData(es));
 				}
 				// This statement does the same as above but for upward action
-				if (Xbox360GamepadState.Instance.AxisJustPastThreshold(Xbox.Axis.LAnalogY, 0.5f) || Input.GetKeyDown(KeyCode.W)) {
+				if (Xbox360GamepadState.Instance.AxisJustPastThreshold(Xbox.Axis.LAnalogX, -0.5f) || Input.GetKeyDown(KeyCode.A)) {
 					winSel -=1;
 					if (winSel < 0)
 					{
@@ -109,18 +109,20 @@ public class InGameInput : MonoBehaviour {
 					}
 					es.SetSelectedGameObject(UIcontrols.winOptions[winSel].gameObject, new BaseEventData(es));
 				}
-				if ((winSel == 0 && Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A)) || (winSel == 0 && Input.GetKeyDown(KeyCode.A))) {
-					onClick.Play();
-					Time.timeScale = 0;
-					UIcontrols.winScreen.gameObject.SetActive (false);
-					cube.MasterReset();
-				}
-
-				if((winSel == 1 && Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A)) || (winSel == 1 && Input.GetKeyDown(KeyCode.Space))) {
+				if((winSel == 0 && Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A)) || (winSel == 0 && Input.GetKeyDown(KeyCode.KeypadEnter))) {
 					onClick.Play();
 					Time.timeScale = 0;
 					UIcontrols.winScreen.gameObject.SetActive(false);
 					Application.LoadLevel(0);
+				}
+				if((winSel == 1 && Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A)) || (winSel == 1 && Input.GetKeyDown(KeyCode.KeypadEnter))) {
+					onClick.Play();
+					Time.timeScale = 0;
+					UIcontrols.winScreen.gameObject.SetActive(false);
+					var levelstring = Cube.LevelString;
+					var levelNum = levelstring[ levelstring.Length - 1 ];
+					Cube.LevelString = string.Format("Level {0}", levelNum ); 
+					Application.LoadLevel (1);
 				}
 			}
 			return;
