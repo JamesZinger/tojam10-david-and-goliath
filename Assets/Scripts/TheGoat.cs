@@ -8,9 +8,7 @@ using UnityEngine;
 public class TheGoat: MonoBehaviour
 {
 	public float MoveSpeed = 1;
-
-	public Vector3 targetPosition { get; private set; }
-
+	
 	public Vector3 StartPosition { get; private set; }
 
 	public Quaternion StartRotation { get; private set; }
@@ -28,6 +26,7 @@ public class TheGoat: MonoBehaviour
 	private Vector3 currentDirectionVector;
 	private Collider prevCenterHit;
 	private bool hasReachedEnd;
+	private bool hasBSCoroutineFinished;
 
 	private AudioSource deathSound;
 	
@@ -42,6 +41,7 @@ public class TheGoat: MonoBehaviour
 		animator = GetComponentInChildren<Animator>();
 		layerMask = ~LayerMask.GetMask( "Rotaters", "Goat Ignored" );
 		pathLayerMask = LayerMask.GetMask( "Paths" );
+		hasBSCoroutineFinished = true;
 	}
 
 	void Start()
@@ -61,7 +61,6 @@ public class TheGoat: MonoBehaviour
 		{
 			StartSound = t.audio;
 		}
-
 		// Determine start node
 		cube = FindObjectOfType<Cube>();
 
@@ -140,6 +139,7 @@ public class TheGoat: MonoBehaviour
 				yield return null;
 				continue;
 			}
+
 
 			// Check that a quad is under the goat
 			var ray = new Ray( transform.position + ( transform.up * 0.2f ), -transform.up );
@@ -236,7 +236,7 @@ public class TheGoat: MonoBehaviour
 		transform.rotation = Quaternion.LookRotation( transform.forward, rayHitInfo.normal );
 
 		if ( !cube.HasStarted ) return;
-
+		
 		// Determine the move direction
 		// get the quad object underneath the GOAT
 		//var quad = rayHitInfo.collider.GetComponent<Quad>();
@@ -248,27 +248,20 @@ public class TheGoat: MonoBehaviour
 			.Where( h => h.normal.z > HitNormalThreshold )
 			.ToArray();
 
-		if ( hits.Length == 0 )
-		{
-			isDeathComplete = false;
-			StartCoroutine( Die() );
-			return;
-		}
-
 		var sphereHits = hits
 			.Where( h => h.collider is SphereCollider )
 			.Where( h => h.collider != prevCenterHit )
 			.ToArray();
 
-		if ( sphereHits.Length == 1 && hits.Length == 3 )
+		Debug.Log( "Sphere Hits: " + sphereHits.Length );
+		Debug.Log( "Hits: " + hits.Length );
+
+		if ( sphereHits.Length == 1 && hits.Length == 3 && prevCenterHit == null )
 		{
 			var sphereHit = sphereHits.First();
 
 			var quad = rayHitInfo.collider.GetComponent<Quad>();
-			foreach ( var d in quad.Node.MoveableDirections )
-			{
-				//Debug.Log( "Direction on Node [" + quad.NodeName + "] " + d );
-			}
+			Debug.Log( "Got HERE" );
 
 			var dotpPairs = quad.Node.MoveableDirections
 				.Select( d =>
@@ -320,46 +313,46 @@ public class TheGoat: MonoBehaviour
 					prevCenterHit = sphereHit.collider;
 				}
 			}
-
-
-			//currentDirectionVector = quad.transform.TransformDirection( currentDirectionVector );
-			////currentDirection = direction;
-
-			//Debug.Log( "After Direction " + currentDirection, quad );
-
-			//Vector3 directionVector = Vector3.forward;
-			//switch ( currentDirection )
-			//{
-			//	case Node.Direction.up:    currentDirectionVector =  quad.transform.up;    break;
-			//	case Node.Direction.down:  currentDirectionVector = -quad.transform.up;    break;
-			//	case Node.Direction.right: currentDirectionVector =  quad.transform.right; break;
-			//	case Node.Direction.left:  currentDirectionVector = -quad.transform.right; break;
-			//}
-
-			//transform.rotation = Quaternion.LookRotation( directionVector, quad.transform.up );
 		}
 		else if ( sphereHits.Length == 1 && hits.Length == 2 )
 		{
-			var quad = rayHitInfo.collider.GetComponent<Quad>();
+			
+			
+			transform.position += transform.forward * Time.deltaTime * MoveSpeed;	
+		}
+		else if ( hits.Length == 0 )
+		{
 
-			if ( quad.Node.Type == NodeTypeEnum.End )
+			var magnitude = ( rayHitInfo.collider.bounds.center - transform.position ).magnitude;
+
+			if ( magnitude < 0.1f )
 			{
-				cube.GoatReachedEnd();
-				hasReachedEnd = true;
+				var quad = rayHitInfo.collider.GetComponent<Quad>();
+				Debug.Log( "IS IT THE END" );
+				if ( quad.Node.Type == NodeTypeEnum.End )
+				{
+					Debug.Log( "YUP" );
+					cube.GoatReachedEnd();
+					hasReachedEnd = true;
+					return;
+				}
+			}
+			else
+			{
+				isDeathComplete = false;
+				StartCoroutine( Die() );
+				return;
 			}
 		}
-		else
 		{
 			// for now just go forward.
 			transform.position += transform.forward * Time.deltaTime * MoveSpeed;
 		}
 
-		if ( sphereHits.Length == 0 )
+		if ( sphereHits.Length == 0 && hasBSCoroutineFinished && prevCenterHit != null )
 		{
-			prevCenterHit = null;
+			StartCoroutine( BSCoroutine() );
 		}
-
-		
 	}
 
 	public RaycastHit[] RaycastCube()
@@ -371,5 +364,14 @@ public class TheGoat: MonoBehaviour
 		var hits = Physics.RaycastAll( ray, 1f, layerMask );
 
 		return hits;
+	}
+
+	IEnumerator BSCoroutine()
+	{
+		hasBSCoroutineFinished = false;
+		yield return null;
+		yield return null;
+		prevCenterHit = null;
+		hasBSCoroutineFinished = true;
 	}
 }
