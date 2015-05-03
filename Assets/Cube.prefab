@@ -13708,6 +13708,8 @@ MonoBehaviour:
   - {fileID: 11432240}
   - {fileID: 11432238}
   - {fileID: 11432236}
+  DirectionPointer: {fileID: 157424, guid: 437c7de7db613c245915594275d6dab2, type: 2}
+  QuadPointerCenter: {fileID: 121256, guid: 3251104187849db4eab18f83f864e7e8, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

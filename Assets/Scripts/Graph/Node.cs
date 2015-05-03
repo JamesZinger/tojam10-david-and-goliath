@@ -6,6 +6,7 @@ using System.Linq;
 //[Serializable]
 public class Node
 {
+	public enum Direction { up, down, left, right }
 	public string Name;
 	public NodeTypeEnum Type;
 	public Quad Quad;
@@ -13,10 +14,14 @@ public class Node
 	[NonSerialized] 
 	public List<Node> Neighbors;
 
+	public HashSet<Direction> MoveableDirections;
+
 	public Node()
 	{
 		Neighbors = new List<Node>();
 		Type = NodeTypeEnum.Normal;
+		MoveableDirections = new HashSet<Direction>();
+
 	}
 
 	public void AddNeighbor( Node neighbor )
