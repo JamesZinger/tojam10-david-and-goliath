@@ -11,7 +11,11 @@ public class Graph
 	public static Dictionary<string, Func<Graph>> levelSelectionDictionary = new Dictionary<string, Func<Graph>>()
 	{
 		{ "Level 1", Level1 },
-		{ "Level 4", Level4 }
+		{ "Level 2", Level2 },
+		{ "Level 3", Level3 },
+		{ "Level 4", Level4 },
+		{ "Level 5", Level5 },
+		{ "Level 6", Level6 }
 	};
 
 	#endregion
@@ -229,9 +233,6 @@ public class Graph
 		graph.Nodes[ 0, 2 ].MoveableDirections.Add( Node.Direction.left  );
 		graph.Nodes[ 0, 1 ].MoveableDirections.Add( Node.Direction.right );
 
-		graph.Nodes[ 2, 6 ].AddNeighbor( graph.Nodes[ 2, 5 ] );
-		graph.Nodes[ 2, 5 ].AddNeighbor( graph.Nodes[ 2, 4 ] );
-
 		return graph;
 	}
 
@@ -239,29 +240,32 @@ public class Graph
 	{
 		Graph graph = new Graph( 4, 8 );
 
-		graph.Nodes[ 0, 6 ].Type = NodeTypeEnum.Start;
-		graph.Nodes[ 0, 5 ].Type = NodeTypeEnum.End;
+		graph.Nodes[ 1, 4 ].Type = NodeTypeEnum.Start;
+		graph.Nodes[ 0, 1 ].Type = NodeTypeEnum.End;
 
-		graph.Nodes[ 0, 6 ].MoveableDirections.Add( Node.Direction.up    );
-		graph.Nodes[ 1, 6 ].MoveableDirections.Add( Node.Direction.up    );
+		graph.Nodes[ 1, 4 ].MoveableDirections.Add( Node.Direction.right );
+		graph.Nodes[ 1, 5 ].MoveableDirections.Add( Node.Direction.left  );
+		graph.Nodes[ 1, 5 ].MoveableDirections.Add( Node.Direction.right );
+		graph.Nodes[ 1, 6 ].MoveableDirections.Add( Node.Direction.left  );
 		graph.Nodes[ 1, 6 ].MoveableDirections.Add( Node.Direction.down  );
 		graph.Nodes[ 2, 6 ].MoveableDirections.Add( Node.Direction.up    );
-		graph.Nodes[ 2, 6 ].MoveableDirections.Add( Node.Direction.left  );
+		graph.Nodes[ 2, 6 ].MoveableDirections.Add( Node.Direction.down  );
+		graph.Nodes[ 3, 6 ].MoveableDirections.Add( Node.Direction.left  );
+		graph.Nodes[ 3, 6 ].MoveableDirections.Add( Node.Direction.down  );
+		graph.Nodes[ 3, 5 ].MoveableDirections.Add( Node.Direction.up    );
+		graph.Nodes[ 3, 5 ].MoveableDirections.Add( Node.Direction.left  );
+		graph.Nodes[ 2, 5 ].MoveableDirections.Add( Node.Direction.down  );
 		graph.Nodes[ 2, 5 ].MoveableDirections.Add( Node.Direction.left  );
-		graph.Nodes[ 2, 5 ].MoveableDirections.Add( Node.Direction.right );
 		graph.Nodes[ 2, 4 ].MoveableDirections.Add( Node.Direction.right );
-		graph.Nodes[ 2, 4 ].MoveableDirections.Add( Node.Direction.up    );
-		graph.Nodes[ 1, 4 ].MoveableDirections.Add( Node.Direction.down  );
-		graph.Nodes[ 1, 4 ].MoveableDirections.Add( Node.Direction.up    );
-		graph.Nodes[ 0, 5 ].MoveableDirections.Add( Node.Direction.right );
-
-		graph.Nodes[ 2, 6 ].AddNeighbor( graph.Nodes[ 2, 5 ] );
-		graph.Nodes[ 2, 5 ].AddNeighbor( graph.Nodes[ 2, 4 ] );
+		graph.Nodes[ 2, 4 ].MoveableDirections.Add( Node.Direction.left  );
+		graph.Nodes[ 0, 2 ].MoveableDirections.Add( Node.Direction.up    );
+		graph.Nodes[ 0, 2 ].MoveableDirections.Add( Node.Direction.left  );
+		graph.Nodes[ 0, 1 ].MoveableDirections.Add( Node.Direction.right );
 
 		return graph;
 	}
 
-	private static Graph Level4()
+	private static Graph Level3()
 	{
 		Graph graph = new Graph( 4, 8 );
 		
@@ -288,6 +292,48 @@ public class Graph
 		graph.Nodes[ 0, 5 ].MoveableDirections.Add( Node.Direction.up    );
 		graph.Nodes[ 0, 5 ].MoveableDirections.Add( Node.Direction.left  );
 		graph.Nodes[ 0, 6 ].MoveableDirections.Add( Node.Direction.right );
+
+		return graph;
+	}
+	
+	private static Graph Level4()
+	{
+		Graph graph = new Graph( 4, 8 );
+
+		graph.Nodes[ 1, 4 ].Type = NodeTypeEnum.Start;
+		graph.Nodes[ 0, 1 ].Type = NodeTypeEnum.End;
+
+		// TODO
+
+		return graph;
+	}
+	
+	private static Graph Level5()
+	{
+		Graph graph = new Graph( 4, 8 );
+
+		graph.Nodes[ 0, 1 ].Type = NodeTypeEnum.Start;
+		graph.Nodes[ 0, 2 ].Type = NodeTypeEnum.End;
+
+		graph.Nodes[ 0, 1 ].MoveableDirections.Add( Node.Direction.up    );
+		graph.Nodes[ 0, 6 ].MoveableDirections.Add( Node.Direction.down    );
+		graph.Nodes[ 0, 6 ].MoveableDirections.Add( Node.Direction.up    );
+		graph.Nodes[ 1, 6 ].MoveableDirections.Add( Node.Direction.left    );
+
+
+		// TODO
+
+		return graph;
+	}
+	
+	private static Graph Level6()
+	{
+		Graph graph = new Graph( 4, 8 );
+
+		graph.Nodes[ 1, 4 ].Type = NodeTypeEnum.Start;
+		graph.Nodes[ 0, 1 ].Type = NodeTypeEnum.End;
+
+		// TODO
 
 		return graph;
 	}
