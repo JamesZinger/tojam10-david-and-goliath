@@ -20,7 +20,6 @@ public class InGameMenuController : MonoBehaviour
 	public bool isExpanded { get; private set; }
 	private bool isCoroutineRunning;
 	private int selectedIndex = 0;
-	public bool isInChildScreen;
 
 	private void Awake()
 	{
@@ -57,6 +56,8 @@ public class InGameMenuController : MonoBehaviour
 		float progress = 0f;
 		if ( !isExpanded )
 		{
+			Array.ForEach( GameUI, o => o.SetActive( false ) );
+
 			Time.timeScale = 0;
 			isCoroutineRunning = true;
 
@@ -133,6 +134,7 @@ public class InGameMenuController : MonoBehaviour
 
 			Time.timeScale = 1f;
 			isExpanded = false;
+			Array.ForEach( GameUI, o => o.SetActive( true ) );
 			EventSystem.current.SetSelectedGameObject( null, new BaseEventData( EventSystem.current ) );
 		}
 		isCoroutineRunning = false;
@@ -143,7 +145,7 @@ public class InGameMenuController : MonoBehaviour
 	{
 		if ( isCoroutineRunning ) return;
 
-		if ( isExpanded && !isInChildScreen )
+		if ( isExpanded && !( LevelSelection.activeSelf || CreditScreen.activeSelf ) )
 		{
 			if ( Xbox360GamepadState.Instance.AxisJustPastThreshold( Xbox.Axis.LAnalogY, -0.5f ) || Input.GetKeyDown( KeyCode.S ) )
 			{
@@ -179,30 +181,19 @@ public class InGameMenuController : MonoBehaviour
 				}
 				else if ( selectedIndex == 1 )
 				{
-					isInChildScreen = true;
+					Array.ForEach( children, child => child.gameObject.SetActive( false ) );
 					LevelSelection.SetActive( true );
 				}
 				else if ( selectedIndex == 2 )
 				{
-					isInChildScreen = true;
+					Array.ForEach( children, child => child.gameObject.SetActive( false ) );
 					CreditScreen.SetActive( true );
 				}
 			}
 		}
-		else if ( isExpanded && isInChildScreen )
+		else if ( isExpanded && ( LevelSelection.activeSelf || CreditScreen.activeSelf ) )
 		{
-			if ( Xbox360GamepadState.Instance.IsButtonDown( Xbox.Button.B ) || Input.GetKeyDown( KeyCode.Space ) )
-			{
-				switch ( selectedIndex )
-				{
-					case 1:
 
-						break;
-					case 2:
-						CreditScreen.SetActive( false );
-						break;
-				}
-			}
 		}
 		else if ( !isExpanded )
 		{
@@ -212,4 +203,10 @@ public class InGameMenuController : MonoBehaviour
 			}
 		}
 	}
+
+	public void TransitioningBack()
+	{
+		Array.ForEach( children, child => child.gameObject.SetActive( true ) );
+	}
+
 }

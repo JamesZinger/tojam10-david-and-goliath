@@ -73,7 +73,7 @@ public class LevelSelectionController : MonoBehaviour
 		if ( ( lvlSel == 6 && Xbox360GamepadState.Instance.IsButtonDown( Xbox.Button.A ) ) || ( lvlSel == 6 && Input.GetKeyDown( KeyCode.Return ) ) )
 		{
 			onClick.Play();
-			FindObjectOfType<InGameMenuController>().isInChildScreen = false;
+			FindObjectOfType<InGameMenuController>().TransitioningBack();
 			gameObject.SetActive( false );
 		}
 	}
