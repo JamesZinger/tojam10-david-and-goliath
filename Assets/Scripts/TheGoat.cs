@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -7,6 +8,8 @@ using UnityEngine;
 public class TheGoat: MonoBehaviour
 {
 	public float MoveSpeed = 1;
+
+	public Vector3 targetPosition { get; private set; }
 
 	public Vector3 StartPosition { get; private set; }
 
@@ -17,8 +20,13 @@ public class TheGoat: MonoBehaviour
 	private IEnumerator updateHandle;
 	private Cube cube;
 	private int layerMask;
+	private int pathLayerMask;
 	private const float HitNormalThreshold = -0.5f;
 	private bool isDeathComplete;
+	private bool isDeathCoroutineRunning;
+	private Node.Direction currentDirection;
+	private Vector3 currentDirectionVector;
+	private Collider prevCenterHit;
 
 	private AudioSource deathSound;
 	
@@ -32,6 +40,7 @@ public class TheGoat: MonoBehaviour
 	{
 		animator = GetComponentInChildren<Animator>();
 		layerMask = ~LayerMask.GetMask( "Rotaters", "Goat Ignored" );
+		pathLayerMask = LayerMask.GetMask( "Paths" );
 	}
 
 	void Start()
@@ -64,10 +73,10 @@ public class TheGoat: MonoBehaviour
 		var ray = new Ray( meshCenter, -meshCenter.normalized );
 		Debug.DrawRay( ray.origin, ray.direction, Color.red, 1000 );
 		var hits = Physics.RaycastAll( ray, 1.5f, layerMask )
-			.Where( hit => hit.collider.gameObject.GetComponent<Quad>() != null )
-			.Where( hit => hit.normal.x > HitNormalThreshold )
-			.Where( hit => hit.normal.y > HitNormalThreshold )
-			.Where( hit => hit.normal.z > HitNormalThreshold )
+			.Where( h => h.collider.gameObject.GetComponent<Quad>() != null )
+			.Where( h => h.normal.x > HitNormalThreshold )
+			.Where( h => h.normal.y > HitNormalThreshold )
+			.Where( h => h.normal.z > HitNormalThreshold )
 			.ToArray();
 
 		if ( hits.Length == 0 )
@@ -76,8 +85,25 @@ public class TheGoat: MonoBehaviour
 			gameObject.SetActive( false );
 			return;
 		}
+
+		var hit = hits.First();
+
+		var quad = hit.collider.gameObject.GetComponent<Quad>();
+
+		currentDirection = quad.Node.MoveableDirections.First();
+
 		StartPosition = transform.position;
-		StartRotation = transform.rotation = Quaternion.LookRotation( transform.forward, hits[ 0 ].normal );
+
+		Vector3 directionVector = Vector3.zero;
+		switch ( currentDirection )
+		{
+			case Node.Direction.up: currentDirectionVector = quad.transform.up; break;
+			case Node.Direction.down: currentDirectionVector = -quad.transform.up; break;
+			case Node.Direction.right: currentDirectionVector = quad.transform.right; break;
+			case Node.Direction.left: currentDirectionVector = -quad.transform.right; break;
+		}
+
+		StartRotation = transform.rotation = Quaternion.LookRotation( directionVector, hit.normal );
 	}
 
 	void OnEnable()
@@ -99,6 +125,11 @@ public class TheGoat: MonoBehaviour
 		while ( true )
 		{
 			if ( cube.IsRotating )
+			{
+				yield return null;
+				continue;
+			}
+			if ( isDeathCoroutineRunning )
 			{
 				yield return null;
 				continue;
@@ -169,6 +200,7 @@ public class TheGoat: MonoBehaviour
 
 	IEnumerator Die()
 	{
+		isDeathCoroutineRunning = true;
  		Debug.Log( "Goat is dead" );
 		deathSound.Play();
 		MoveSound.Stop();
@@ -176,16 +208,16 @@ public class TheGoat: MonoBehaviour
 		cube.Reset();
 		Reset();
 		yield return null;
-		// DDDOOO EETTTt
-
 		isDeathComplete = true;
 		animator.SetBool( "isDead", false );
+		isDeathCoroutineRunning = false;
 	}
 
 	public void Reset()
 	{
 		transform.position = StartPosition;
 		transform.rotation = StartRotation;
+		prevCenterHit = null;
 	}
 
 
@@ -195,10 +227,120 @@ public class TheGoat: MonoBehaviour
 		transform.position = rayHitInfo.point + transform.up * 0.05f;
 		transform.rotation = Quaternion.LookRotation( transform.forward, rayHitInfo.normal );
 
-
 		if ( !cube.HasStarted ) return;
-		// for now just go forward.
-		transform.position += transform.forward * Time.deltaTime * MoveSpeed;
+
+		// Determine the move direction
+		// get the quad object underneath the GOAT
+		//var quad = rayHitInfo.collider.GetComponent<Quad>();
+
+		var ray = new Ray( transform.position + ( transform.up * 0.05f ), -transform.up );
+		var hits = Physics.RaycastAll( ray, 0.1f, pathLayerMask )
+			.Where( h => h.normal.x > HitNormalThreshold )
+			.Where( h => h.normal.y > HitNormalThreshold )
+			.Where( h => h.normal.z > HitNormalThreshold )
+			.ToArray();
+
+		if ( hits.Length == 0 )
+		{
+			isDeathComplete = false;
+			StartCoroutine( Die() );
+			return;
+		}
+
+		var sphereHits = hits
+			.Where( h => h.collider is SphereCollider )
+			.Where( h => h.collider != prevCenterHit )
+			.ToArray();
+
+		if ( sphereHits.Length == 1 && hits.Length == 3 )
+		{
+			var sphereHit = sphereHits.First();
+			
+			var quad = rayHitInfo.collider.GetComponent<Quad>();
+			foreach ( var d  in quad.Node.MoveableDirections )
+			{
+				//Debug.Log( "Direction on Node [" + quad.NodeName + "] " + d );
+			}
+
+			var dotpPairs = quad.Node.MoveableDirections
+				.Select( d => {
+					Vector3 dirV = Vector3.zero;
+					switch ( d )
+					{
+						case Node.Direction.up:
+							dirV = quad.transform.up * 90;
+							break;
+						case Node.Direction.down:
+							dirV = -quad.transform.up * 90;
+							break;
+						case Node.Direction.right:
+							dirV = quad.transform.right * 90;
+							break;
+						case Node.Direction.left:
+							dirV = -quad.transform.right * 90;
+							break;
+					}
+
+					var quart = Quaternion.LookRotation( dirV, -quad.transform.forward );
+					return new KeyValuePair<float, Quaternion>( Quaternion.Dot( transform.rotation, quart ), quart );
+				} )
+				.ToArray();
+
+			var turns = dotpPairs
+				.Where( dotPair => dotPair.Key > 0.25f )
+				.Where( dotPair => dotPair.Key < 0.75f )
+				.ToArray();
+
+			if ( turns.Length > 0 )
+			{
+				Debug.Log( "Goat is turning" );
+				Debug.Log( turns.First().Value );
+				transform.rotation = turns.First().Value;
+				prevCenterHit = sphereHit.collider;
+			}
+
+			else
+			{
+				var straightLines = dotpPairs
+					.Where( dotpPair => dotpPair.Key >= 0.75f )
+					.ToArray();
+				if ( straightLines.Length > 0 )
+				{
+					Debug.Log( "Goat is going straight" );
+					transform.rotation = straightLines.First().Value;
+					prevCenterHit = sphereHit.collider;
+				}
+			}
+			
+
+			//currentDirectionVector = quad.transform.TransformDirection( currentDirectionVector );
+			////currentDirection = direction;
+
+			//Debug.Log( "After Direction " + currentDirection, quad );
+
+			//Vector3 directionVector = Vector3.forward;
+			//switch ( currentDirection )
+			//{
+			//	case Node.Direction.up:    currentDirectionVector =  quad.transform.up;    break;
+			//	case Node.Direction.down:  currentDirectionVector = -quad.transform.up;    break;
+			//	case Node.Direction.right: currentDirectionVector =  quad.transform.right; break;
+			//	case Node.Direction.left:  currentDirectionVector = -quad.transform.right; break;
+			//}
+
+			//transform.rotation = Quaternion.LookRotation( directionVector, quad.transform.up );
+		}
+		else
+		{
+			// for now just go forward.
+			transform.position += transform.forward * Time.deltaTime * MoveSpeed;
+		}
+
+		if ( sphereHits.Length == 0 )
+		{
+			prevCenterHit = null;
+		}
+
+		
 	}
 
 	public RaycastHit[] RaycastCube()
