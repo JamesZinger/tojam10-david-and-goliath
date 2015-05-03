@@ -8,7 +8,7 @@ using UnityEngine;
 public class TheGoat: MonoBehaviour
 {
 	public float MoveSpeed = 1;
-	public bool Disable;
+	public bool FUCKTHEGOAT;
 	
 	public Vector3 StartPosition { get; private set; }
 
@@ -138,7 +138,7 @@ public class TheGoat: MonoBehaviour
 
 		while ( true )
 		{
-			if ( Disable )
+			if ( FUCKTHEGOAT )
 			{
 				yield return new WaitForFixedUpdate();
 				continue;
