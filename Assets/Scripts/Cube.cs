@@ -16,6 +16,7 @@ public class Cube : MonoBehaviour
 	public bool HasStarted;
 	public Quad[] QuadArray;
 	public GameObject DirectionPointer;
+	public GameObject QuadPointerCenter;
 
 	private Vector3[] originalQuadPositions;
 	private Quaternion[] originalQuadRotations;

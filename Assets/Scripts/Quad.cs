@@ -37,6 +37,23 @@ public class Quad : MonoBehaviour
 	public IEnumerator WaitForFrame()
 	{
 		yield return null;
+
+		if ( Node.MoveableDirections.Count > 1 )
+		{
+			
+
+			var go = Instantiate( Cube.QuadPointerCenter ) as GameObject;
+
+			if ( go != null )
+			{
+				go.transform.parent = transform;
+
+				go.transform.localPosition = Vector3.zero;
+				go.transform.localRotation = Quaternion.Euler( 90, 0, 0 );
+			}
+
+		}
+
 		foreach ( var direction in Node.MoveableDirections )
 		{
 			Vector3 rotationEuler = Vector3.zero;
