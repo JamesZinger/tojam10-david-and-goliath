@@ -12,17 +12,19 @@ public class InGameMenuController : MonoBehaviour
 	public RectTransform[] children;
 	public GameObject LevelSelection;
 	public GameObject CreditScreen;
+	public GameObject[] GameUI;
 	
 	private Vector2[] targetPositions;
 	private Vector2[] startingPositions;
 	private Button selfButton;
-	private bool isExpanded;
+	public bool isExpanded { get; private set; }
 	private bool isCoroutineRunning;
 	private int selectedIndex = 0;
 	public bool isInChildScreen;
 
 	private void Awake()
 	{
+		Time.timeScale = 1;
 		targetPositions = new Vector2[children.Length];
 
 		for ( int i = 0; i < children.Length; i++ )
@@ -131,6 +133,7 @@ public class InGameMenuController : MonoBehaviour
 
 			Time.timeScale = 1f;
 			isExpanded = false;
+			EventSystem.current.SetSelectedGameObject( null, new BaseEventData( EventSystem.current ) );
 		}
 		isCoroutineRunning = false;
 	}
@@ -172,7 +175,7 @@ public class InGameMenuController : MonoBehaviour
 				if ( selectedIndex == 0 )
 				{
 					// Spawn level selection screen
-					Toggle();
+					Application.LoadLevel( 0 );
 				}
 				else if ( selectedIndex == 1 )
 				{

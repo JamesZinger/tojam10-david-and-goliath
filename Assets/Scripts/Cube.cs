@@ -53,6 +53,31 @@ public class Cube : MonoBehaviour
 		HasStarted = false;
 	}
 
+	private void Update()
+	{
+		Xbox360GamepadState.Instance.UpdateState();
+		var pauseMenu = FindObjectOfType<InGameMenuController>();
+		if ( pauseMenu.isExpanded ) return;
+		if ( Xbox360GamepadState.Instance.IsButtonDown( Xbox.Button.X ) )
+		{
+			RotateX();
+		}
+		if ( Xbox360GamepadState.Instance.IsButtonDown( Xbox.Button.A ) )
+		{
+			RotateY();
+		}
+
+		if ( Xbox360GamepadState.Instance.IsButtonDown( Xbox.Button.B ) )
+		{
+			RotateZ();
+		}
+
+		if ( Xbox360GamepadState.Instance.IsButtonDown( Xbox.Button.Y ) )
+		{
+			StartMovingGoat();
+		}
+	}
+
 	void Start()
 	{
 		IsGoatDyingRightAtThisSecond = false;
@@ -104,11 +129,6 @@ public class Cube : MonoBehaviour
 		HasStarted = true;
 		GoatCollider.GetComponent<TheGoat>().StartSound.Play();
 		GoatCollider.GetComponent<TheGoat>().MoveSound.Play();
-	}
-
-	void Update()
-	{
-
 	}
 
 	public void RotateX()
