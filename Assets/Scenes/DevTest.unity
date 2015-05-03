@@ -328,7 +328,7 @@ Prefab:
       objectReference: {fileID: 1227754551}
     - target: {fileID: 11459680, guid: fd8d07a272487ea4194c6f57d31f8807, type: 2}
       propertyPath: FUCKTHEGOAT
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fd8d07a272487ea4194c6f57d31f8807, type: 2}
@@ -2238,7 +2238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MoveSpeed: 1
-  FUCKTHEGOAT: 1
+  FUCKTHEGOAT: 0
   IsDeathCoroutineRunning: 0
 --- !u!4 &542823209
 Transform:
