@@ -328,7 +328,7 @@ Prefab:
       objectReference: {fileID: 1227754551}
     - target: {fileID: 11459680, guid: fd8d07a272487ea4194c6f57d31f8807, type: 2}
       propertyPath: FUCKTHEGOAT
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fd8d07a272487ea4194c6f57d31f8807, type: 2}
@@ -2036,7 +2036,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DeathCount: 0
-  DefaultLevelString: Level 5
+  DefaultLevelString: Level 6
   CenterTransform: {fileID: 1229932949}
   RotationCurve:
     serializedVersion: 2
@@ -2577,7 +2577,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MoveSpeed: 1
-  FUCKTHEGOAT: 1
+  FUCKTHEGOAT: 0
   IsDeathCoroutineRunning: 0
 --- !u!4 &542823209
 Transform:
@@ -4285,7 +4285,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11474094, guid: bf9e057e5aab0de4f9d71e9d468e91aa, type: 2}
       propertyPath: DefaultLevelString
-      value: Level 5
+      value: Level 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bf9e057e5aab0de4f9d71e9d468e91aa, type: 2}
