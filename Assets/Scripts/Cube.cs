@@ -194,7 +194,9 @@ public class Cube : MonoBehaviour
 
 		CenterTransform.rotation = Quaternion.identity;
 
+		yield return new WaitForSeconds( .1f );
 		IsRotating = false;
+		yield return null;
 		yield return null;
 	}
 	
