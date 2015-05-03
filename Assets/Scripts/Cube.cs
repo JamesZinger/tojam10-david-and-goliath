@@ -30,6 +30,7 @@ public class Cube : MonoBehaviour
 	private Stack<RotationAxis> rotationHistory;
 
 	public bool IsRotating { get; private set; }
+	public bool IsGoatDyingRightAtThisSecond { get; set; }
 
 	public Collider GoatCollider { get; private set; }
 
@@ -50,6 +51,7 @@ public class Cube : MonoBehaviour
 
 	void Start()
 	{
+		IsGoatDyingRightAtThisSecond = false;
 		rotationHistory = new Stack<RotationAxis>();
 
 		Transform t = transform.FindChild( "RotateSound" );
@@ -247,7 +249,22 @@ public class Cube : MonoBehaviour
 	{
 		DeathCount++;
 		HasStarted = false;
-		yield return new WaitForSeconds( 1f );
+
+
+
+		// TODO Need to wait for goat death to animate before continuing, preferably without 
+		// weird glichy as fuck sounds going off and tripping balls.
+
+		//IsGoatDyingRightAtThisSecond = true;
+		//while ( IsGoatDyingRightAtThisSecond )
+		//{
+		//	yield return null;
+		//}
+
+
+
+
+		GoatCollider.gameObject.SetActive( false );
 
 		// Reverse through each of the rotationds the user has made until they're all gone.
 		while ( rotationHistory.Count > 0 )
@@ -264,6 +281,7 @@ public class Cube : MonoBehaviour
 		}
 
 		// Reset the goat.
+		GoatCollider.gameObject.SetActive( true );
 		GoatCollider.GetComponent<TheGoat>().Reset();
 
 		yield return new WaitForSeconds( 1f );
