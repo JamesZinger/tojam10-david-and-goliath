@@ -1703,6 +1703,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DeathCount: 0
+  DefaultLevelString: Level 1
   CenterTransform: {fileID: 1229932949}
   RotationCurve:
     serializedVersion: 2
@@ -5385,6 +5386,58 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Axis: 1
+--- !u!1001 &1317887723
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 495276, guid: bf9e057e5aab0de4f9d71e9d468e91aa, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 495276, guid: bf9e057e5aab0de4f9d71e9d468e91aa, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 495276, guid: bf9e057e5aab0de4f9d71e9d468e91aa, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 495276, guid: bf9e057e5aab0de4f9d71e9d468e91aa, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 495276, guid: bf9e057e5aab0de4f9d71e9d468e91aa, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 495276, guid: bf9e057e5aab0de4f9d71e9d468e91aa, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 495276, guid: bf9e057e5aab0de4f9d71e9d468e91aa, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 495276, guid: bf9e057e5aab0de4f9d71e9d468e91aa, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 11495312, guid: bf9e057e5aab0de4f9d71e9d468e91aa, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11495312, guid: bf9e057e5aab0de4f9d71e9d468e91aa, type: 2}
+      propertyPath: HasStarted
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: bf9e057e5aab0de4f9d71e9d468e91aa, type: 2}
+  m_RootGameObject: {fileID: 465032850}
+  m_IsPrefabParent: 0
+  m_IsExploded: 1
 --- !u!1 &1320280794
 GameObject:
   m_ObjectHideFlags: 0

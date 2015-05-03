@@ -4334,12 +4334,13 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 195276}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 84747cd089e743344b8c6140dc85c9eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   DeathCount: 0
+  DefaultLevelString: Level 1
   CenterTransform: {fileID: 495256}
   RotationCurve:
     serializedVersion: 2
@@ -4357,8 +4358,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
   SpinSpeed: 1.02999997
-  SpinSpeedReverse: 3
-  HasStarted: 0
+  HasStarted: 1
+  SpinSpeedReverse: 3  HasStarted: 0
   QuadArray:
   - {fileID: 11432208}
   - {fileID: 11432210}
