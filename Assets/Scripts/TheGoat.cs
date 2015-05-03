@@ -13,6 +13,8 @@ public class TheGoat: MonoBehaviour
 
 	public Quaternion StartRotation { get; private set; }
 
+	public bool IsRewinding { get; private set; }
+
 	private Animator animator;
 
 	private IEnumerator updateHandle;
@@ -26,7 +28,7 @@ public class TheGoat: MonoBehaviour
 	private Collider prevCenterHit;
 	private bool hasReachedEnd;
 	private bool hasBSCoroutineFinished;
-	private bool isRewinding;
+	
 
 	private Animator canvasAnimator;
 
@@ -137,17 +139,17 @@ public class TheGoat: MonoBehaviour
 		{
 			if ( cube.IsRotating )
 			{
-				yield return null;
+				yield return new WaitForFixedUpdate();
 				continue;
 			}
 			if ( IsDeathCoroutineRunning )
 			{
-				yield return null;
+				yield return new WaitForFixedUpdate();
 				continue;
 			}
 			if ( hasReachedEnd )
 			{
-				yield return null;
+				yield return new WaitForFixedUpdate();
 				continue;
 			}
 
@@ -167,7 +169,7 @@ public class TheGoat: MonoBehaviour
 			{
 				// then continue moving forward
 				NormalMovingBehaviour( hits [ 0 ] );
-				yield return null;
+				yield return new WaitForFixedUpdate();
 				continue;
 			}
 
@@ -209,7 +211,7 @@ public class TheGoat: MonoBehaviour
 			// Move and rotate to align with the normal of the quad.
 			transform.position += downVector * 0.07f;
 			transform.rotation = Quaternion.LookRotation( downVector, hitInfo.normal );
-			yield return null;
+			yield return new WaitForFixedUpdate();
 		}
 	}
 
@@ -285,17 +287,18 @@ public class TheGoat: MonoBehaviour
 					var quart = Quaternion.LookRotation( dirV, -quad.transform.forward );
 					return new KeyValuePair<float, Quaternion>( Quaternion.Dot( transform.rotation, quart ), quart );
 				} )
+				.Where( pair => Math.Abs( pair.Key ) > 0.1f  )
 				.ToArray();
 
 			var turns = dotpPairs
-				.Where( dotPair => dotPair.Key > 0.25f )
-				.Where( dotPair => dotPair.Key < 0.75f )
+				.Where( dotPair => Math.Abs( dotPair.Key ) > 0.25f )
+				.Where( dotPair => Math.Abs( dotPair.Key ) < 0.75f )
 				.ToArray();
-
+			
 			if ( turns.Length > 0 )
 			{
 				Debug.Log( "Goat is turning" );
-				Debug.Log( turns.First().Value );
+				Debug.Log( turns.First().Value.eulerAngles );
 				transform.rotation = turns.First().Value;
 				prevCenterHit = sphereHit.collider;
 			}
@@ -303,8 +306,8 @@ public class TheGoat: MonoBehaviour
 			else
 			{
 				var straightLines = dotpPairs
-					.Where( dotpPair => dotpPair.Key >= 0.75f )
 					.ToArray();
+
 				if ( straightLines.Length > 0 )
 				{
 					Debug.Log( "Goat is going straight" );
@@ -328,13 +331,19 @@ public class TheGoat: MonoBehaviour
 			{
 				var quad = rayHitInfo.collider.GetComponent<Quad>();
 				Debug.Log( "IS IT THE END" );
-				if ( quad.Node.Type == NodeTypeEnum.End )
+				switch ( quad.Node.Type )
 				{
-					Debug.Log( "YUP" );
-					cube.GoatReachedEnd();
-					hasReachedEnd = true;
-					return;
+					case NodeTypeEnum.End:
+						Debug.Log( "YUP" );
+						cube.GoatReachedEnd();
+						hasReachedEnd = true;
+						return;
+					case NodeTypeEnum.Start:
+						StartCoroutine( Die() );
+						return;
 				}
+
+				transform.position = rayHitInfo.collider.transform.position + transform.up * 0.01f;
 			}
 			else
 			{
@@ -342,7 +351,7 @@ public class TheGoat: MonoBehaviour
 				return;
 			}
 		}
-		else if ( !isRewinding )
+		else if ( !IsRewinding )
 		{
 
 			// for now just go forward.
@@ -377,7 +386,7 @@ public class TheGoat: MonoBehaviour
 
 	public IEnumerator RewindWorld()
 	{
-	isRewinding = true;
+	IsRewinding = true;
 		canvasAnimator.SetBool( "isDead", true );
 		yield return new WaitForSeconds( 1f );
 		yield return StartCoroutine( cube.ResetCoroutine() );
@@ -385,6 +394,6 @@ public class TheGoat: MonoBehaviour
 		canvasAnimator.SetBool( "isDead", false );
 		Reset();
 		yield return new WaitForSeconds( 1f );
-		isRewinding = false;
+		IsRewinding = false;
 	}
 }

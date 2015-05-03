@@ -9,7 +9,7 @@ public class Cube : MonoBehaviour
 	public int DeathCount;
 
 	public static string LevelString = "";
-	public string DefaultLevelString = "";
+	public string DefaultLevelString = "Level 1";
 	public Transform CenterTransform;
 	public AnimationCurve RotationCurve;
 	public float SpinSpeed;
@@ -113,7 +113,8 @@ public class Cube : MonoBehaviour
 
 	public void RotateX()
 	{
-		if ( !IsRotating && !HasFinished )
+		var goat = GoatCollider.GetComponent<TheGoat>();
+		if ( !IsRotating && !HasFinished && !goat.IsRewinding )
 		{
 			rotateSound.Play();
 			rotationHistory.Push( RotationAxis.X );
@@ -123,7 +124,8 @@ public class Cube : MonoBehaviour
 
 	public void RotateY()
 	{
-		if ( !IsRotating && !HasFinished )
+		var goat = GoatCollider.GetComponent<TheGoat>();
+		if ( !IsRotating && !HasFinished && !goat.IsRewinding )
 		{
 			rotateSound.Play();
 			rotationHistory.Push( RotationAxis.Y );
@@ -133,7 +135,8 @@ public class Cube : MonoBehaviour
 
 	public void RotateZ()
 	{
-		if ( !IsRotating && !HasFinished )
+		var goat = GoatCollider.GetComponent<TheGoat>();
+		if ( !IsRotating && !HasFinished  && !goat.IsRewinding )
 		{
 			rotateSound.Play();
 			rotationHistory.Push( RotationAxis.Z );
