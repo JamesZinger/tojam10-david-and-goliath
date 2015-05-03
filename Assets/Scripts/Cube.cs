@@ -12,6 +12,7 @@ public class Cube : MonoBehaviour
 	public Transform CenterTransform;
 	public AnimationCurve RotationCurve;
 	public float SpinSpeed;
+	public float SpinSpeedReverse;
 	public Graph Graph;
 	public bool HasStarted;
 	public Quad[] QuadArray;
@@ -24,6 +25,8 @@ public class Cube : MonoBehaviour
 	private Quaternion[] originalQuadRotations;
 
 	private AudioSource rotateSound;
+
+	private Stack<RotationAxis> rotationHistory;
 
 	public bool IsRotating { get; private set; }
 
@@ -43,6 +46,8 @@ public class Cube : MonoBehaviour
 
 	void Start()
 	{
+		rotationHistory = new Stack<RotationAxis>();
+
 		Transform t = transform.FindChild( "RotateSound" );
 		if ( t != null )
 		{
@@ -70,9 +75,6 @@ public class Cube : MonoBehaviour
 
 			childQuad.Node = Graph.GetNodeByName( childQuad.NodeName );
 		}
-
-
-		
 	}
 
 	public void StartMovingGoat()
@@ -92,36 +94,45 @@ public class Cube : MonoBehaviour
 
 	public void RotateX()
 	{
-		rotateSound.Play();
-		StartCoroutine( Rotate( RotationAxis.X ) );
+		if ( !IsRotating )
+		{
+			rotationHistory.Push( RotationAxis.X );
+			StartCoroutine( Rotate( RotationAxis.X, RotationEnum.Clockwise, SpinSpeed ) );
+		}
 	}
 
 	public void RotateY()
 	{
-		rotateSound.Play();
-		StartCoroutine( Rotate( RotationAxis.Y ) );
+		if ( !IsRotating )
+		{
+			rotationHistory.Push( RotationAxis.Y );
+			StartCoroutine( Rotate( RotationAxis.Y, RotationEnum.Clockwise, SpinSpeed ) );
+		}
 	}
 
 	public void RotateZ()
 	{
-		rotateSound.Play();
-		StartCoroutine( Rotate( RotationAxis.Z ) );
+		if ( !IsRotating )
+		{
+			rotationHistory.Push( RotationAxis.Z );
+			StartCoroutine( Rotate( RotationAxis.Z, RotationEnum.Clockwise, SpinSpeed ) );
+		}
 	}
 
-	IEnumerator Rotate( RotationAxis axis )
+	IEnumerator Rotate( RotationAxis axis, RotationEnum direction, float speed )
 	{
 		if ( IsRotating )
 		{
 			yield break;
 		}
 
-
-
 		if ( SpinSpeed < float.Epsilon )
 		{
 			Debug.LogError( "SpinSpeed is less than or equal to 0" );
 			yield break;
 		}
+		
+		rotateSound.Play();
 
 		RotationCollider activeCollider = null;
 		switch ( axis )
@@ -149,11 +160,23 @@ public class Cube : MonoBehaviour
 		}
 
 		Vector3? rotationAxis = null;
-		switch ( axis )
+		if ( direction == RotationEnum.Clockwise )
 		{
-			case RotationAxis.X: rotationAxis = new Vector3( x: 1, y: 0, z: 0 ); break;
-			case RotationAxis.Y: rotationAxis = new Vector3( x: 0, y: 1, z: 0 ); break;
-			case RotationAxis.Z: rotationAxis = new Vector3( x: 0, y: 0, z: 1 ); break;
+			switch ( axis )
+			{
+				case RotationAxis.X: rotationAxis = new Vector3( x: 1, y: 0, z: 0 ); break;
+				case RotationAxis.Y: rotationAxis = new Vector3( x: 0, y: 1, z: 0 ); break;
+				case RotationAxis.Z: rotationAxis = new Vector3( x: 0, y: 0, z: 1 ); break;
+			}
+		}
+		else
+		{
+			switch ( axis )
+			{
+				case RotationAxis.X: rotationAxis = new Vector3( x: -1, y: 0, z: 0 ); break;
+				case RotationAxis.Y: rotationAxis = new Vector3( x: 0, y: -1, z: 0 ); break;
+				case RotationAxis.Z: rotationAxis = new Vector3( x: 0, y: 0, z: -1 ); break;
+			}
 		}
 
 		if ( rotationAxis == null )
@@ -162,12 +185,12 @@ public class Cube : MonoBehaviour
 			yield break;
 		}
 
-		switch ( axis )
-		{
-			case RotationAxis.X: Graph.RotateX( RotationEnum.Clockwise ); break;
-			case RotationAxis.Y: Graph.RotateY( RotationEnum.Clockwise ); break;
-			//case RotationAxis.Z: Graph.RotateZ( RotationEnum.Clockwise ); break;
-        }
+		//switch ( axis )
+		//{
+		//	case RotationAxis.X: Graph.RotateX( direction ); break;
+		//	case RotationAxis.Y: Graph.RotateY( direction ); break;
+		//	case RotationAxis.Z: Graph.RotateZ( direction ); break;
+		//}
 		
 		IsRotating = true;
 		CenterTransform.rotation = Quaternion.identity;
@@ -182,7 +205,7 @@ public class Cube : MonoBehaviour
 		{
 			var angle = RotationCurve.Evaluate( progress );
 			CenterTransform.rotation = Quaternion.Euler( angle * rotationAxis.Value );
-			progress += Time.deltaTime * SpinSpeed;
+			progress += Time.deltaTime * speed;
 	
 			yield return null;
 		}
@@ -204,22 +227,36 @@ public class Cube : MonoBehaviour
 	
 	public void Reset()
 	{
-		DeathCount++;
+		StartCoroutine( ResetCoroutine() );
+	}
 
+	public void GoatReachedEnd()
+	{
+		Debug.Log( "You Win!!!" );
+	}
+
+	IEnumerator ResetCoroutine()
+	{
+		DeathCount++;
 		HasStarted = false;
 
-		GoatCollider.GetComponent<TheGoat>().Reset();
+		// Reverse through each of the rotationds the user has made until they're all gone.
+		while ( rotationHistory.Count > 0 )
+		{
+			yield return StartCoroutine( Rotate( rotationHistory.Pop(), RotationEnum.Counterclockwise, SpinSpeedReverse ) );
+		}
 
+		// Just set positions and rotations back tro originals for good measure.
 		for ( int i = 0; i < QuadArray.Length; i ++ )
 		{
 			var quad = QuadArray[ i ];
 			quad.transform.position = originalQuadPositions[ i ];
 			quad.transform.rotation = originalQuadRotations[ i ];
 		}
-	}
 
-	public void GoatReachedEnd()
-	{
-		
+		// Reset the goat.
+		GoatCollider.GetComponent<TheGoat>().Reset();
+
+		yield return new WaitForSeconds( 1f );
 	}
 }
