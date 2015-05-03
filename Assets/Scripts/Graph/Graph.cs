@@ -324,10 +324,20 @@ public class Graph
 	{
 		Graph graph = new Graph( 4, 8 );
 
-		graph.Nodes[ 1, 4 ].Type = NodeTypeEnum.Start;
-		graph.Nodes[ 0, 1 ].Type = NodeTypeEnum.End;
-
-		// TODO
+		graph.Nodes[ 2, 4 ].Type = NodeTypeEnum.Start;
+		//graph.Nodes[ 0, 1 ].Type = NodeTypeEnum.End;
+		
+		graph.Nodes[ 2, 4 ].MoveableDirections.Add( Node.Direction.up    );
+		graph.Nodes[ 1, 4 ].MoveableDirections.Add( Node.Direction.down  );
+		graph.Nodes[ 1, 4 ].MoveableDirections.Add( Node.Direction.up    );
+		graph.Nodes[ 0, 5 ].MoveableDirections.Add( Node.Direction.right );
+		graph.Nodes[ 0, 5 ].MoveableDirections.Add( Node.Direction.up    );
+		graph.Nodes[ 0, 5 ].MoveableDirections.Add( Node.Direction.right );
+		graph.Nodes[ 0, 5 ].MoveableDirections.Add( Node.Direction.up    );
+		graph.Nodes[ 1, 1 ].MoveableDirections.Add( Node.Direction.up    );
+		graph.Nodes[ 1, 1 ].MoveableDirections.Add( Node.Direction.left  );
+		graph.Nodes[ 0, 1 ].MoveableDirections.Add( Node.Direction.right );
+		graph.Nodes[ 0, 1 ].MoveableDirections.Add( Node.Direction.up    );
 
 		return graph;
 	}
