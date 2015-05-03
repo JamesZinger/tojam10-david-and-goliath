@@ -16,6 +16,7 @@ public class Cube : MonoBehaviour
 	public float SpinSpeedReverse;
 	public Graph Graph;
 	public bool HasStarted;
+	public bool HasFinished;
 	public Quad[] QuadArray;
 	public GameObject DirectionPointer;
 	public GameObject QuadPointerCenter;
@@ -25,7 +26,10 @@ public class Cube : MonoBehaviour
 	private Vector3[] originalQuadPositions;
 	private Quaternion[] originalQuadRotations;
 
+	private bool isReversing;
+
 	private AudioSource rotateSound;
+	private AudioSource reverseSound;
 
 	private Stack<RotationAxis> rotationHistory;
 
@@ -58,6 +62,11 @@ public class Cube : MonoBehaviour
 		if ( t != null )
 		{
 			rotateSound = t.audio;
+		}
+		t = transform.FindChild( "ReverseSound" );
+		if ( t != null )
+		{
+			reverseSound = t.audio;
 		}
 
 		var Colliders = GetComponentsInChildren<RotationCollider>();
@@ -104,8 +113,9 @@ public class Cube : MonoBehaviour
 
 	public void RotateX()
 	{
-		if ( !IsRotating )
+		if ( !IsRotating && !HasFinished )
 		{
+			rotateSound.Play();
 			rotationHistory.Push( RotationAxis.X );
 			StartCoroutine( Rotate( RotationAxis.X, RotationEnum.Clockwise, SpinSpeed ) );
 		}
@@ -113,8 +123,9 @@ public class Cube : MonoBehaviour
 
 	public void RotateY()
 	{
-		if ( !IsRotating )
+		if ( !IsRotating && !HasFinished )
 		{
+			rotateSound.Play();
 			rotationHistory.Push( RotationAxis.Y );
 			StartCoroutine( Rotate( RotationAxis.Y, RotationEnum.Clockwise, SpinSpeed ) );
 		}
@@ -122,8 +133,9 @@ public class Cube : MonoBehaviour
 
 	public void RotateZ()
 	{
-		if ( !IsRotating )
+		if ( !IsRotating && !HasFinished )
 		{
+			rotateSound.Play();
 			rotationHistory.Push( RotationAxis.Z );
 			StartCoroutine( Rotate( RotationAxis.Z, RotationEnum.Clockwise, SpinSpeed ) );
 		}
@@ -141,8 +153,6 @@ public class Cube : MonoBehaviour
 			Debug.LogError( "SpinSpeed is less than or equal to 0" );
 			yield break;
 		}
-		
-		rotateSound.Play();
 
 		RotationCollider activeCollider = null;
 		switch ( axis )
@@ -245,32 +255,18 @@ public class Cube : MonoBehaviour
 		Debug.Log( "You Win!!!" );
 	}
 
-	IEnumerator ResetCoroutine()
+	public IEnumerator ResetCoroutine()
 	{
 		DeathCount++;
 		HasStarted = false;
 
-
-
-		// TODO Need to wait for goat death to animate before continuing, preferably without 
-		// weird glichy as fuck sounds going off and tripping balls.
-
-		//IsGoatDyingRightAtThisSecond = true;
-		//while ( IsGoatDyingRightAtThisSecond )
-		//{
-		//	yield return null;
-		//}
-
-
-
-
-		GoatCollider.gameObject.SetActive( false );
-
-		// Reverse through each of the rotationds the user has made until they're all gone.
+		// Reverse through each of the rotations the user has made until they're all gone.
+		reverseSound.Play();
 		while ( rotationHistory.Count > 0 )
 		{
 			yield return StartCoroutine( Rotate( rotationHistory.Pop(), RotationEnum.Counterclockwise, SpinSpeedReverse ) );
 		}
+		reverseSound.Stop();
 
 		// Just set positions and rotations back tro originals for good measure.
 		for ( int i = 0; i < QuadArray.Length; i ++ )
@@ -280,10 +276,7 @@ public class Cube : MonoBehaviour
 			quad.transform.rotation = originalQuadRotations[ i ];
 		}
 
-		// Reset the goat.
-		GoatCollider.gameObject.SetActive( true );
-		GoatCollider.GetComponent<TheGoat>().Reset();
-
 		yield return new WaitForSeconds( 1f );
+		HasFinished = false;
 	}
 }

@@ -20,8 +20,7 @@ public class TheGoat: MonoBehaviour
 	private int layerMask;
 	private int pathLayerMask;
 	private const float HitNormalThreshold = -0.5f;
-	private bool isDeathComplete;
-	private bool isDeathCoroutineRunning;
+	public bool IsDeathCoroutineRunning;
 	private Node.Direction currentDirection;
 	private Vector3 currentDirectionVector;
 	private Collider prevCenterHit;
@@ -137,16 +136,19 @@ public class TheGoat: MonoBehaviour
 		{
 			if ( cube.IsRotating )
 			{
+				Debug.Log( "IsRotating: " + cube.IsRotating );
 				yield return null;
 				continue;
 			}
-			if ( isDeathCoroutineRunning )
+			if ( IsDeathCoroutineRunning )
 			{
+				Debug.Log( "IsDeathCoroutineRunning: " + IsDeathCoroutineRunning );
 				yield return null;
 				continue;
 			}
 			if ( hasReachedEnd )
 			{
+				Debug.Log( "hasReachedEnd: " + hasReachedEnd );
 				yield return null;
 				continue;
 			}
@@ -200,10 +202,7 @@ public class TheGoat: MonoBehaviour
 			}
 			if ( !didHit )
 			{ 
-				StartCoroutine( Die() );
-				while ( !isDeathComplete )
-					yield return null;
-				isDeathComplete = false;
+				yield return StartCoroutine( Die() );
 				continue;
 			}
 		
@@ -218,18 +217,16 @@ public class TheGoat: MonoBehaviour
 
 	IEnumerator Die()
 	{
-		isDeathCoroutineRunning = true;
+		IsDeathCoroutineRunning = true;
  		Debug.Log( "Goat is dead" );
 		deathSound.Play();
 		MoveSound.Stop();
 		canvasAnimator.SetBool( "isDead", true );
-		cube.IsGoatDyingRightAtThisSecond = true;
-		cube.Reset();
+		yield return StartCoroutine( cube.ResetCoroutine() );
 		Reset();
 		yield return null;
-		isDeathComplete = true;
 		canvasAnimator.SetBool( "isDead", false );
-		isDeathCoroutineRunning = false;
+		IsDeathCoroutineRunning = false;
 	}
 
 	public void Reset()
@@ -347,7 +344,6 @@ public class TheGoat: MonoBehaviour
 			}
 			else
 			{
-				isDeathComplete = false;
 				StartCoroutine( Die() );
 				return;
 			}
