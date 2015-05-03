@@ -318,7 +318,32 @@ public class Graph
 		graph.Nodes[ 0, 1 ].MoveableDirections.Add( Node.Direction.up    );
 		graph.Nodes[ 0, 6 ].MoveableDirections.Add( Node.Direction.down    );
 		graph.Nodes[ 0, 6 ].MoveableDirections.Add( Node.Direction.up    );
-		graph.Nodes[ 1, 6 ].MoveableDirections.Add( Node.Direction.left    );
+		graph.Nodes[ 1, 6 ].MoveableDirections.Add( Node.Direction.up    );
+		graph.Nodes[ 1, 6 ].MoveableDirections.Add( Node.Direction.down    );
+		graph.Nodes[ 2, 4 ].MoveableDirections.Add( Node.Direction.up    );
+		graph.Nodes[ 2, 4 ].MoveableDirections.Add( Node.Direction.left   );
+		graph.Nodes[ 2, 3 ].MoveableDirections.Add( Node.Direction.up    );
+		graph.Nodes[ 2, 3 ].MoveableDirections.Add( Node.Direction.right    );
+		graph.Nodes[ 1, 0 ].MoveableDirections.Add( Node.Direction.left    );
+		graph.Nodes[ 1, 0 ].MoveableDirections.Add( Node.Direction.right    );
+		graph.Nodes[ 1, 7 ].MoveableDirections.Add( Node.Direction.down    );
+		graph.Nodes[ 1, 7 ].MoveableDirections.Add( Node.Direction.right    );
+		graph.Nodes[ 1, 1 ].MoveableDirections.Add( Node.Direction.left   );
+		graph.Nodes[ 1, 1 ].MoveableDirections.Add( Node.Direction.down    );
+		graph.Nodes[ 2, 5 ].MoveableDirections.Add( Node.Direction.up   );
+		graph.Nodes[ 2, 5 ].MoveableDirections.Add( Node.Direction.down    );
+		graph.Nodes[ 3, 5 ].MoveableDirections.Add( Node.Direction.right    );
+		graph.Nodes[ 3, 5 ].MoveableDirections.Add( Node.Direction.left    );
+		graph.Nodes[ 3, 6 ].MoveableDirections.Add( Node.Direction.left    );
+		graph.Nodes[ 3, 6 ].MoveableDirections.Add( Node.Direction.right    );
+		graph.Nodes[ 2, 6 ].MoveableDirections.Add( Node.Direction.up    );
+		graph.Nodes[ 2, 6 ].MoveableDirections.Add( Node.Direction.down    );
+		graph.Nodes[ 1, 2 ].MoveableDirections.Add( Node.Direction.right  );
+		graph.Nodes[ 1, 2 ].MoveableDirections.Add( Node.Direction.down    );
+		graph.Nodes[ 1, 3 ].MoveableDirections.Add( Node.Direction.up   );
+		graph.Nodes[ 1, 3 ].MoveableDirections.Add( Node.Direction.left    );
+		graph.Nodes[ 0, 2 ].MoveableDirections.Add( Node.Direction.right    );
+
 
 
 		// TODO
