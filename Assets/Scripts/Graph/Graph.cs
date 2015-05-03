@@ -312,8 +312,14 @@ public class Graph
 	{
 		Graph graph = new Graph( 4, 8 );
 
-		graph.Nodes[ 1, 4 ].Type = NodeTypeEnum.Start;
-		graph.Nodes[ 0, 1 ].Type = NodeTypeEnum.End;
+		graph.Nodes[ 0, 1 ].Type = NodeTypeEnum.Start;
+		graph.Nodes[ 0, 2 ].Type = NodeTypeEnum.End;
+
+		graph.Nodes[ 0, 1 ].MoveableDirections.Add( Node.Direction.up    );
+		graph.Nodes[ 0, 6 ].MoveableDirections.Add( Node.Direction.down    );
+		graph.Nodes[ 0, 6 ].MoveableDirections.Add( Node.Direction.up    );
+		graph.Nodes[ 1, 6 ].MoveableDirections.Add( Node.Direction.left    );
+
 
 		// TODO
 
