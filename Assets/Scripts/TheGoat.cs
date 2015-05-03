@@ -28,6 +28,8 @@ public class TheGoat: MonoBehaviour
 	private bool hasReachedEnd;
 	private bool hasBSCoroutineFinished;
 
+	private Animator canvasAnimator;
+
 	private AudioSource deathSound;
 	
 	[NonSerialized]
@@ -61,6 +63,12 @@ public class TheGoat: MonoBehaviour
 		{
 			StartSound = t.audio;
 		}
+		t = transform.FindChild( "Icon" ).FindChild( "Canvas" );
+		if ( t != null )
+		{
+			canvasAnimator = t.GetComponent<Animator>();
+		}
+
 		// Determine start node
 		cube = FindObjectOfType<Cube>();
 
@@ -211,12 +219,13 @@ public class TheGoat: MonoBehaviour
  		Debug.Log( "Goat is dead" );
 		deathSound.Play();
 		MoveSound.Stop();
-		animator.SetBool( "isDead", true );
+		canvasAnimator.SetBool( "isDead", true );
+		cube.IsGoatDyingRightAtThisSecond = true;
 		cube.Reset();
 		Reset();
 		yield return null;
 		isDeathComplete = true;
-		animator.SetBool( "isDead", false );
+		canvasAnimator.SetBool( "isDead", false );
 		isDeathCoroutineRunning = false;
 	}
 
