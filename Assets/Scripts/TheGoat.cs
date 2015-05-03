@@ -15,7 +15,7 @@ public class TheGoat: MonoBehaviour
 
 	public bool IsRewinding { get; private set; }
 
-	private Animator animator;
+	//private Animator animator;
 
 	private IEnumerator updateHandle;
 	private Cube cube;
@@ -42,7 +42,7 @@ public class TheGoat: MonoBehaviour
 
 	void Awake()
 	{
-		animator = GetComponentInChildren<Animator>();
+		//animator = GetComponentInChildren<Animator>();
 		layerMask = ~LayerMask.GetMask( "Rotaters", "Goat Ignored" );
 		pathLayerMask = LayerMask.GetMask( "Paths" );
 		hasBSCoroutineFinished = true;
