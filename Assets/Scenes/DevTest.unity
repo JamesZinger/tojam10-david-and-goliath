@@ -1804,7 +1804,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DeathCount: 0
-  DefaultLevelString: Level 1
+  DefaultLevelString: Level 2
   CenterTransform: {fileID: 1229932949}
   RotationCurve:
     serializedVersion: 2
@@ -3856,7 +3856,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11474094, guid: bf9e057e5aab0de4f9d71e9d468e91aa, type: 2}
       propertyPath: DefaultLevelString
-      value: Level 1
+      value: Level 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bf9e057e5aab0de4f9d71e9d468e91aa, type: 2}
