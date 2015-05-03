@@ -4,11 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class Cube : MonoBehaviour
 {
 	public int DeathCount;
-	
+
+	public static string LevelString = "";
+	public string DefaultLevelString = "";
 	public Transform CenterTransform;
 	public AnimationCurve RotationCurve;
 	public float SpinSpeed;
@@ -37,7 +38,10 @@ public class Cube : MonoBehaviour
 
 	void Awake()
 	{
-		Graph = Graph.LoadGraphFromCsv( "" );
+		var stringLevelName = DefaultLevelString;
+		if ( LevelString.Length != 0 ) stringLevelName = LevelString;
+
+		Graph = Graph.LoadLevel( stringLevelName );
 		HasStarted = false;
 	}
 
@@ -69,9 +73,10 @@ public class Cube : MonoBehaviour
 			var childQuad = QuadArray[ i ];
 
 			childQuad.Node = Graph.GetNodeByName( childQuad.NodeName );
+			QuadArray[ i ].Configure();
 		}
 
-
+		goat.Configure( this );
 		
 	}
 

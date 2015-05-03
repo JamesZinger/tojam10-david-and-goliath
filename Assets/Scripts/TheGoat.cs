@@ -44,7 +44,7 @@ public class TheGoat: MonoBehaviour
 		hasBSCoroutineFinished = true;
 	}
 
-	void Start()
+	public void Configure( Cube realCube )
 	{
 		Transform t = transform.FindChild( "DeathSound" );
 		if ( t != null )
@@ -62,7 +62,7 @@ public class TheGoat: MonoBehaviour
 			StartSound = t.audio;
 		}
 		// Determine start node
-		cube = FindObjectOfType<Cube>();
+		cube = realCube;
 
 		var startNode = cube.Graph.Nodes.Cast<Node>()
 			.Single( node => node.Type == NodeTypeEnum.Start );
@@ -97,10 +97,10 @@ public class TheGoat: MonoBehaviour
 		Vector3 directionVector = Vector3.zero;
 		switch ( currentDirection )
 		{
-			case Node.Direction.up: currentDirectionVector = quad.transform.up; break;
-			case Node.Direction.down: currentDirectionVector = -quad.transform.up; break;
-			case Node.Direction.right: currentDirectionVector = quad.transform.right; break;
-			case Node.Direction.left: currentDirectionVector = -quad.transform.right; break;
+			case Node.Direction.up: directionVector = quad.transform.up; break;
+			case Node.Direction.down: directionVector = -quad.transform.up; break;
+			case Node.Direction.right: directionVector = quad.transform.right; break;
+			case Node.Direction.left: directionVector = -quad.transform.right; break;
 		}
 
 		StartRotation = transform.rotation = Quaternion.LookRotation( directionVector, hit.normal );
@@ -119,8 +119,11 @@ public class TheGoat: MonoBehaviour
 
 	IEnumerator UpdateCoroutine()
 	{
+		yield return null;
+		yield return null;
+
 		if ( cube == null )
-			yield return null;
+			cube = FindObjectOfType<Cube>();
 
 		while ( true )
 		{
@@ -253,15 +256,11 @@ public class TheGoat: MonoBehaviour
 			.Where( h => h.collider != prevCenterHit )
 			.ToArray();
 
-		Debug.Log( "Sphere Hits: " + sphereHits.Length );
-		Debug.Log( "Hits: " + hits.Length );
-
 		if ( sphereHits.Length == 1 && hits.Length == 3 && prevCenterHit == null )
 		{
 			var sphereHit = sphereHits.First();
 
 			var quad = rayHitInfo.collider.GetComponent<Quad>();
-			Debug.Log( "Got HERE" );
 
 			var dotpPairs = quad.Node.MoveableDirections
 				.Select( d =>

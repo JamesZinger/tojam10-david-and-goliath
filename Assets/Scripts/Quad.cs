@@ -9,7 +9,7 @@ public class Quad : MonoBehaviour
 
 	private Cube Cube;
 
-	public void Start()
+	public void Configure()
 	{
 		Cube = FindObjectOfType<Cube>();
 
