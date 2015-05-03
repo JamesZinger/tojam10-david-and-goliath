@@ -79,6 +79,7 @@ public class MainMenu : MonoBehaviour {
 				onClick.Play();
 				UIcontrols.menuOP.gameObject.SetActive (false);
 				UIcontrols.credits.gameObject.SetActive(true);
+				return;
 			}
 			else if ((opSel == 3 && Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A))|| (opSel == 3 && Input.GetKeyDown(KeyCode.KeypadEnter))) {
 				onClick.Play();
@@ -140,8 +141,8 @@ public class MainMenu : MonoBehaviour {
 				UIcontrols.menuOP.gameObject.SetActive(true);
 				opSel = 1;
 			}
-			if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.B) || Input.GetKeyDown (KeyCode.Space)) {
-				onBack.Play();
+			if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A) || Input.GetKeyDown (KeyCode.KeypadEnter)) {
+				onClick.Play();
 				UIcontrols.levelSelect.gameObject.SetActive (false);
 				UIcontrols.menuOP.gameObject.SetActive(true);
 				opSel = 1;
@@ -152,8 +153,8 @@ public class MainMenu : MonoBehaviour {
 
 		if (UIcontrols.credits.gameObject.activeSelf == true) 
 		{
-			if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.B) || Input.GetKeyDown (KeyCode.Space)) {
-				onBack.Play();
+			if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A) || Input.GetKeyDown (KeyCode.KeypadEnter)) {
+				onClick.Play();
 				UIcontrols.credits.gameObject.SetActive (false);
 				UIcontrols.menuOP.gameObject.SetActive(true);
 				opSel = 2;
