@@ -27,9 +27,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 431812}
   - 33: {fileID: 3331812}
-  - 64: {fileID: 6431812}
   - 23: {fileID: 2331812}
   - 114: {fileID: 11431810}
+  - 65: {fileID: 6510990}
   m_Layer: 10
   m_Name: QuadTopBottom 1
   m_TagString: Active Quad
@@ -56,7 +56,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 131812}
   m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106829}
-  m_LocalPosition: {x: .5, y: 1, z: .5}
+  m_LocalPosition: {x: .551173985, y: 1.19999528, z: .264256656}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 431810}
@@ -129,19 +129,18 @@ MeshCollider:
   m_SmoothSphereCollisions: 0
   m_Convex: 0
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!64 &6431812
-MeshCollider:
+--- !u!65 &6510990
+BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 131812}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+  m_Size: {x: 1.00100005, y: 1.00100005, z: .00999999978}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &11431810
 MonoBehaviour:
   m_ObjectHideFlags: 1
