@@ -276,7 +276,15 @@ public class Cube : MonoBehaviour
 			quad.transform.rotation = originalQuadRotations[ i ];
 		}
 
-		yield return new WaitForSeconds( 1f );
 		HasFinished = false;
+	}
+
+	public void MasterReset()
+	{
+		if ( !IsRotating )
+		{
+			var goat = GoatCollider.GetComponent<TheGoat>();
+			StartCoroutine( goat.RewindWorld() );
+		}
 	}
 }

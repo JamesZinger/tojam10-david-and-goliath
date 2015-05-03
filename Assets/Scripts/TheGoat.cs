@@ -26,6 +26,7 @@ public class TheGoat: MonoBehaviour
 	private Collider prevCenterHit;
 	private bool hasReachedEnd;
 	private bool hasBSCoroutineFinished;
+	private bool isRewinding;
 
 	private Animator canvasAnimator;
 
@@ -74,7 +75,7 @@ public class TheGoat: MonoBehaviour
 		var startNode = cube.Graph.Nodes.Cast<Node>()
 			.Single( node => node.Type == NodeTypeEnum.Start );
 
-		transform.position = startNode.Quad.transform.position + startNode.Quad.transform.up * 0.1f;
+		transform.position = startNode.Quad.transform.position;
 
 		var meshCenter = GetComponentInChildren<MeshRenderer>().bounds.center;
 		var ray = new Ray( meshCenter, -meshCenter.normalized );
@@ -136,19 +137,16 @@ public class TheGoat: MonoBehaviour
 		{
 			if ( cube.IsRotating )
 			{
-				Debug.Log( "IsRotating: " + cube.IsRotating );
 				yield return null;
 				continue;
 			}
 			if ( IsDeathCoroutineRunning )
 			{
-				Debug.Log( "IsDeathCoroutineRunning: " + IsDeathCoroutineRunning );
 				yield return null;
 				continue;
 			}
 			if ( hasReachedEnd )
 			{
-				Debug.Log( "hasReachedEnd: " + hasReachedEnd );
 				yield return null;
 				continue;
 			}
@@ -221,11 +219,7 @@ public class TheGoat: MonoBehaviour
  		Debug.Log( "Goat is dead" );
 		deathSound.Play();
 		MoveSound.Stop();
-		canvasAnimator.SetBool( "isDead", true );
-		yield return StartCoroutine( cube.ResetCoroutine() );
-		Reset();
-		yield return null;
-		canvasAnimator.SetBool( "isDead", false );
+		yield return StartCoroutine( RewindWorld() );
 		IsDeathCoroutineRunning = false;
 	}
 
@@ -241,7 +235,7 @@ public class TheGoat: MonoBehaviour
 	void NormalMovingBehaviour( RaycastHit rayHitInfo )
 	{
 		// If there is a quad underneath the goat than ground it.
-		transform.position = rayHitInfo.point + transform.up * 0.05f;
+		transform.position = rayHitInfo.point + transform.up * 0.01f;
 		transform.rotation = Quaternion.LookRotation( transform.forward, rayHitInfo.normal );
 
 		if ( !cube.HasStarted ) return;
@@ -348,7 +342,9 @@ public class TheGoat: MonoBehaviour
 				return;
 			}
 		}
+		else if ( !isRewinding )
 		{
+
 			// for now just go forward.
 			transform.position += transform.forward * Time.deltaTime * MoveSpeed;
 		}
@@ -365,7 +361,7 @@ public class TheGoat: MonoBehaviour
 		var ray = new Ray( transform.position, -transform.up );
 		
 		// Check if there is a quad underneath the goat
-		var hits = Physics.RaycastAll( ray, 1f, layerMask );
+		var hits = Physics.RaycastAll( ray, 0.5f, layerMask );
 
 		return hits;
 	}
@@ -377,5 +373,18 @@ public class TheGoat: MonoBehaviour
 		yield return null;
 		prevCenterHit = null;
 		hasBSCoroutineFinished = true;
+	}
+
+	public IEnumerator RewindWorld()
+	{
+	isRewinding = true;
+		canvasAnimator.SetBool( "isDead", true );
+		yield return new WaitForSeconds( 1f );
+		yield return StartCoroutine( cube.ResetCoroutine() );
+		transform.position = StartPosition;
+		canvasAnimator.SetBool( "isDead", false );
+		Reset();
+		yield return new WaitForSeconds( 1f );
+		isRewinding = false;
 	}
 }
