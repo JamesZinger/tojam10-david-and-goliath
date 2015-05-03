@@ -252,12 +252,10 @@ public class TheGoat: MonoBehaviour
 			.Where( h => h.collider != prevCenterHit )
 			.ToArray();
 
-
-
-		if ( sphereHits.Length > 0 )
+		if ( sphereHits.Length == 1 && hits.Length == 3 )
 		{
 			var sphereHit = sphereHits.First();
-			prevCenterHit = sphereHit.collider as SphereCollider;
+			
 			var quad = rayHitInfo.collider.GetComponent<Quad>();
 			foreach ( var d  in quad.Node.MoveableDirections )
 			{
@@ -298,6 +296,7 @@ public class TheGoat: MonoBehaviour
 				Debug.Log( "Goat is turning" );
 				Debug.Log( turns.First().Value );
 				transform.rotation = turns.First().Value;
+				prevCenterHit = sphereHit.collider;
 			}
 
 			else
@@ -309,6 +308,7 @@ public class TheGoat: MonoBehaviour
 				{
 					Debug.Log( "Goat is going straight" );
 					transform.rotation = straightLines.First().Value;
+					prevCenterHit = sphereHit.collider;
 				}
 			}
 			
@@ -334,6 +334,12 @@ public class TheGoat: MonoBehaviour
 			// for now just go forward.
 			transform.position += transform.forward * Time.deltaTime * MoveSpeed;
 		}
+
+		if ( sphereHits.Length == 0 )
+		{
+			prevCenterHit = null;
+		}
+
 		
 	}
 
