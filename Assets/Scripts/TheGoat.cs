@@ -13,6 +13,8 @@ public class TheGoat: MonoBehaviour
 
 	public Quaternion StartRotation { get; private set; }
 
+	public bool IsRewinding { get; private set; }
+
 	private Animator animator;
 
 	private IEnumerator updateHandle;
@@ -26,7 +28,7 @@ public class TheGoat: MonoBehaviour
 	private Collider prevCenterHit;
 	private bool hasReachedEnd;
 	private bool hasBSCoroutineFinished;
-	private bool isRewinding;
+	
 
 	private Animator canvasAnimator;
 
@@ -292,10 +294,17 @@ public class TheGoat: MonoBehaviour
 				.Where( dotPair => dotPair.Key < 0.75f )
 				.ToArray();
 
+			var otherTurns = dotpPairs
+				.Where( dotpPair => dotpPair.Key < -0.25f )
+				.Where( dotpPair => dotpPair.Key > -0.75f )
+				.ToArray();
+
+			turns = turns.Concat( otherTurns ).ToArray();
+
 			if ( turns.Length > 0 )
 			{
 				Debug.Log( "Goat is turning" );
-				Debug.Log( turns.First().Value );
+				Debug.Log( turns.First().Value.eulerAngles );
 				transform.rotation = turns.First().Value;
 				prevCenterHit = sphereHit.collider;
 			}
@@ -303,7 +312,6 @@ public class TheGoat: MonoBehaviour
 			else
 			{
 				var straightLines = dotpPairs
-					.Where( dotpPair => dotpPair.Key >= 0.75f )
 					.ToArray();
 				if ( straightLines.Length > 0 )
 				{
@@ -335,6 +343,10 @@ public class TheGoat: MonoBehaviour
 					hasReachedEnd = true;
 					return;
 				}
+				else
+				{
+					transform.position = rayHitInfo.collider.transform.position + transform.up * 0.01f;
+				}
 			}
 			else
 			{
@@ -342,7 +354,7 @@ public class TheGoat: MonoBehaviour
 				return;
 			}
 		}
-		else if ( !isRewinding )
+		else if ( !IsRewinding )
 		{
 
 			// for now just go forward.
@@ -377,7 +389,7 @@ public class TheGoat: MonoBehaviour
 
 	public IEnumerator RewindWorld()
 	{
-	isRewinding = true;
+	IsRewinding = true;
 		canvasAnimator.SetBool( "isDead", true );
 		yield return new WaitForSeconds( 1f );
 		yield return StartCoroutine( cube.ResetCoroutine() );
@@ -385,6 +397,6 @@ public class TheGoat: MonoBehaviour
 		canvasAnimator.SetBool( "isDead", false );
 		Reset();
 		yield return new WaitForSeconds( 1f );
-		isRewinding = false;
+		IsRewinding = false;
 	}
 }
