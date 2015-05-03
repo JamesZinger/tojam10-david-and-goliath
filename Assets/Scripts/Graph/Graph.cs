@@ -1,11 +1,15 @@
-﻿using UnityEngine;
-using System;
-using System.Collections;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+
 
 public class Graph
 {
 	public Node[,] Nodes;
+
+	private static Dictionary<string, Func<Graph>> levelSelectionDictionary = new Dictionary<string, Func<Graph>>()
+	{
+		{ "Level 1", LevelOne }
+	};
 
 	public Graph( int rows, int columns )
 	{
@@ -15,14 +19,37 @@ public class Graph
 
 	#region Static methods
 
-	public static Graph LoadGraphFromCsv( string csvPath )
+	public static Graph LoadLevel( string levelName )
 	{
 		Graph graph = new Graph( 4, 8 );
 
-		// Fore now just use this function to hardcode a path.
-		graph.CreateTestPath();
-		
-		// TODO Load Graph from the CSV file.
+		var func = levelSelectionDictionary[ levelName ];
+
+		return func == null ? null : func();
+	}
+
+	private static Graph LevelOne()
+	{
+		Graph graph = new Graph( 4, 8 );
+
+		graph.Nodes[ 0, 6 ].Type = NodeTypeEnum.Start;
+		graph.Nodes[ 0, 5 ].Type = NodeTypeEnum.End;
+
+		graph.Nodes[ 0, 6 ].MoveableDirections.Add( Node.Direction.up );
+		graph.Nodes[ 1, 6 ].MoveableDirections.Add( Node.Direction.up );
+		graph.Nodes[ 1, 6 ].MoveableDirections.Add( Node.Direction.down );
+		graph.Nodes[ 2, 6 ].MoveableDirections.Add( Node.Direction.up );
+		graph.Nodes[ 2, 6 ].MoveableDirections.Add( Node.Direction.left );
+		graph.Nodes[ 2, 5 ].MoveableDirections.Add( Node.Direction.left );
+		graph.Nodes[ 2, 5 ].MoveableDirections.Add( Node.Direction.right );
+		graph.Nodes[ 2, 4 ].MoveableDirections.Add( Node.Direction.right );
+		graph.Nodes[ 2, 4 ].MoveableDirections.Add( Node.Direction.up );
+		graph.Nodes[ 1, 4 ].MoveableDirections.Add( Node.Direction.down );
+		graph.Nodes[ 1, 4 ].MoveableDirections.Add( Node.Direction.up );
+		graph.Nodes[ 0, 5 ].MoveableDirections.Add( Node.Direction.right );
+
+		graph.Nodes[ 2, 6 ].AddNeighbor( graph.Nodes[ 2, 5 ] );
+		graph.Nodes[ 2, 5 ].AddNeighbor( graph.Nodes[ 2, 4 ] );
 
 		return graph;
 	}

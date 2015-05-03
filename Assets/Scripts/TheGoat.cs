@@ -8,9 +8,7 @@ using UnityEngine;
 public class TheGoat: MonoBehaviour
 {
 	public float MoveSpeed = 1;
-
-	public Vector3 targetPosition { get; private set; }
-
+	
 	public Vector3 StartPosition { get; private set; }
 
 	public Quaternion StartRotation { get; private set; }
@@ -22,11 +20,15 @@ public class TheGoat: MonoBehaviour
 	private int layerMask;
 	private int pathLayerMask;
 	private const float HitNormalThreshold = -0.5f;
-	private bool isDeathComplete;
-	private bool isDeathCoroutineRunning;
+	public bool IsDeathCoroutineRunning;
 	private Node.Direction currentDirection;
 	private Vector3 currentDirectionVector;
 	private Collider prevCenterHit;
+	private bool hasReachedEnd;
+	private bool hasBSCoroutineFinished;
+	private bool isRewinding;
+
+	private Animator canvasAnimator;
 
 	private AudioSource deathSound;
 	
@@ -41,9 +43,10 @@ public class TheGoat: MonoBehaviour
 		animator = GetComponentInChildren<Animator>();
 		layerMask = ~LayerMask.GetMask( "Rotaters", "Goat Ignored" );
 		pathLayerMask = LayerMask.GetMask( "Paths" );
+		hasBSCoroutineFinished = true;
 	}
 
-	void Start()
+	public void Configure( Cube realCube )
 	{
 		Transform t = transform.FindChild( "DeathSound" );
 		if ( t != null )
@@ -60,14 +63,19 @@ public class TheGoat: MonoBehaviour
 		{
 			StartSound = t.audio;
 		}
+		t = transform.FindChild( "Icon" ).FindChild( "Canvas" );
+		if ( t != null )
+		{
+			canvasAnimator = t.GetComponent<Animator>();
+		}
 
 		// Determine start node
-		cube = FindObjectOfType<Cube>();
+		cube = realCube;
 
 		var startNode = cube.Graph.Nodes.Cast<Node>()
 			.Single( node => node.Type == NodeTypeEnum.Start );
 
-		transform.position = startNode.Quad.transform.position + startNode.Quad.transform.up * 0.1f;
+		transform.position = startNode.Quad.transform.position;
 
 		var meshCenter = GetComponentInChildren<MeshRenderer>().bounds.center;
 		var ray = new Ray( meshCenter, -meshCenter.normalized );
@@ -97,10 +105,10 @@ public class TheGoat: MonoBehaviour
 		Vector3 directionVector = Vector3.zero;
 		switch ( currentDirection )
 		{
-			case Node.Direction.up: currentDirectionVector = quad.transform.up; break;
-			case Node.Direction.down: currentDirectionVector = -quad.transform.up; break;
-			case Node.Direction.right: currentDirectionVector = quad.transform.right; break;
-			case Node.Direction.left: currentDirectionVector = -quad.transform.right; break;
+			case Node.Direction.up: directionVector = quad.transform.up; break;
+			case Node.Direction.down: directionVector = -quad.transform.up; break;
+			case Node.Direction.right: directionVector = quad.transform.right; break;
+			case Node.Direction.left: directionVector = -quad.transform.right; break;
 		}
 
 		StartRotation = transform.rotation = Quaternion.LookRotation( directionVector, hit.normal );
@@ -119,8 +127,11 @@ public class TheGoat: MonoBehaviour
 
 	IEnumerator UpdateCoroutine()
 	{
+		yield return null;
+		yield return null;
+
 		if ( cube == null )
-			yield return null;
+			cube = FindObjectOfType<Cube>();
 
 		while ( true )
 		{
@@ -129,11 +140,18 @@ public class TheGoat: MonoBehaviour
 				yield return null;
 				continue;
 			}
-			if ( isDeathCoroutineRunning )
+			if ( IsDeathCoroutineRunning )
 			{
 				yield return null;
 				continue;
 			}
+			if ( hasReachedEnd )
+			{
+				yield return null;
+				continue;
+			}
+
+
 			// Check that a quad is under the goat
 			var ray = new Ray( transform.position + ( transform.up * 0.2f ), -transform.up );
 			Debug.DrawRay( ray.origin, ray.direction, Color.green );
@@ -182,10 +200,7 @@ public class TheGoat: MonoBehaviour
 			}
 			if ( !didHit )
 			{ 
-				StartCoroutine( Die() );
-				while ( !isDeathComplete )
-					yield return null;
-				isDeathComplete = false;
+				yield return StartCoroutine( Die() );
 				continue;
 			}
 		
@@ -200,17 +215,12 @@ public class TheGoat: MonoBehaviour
 
 	IEnumerator Die()
 	{
-		isDeathCoroutineRunning = true;
+		IsDeathCoroutineRunning = true;
  		Debug.Log( "Goat is dead" );
 		deathSound.Play();
 		MoveSound.Stop();
-		animator.SetBool( "isDead", true );
-		cube.Reset();
-		Reset();
-		yield return null;
-		isDeathComplete = true;
-		animator.SetBool( "isDead", false );
-		isDeathCoroutineRunning = false;
+		yield return StartCoroutine( RewindWorld() );
+		IsDeathCoroutineRunning = false;
 	}
 
 	public void Reset()
@@ -218,17 +228,18 @@ public class TheGoat: MonoBehaviour
 		transform.position = StartPosition;
 		transform.rotation = StartRotation;
 		prevCenterHit = null;
+		hasReachedEnd = false;
 	}
 
 
 	void NormalMovingBehaviour( RaycastHit rayHitInfo )
 	{
 		// If there is a quad underneath the goat than ground it.
-		transform.position = rayHitInfo.point + transform.up * 0.05f;
+		transform.position = rayHitInfo.point + transform.up * 0.01f;
 		transform.rotation = Quaternion.LookRotation( transform.forward, rayHitInfo.normal );
 
 		if ( !cube.HasStarted ) return;
-
+		
 		// Determine the move direction
 		// get the quad object underneath the GOAT
 		//var quad = rayHitInfo.collider.GetComponent<Quad>();
@@ -240,32 +251,20 @@ public class TheGoat: MonoBehaviour
 			.Where( h => h.normal.z > HitNormalThreshold )
 			.ToArray();
 
-		if ( hits.Length == 0 )
-		{
-			isDeathComplete = false;
-			StartCoroutine( Die() );
-			return;
-		}
-
 		var sphereHits = hits
 			.Where( h => h.collider is SphereCollider )
 			.Where( h => h.collider != prevCenterHit )
 			.ToArray();
 
-
-
-		if ( sphereHits.Length > 0 )
+		if ( sphereHits.Length == 1 && hits.Length == 3 && prevCenterHit == null )
 		{
 			var sphereHit = sphereHits.First();
-			prevCenterHit = sphereHit.collider as SphereCollider;
+
 			var quad = rayHitInfo.collider.GetComponent<Quad>();
-			foreach ( var d  in quad.Node.MoveableDirections )
-			{
-				//Debug.Log( "Direction on Node [" + quad.NodeName + "] " + d );
-			}
 
 			var dotpPairs = quad.Node.MoveableDirections
-				.Select( d => {
+				.Select( d =>
+				{
 					Vector3 dirV = Vector3.zero;
 					switch ( d )
 					{
@@ -298,6 +297,7 @@ public class TheGoat: MonoBehaviour
 				Debug.Log( "Goat is turning" );
 				Debug.Log( turns.First().Value );
 				transform.rotation = turns.First().Value;
+				prevCenterHit = sphereHit.collider;
 			}
 
 			else
@@ -309,32 +309,50 @@ public class TheGoat: MonoBehaviour
 				{
 					Debug.Log( "Goat is going straight" );
 					transform.rotation = straightLines.First().Value;
+					prevCenterHit = sphereHit.collider;
 				}
 			}
-			
-
-			//currentDirectionVector = quad.transform.TransformDirection( currentDirectionVector );
-			////currentDirection = direction;
-
-			//Debug.Log( "After Direction " + currentDirection, quad );
-
-			//Vector3 directionVector = Vector3.forward;
-			//switch ( currentDirection )
-			//{
-			//	case Node.Direction.up:    currentDirectionVector =  quad.transform.up;    break;
-			//	case Node.Direction.down:  currentDirectionVector = -quad.transform.up;    break;
-			//	case Node.Direction.right: currentDirectionVector =  quad.transform.right; break;
-			//	case Node.Direction.left:  currentDirectionVector = -quad.transform.right; break;
-			//}
-
-			//transform.rotation = Quaternion.LookRotation( directionVector, quad.transform.up );
 		}
-		else
+		else if ( sphereHits.Length == 1 && hits.Length == 2 )
 		{
+			
+			
+			transform.position += transform.forward * Time.deltaTime * MoveSpeed;	
+		}
+		else if ( hits.Length == 0 )
+		{
+
+			var magnitude = ( rayHitInfo.collider.bounds.center - transform.position ).magnitude;
+
+			if ( magnitude < 0.1f )
+			{
+				var quad = rayHitInfo.collider.GetComponent<Quad>();
+				Debug.Log( "IS IT THE END" );
+				if ( quad.Node.Type == NodeTypeEnum.End )
+				{
+					Debug.Log( "YUP" );
+					cube.GoatReachedEnd();
+					hasReachedEnd = true;
+					return;
+				}
+			}
+			else
+			{
+				StartCoroutine( Die() );
+				return;
+			}
+		}
+		else if ( !isRewinding )
+		{
+
 			// for now just go forward.
 			transform.position += transform.forward * Time.deltaTime * MoveSpeed;
 		}
-		
+
+		if ( sphereHits.Length == 0 && hasBSCoroutineFinished && prevCenterHit != null )
+		{
+			StartCoroutine( BSCoroutine() );
+		}
 	}
 
 	public RaycastHit[] RaycastCube()
@@ -343,8 +361,30 @@ public class TheGoat: MonoBehaviour
 		var ray = new Ray( transform.position, -transform.up );
 		
 		// Check if there is a quad underneath the goat
-		var hits = Physics.RaycastAll( ray, 1f, layerMask );
+		var hits = Physics.RaycastAll( ray, 0.5f, layerMask );
 
 		return hits;
+	}
+
+	IEnumerator BSCoroutine()
+	{
+		hasBSCoroutineFinished = false;
+		yield return null;
+		yield return null;
+		prevCenterHit = null;
+		hasBSCoroutineFinished = true;
+	}
+
+	public IEnumerator RewindWorld()
+	{
+	isRewinding = true;
+		canvasAnimator.SetBool( "isDead", true );
+		yield return new WaitForSeconds( 1f );
+		yield return StartCoroutine( cube.ResetCoroutine() );
+		transform.position = StartPosition;
+		canvasAnimator.SetBool( "isDead", false );
+		Reset();
+		yield return new WaitForSeconds( 1f );
+		isRewinding = false;
 	}
 }

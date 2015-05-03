@@ -4,26 +4,37 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-[ExecuteInEditMode]
 public class Cube : MonoBehaviour
 {
 	public int DeathCount;
-	
+
+	public static string LevelString = "";
+	public string DefaultLevelString = "";
 	public Transform CenterTransform;
 	public AnimationCurve RotationCurve;
 	public float SpinSpeed;
+	public float SpinSpeedReverse;
 	public Graph Graph;
 	public bool HasStarted;
+	public bool HasFinished;
 	public Quad[] QuadArray;
 	public GameObject DirectionPointer;
 	public GameObject QuadPointerCenter;
+	public GameObject StartPointPrefab;
+	public GameObject EndPointPrefab;
 
 	private Vector3[] originalQuadPositions;
 	private Quaternion[] originalQuadRotations;
 
+	private bool isReversing;
+
 	private AudioSource rotateSound;
+	private AudioSource reverseSound;
+
+	private Stack<RotationAxis> rotationHistory;
 
 	public bool IsRotating { get; private set; }
+	public bool IsGoatDyingRightAtThisSecond { get; set; }
 
 	public Collider GoatCollider { get; private set; }
 
@@ -35,16 +46,27 @@ public class Cube : MonoBehaviour
 
 	void Awake()
 	{
-		Graph = Graph.LoadGraphFromCsv( "" );
+		var stringLevelName = DefaultLevelString;
+		if ( LevelString.Length != 0 ) stringLevelName = LevelString;
+
+		Graph = Graph.LoadLevel( stringLevelName );
 		HasStarted = false;
 	}
 
 	void Start()
 	{
+		IsGoatDyingRightAtThisSecond = false;
+		rotationHistory = new Stack<RotationAxis>();
+
 		Transform t = transform.FindChild( "RotateSound" );
 		if ( t != null )
 		{
 			rotateSound = t.audio;
+		}
+		t = transform.FindChild( "ReverseSound" );
+		if ( t != null )
+		{
+			reverseSound = t.audio;
 		}
 
 		var Colliders = GetComponentsInChildren<RotationCollider>();
@@ -67,9 +89,10 @@ public class Cube : MonoBehaviour
 			var childQuad = QuadArray[ i ];
 
 			childQuad.Node = Graph.GetNodeByName( childQuad.NodeName );
+			QuadArray[ i ].Configure();
 		}
 
-
+		goat.Configure( this );
 		
 	}
 
@@ -90,30 +113,40 @@ public class Cube : MonoBehaviour
 
 	public void RotateX()
 	{
-		rotateSound.Play();
-		StartCoroutine( Rotate( RotationAxis.X ) );
+		if ( !IsRotating && !HasFinished )
+		{
+			rotateSound.Play();
+			rotationHistory.Push( RotationAxis.X );
+			StartCoroutine( Rotate( RotationAxis.X, RotationEnum.Clockwise, SpinSpeed ) );
+		}
 	}
 
 	public void RotateY()
 	{
-		rotateSound.Play();
-		StartCoroutine( Rotate( RotationAxis.Y ) );
+		if ( !IsRotating && !HasFinished )
+		{
+			rotateSound.Play();
+			rotationHistory.Push( RotationAxis.Y );
+			StartCoroutine( Rotate( RotationAxis.Y, RotationEnum.Clockwise, SpinSpeed ) );
+		}
 	}
 
 	public void RotateZ()
 	{
-		rotateSound.Play();
-		StartCoroutine( Rotate( RotationAxis.Z ) );
+		if ( !IsRotating && !HasFinished )
+		{
+			rotateSound.Play();
+			rotationHistory.Push( RotationAxis.Z );
+			StartCoroutine( Rotate( RotationAxis.Z, RotationEnum.Clockwise, SpinSpeed ) );
+		}
 	}
 
-	IEnumerator Rotate( RotationAxis axis )
+	IEnumerator Rotate( RotationAxis axis, RotationEnum direction, float speed )
 	{
 		if ( IsRotating )
 		{
 			yield break;
 		}
-
-
 
 		if ( SpinSpeed < float.Epsilon )
 		{
@@ -147,11 +180,23 @@ public class Cube : MonoBehaviour
 		}
 
 		Vector3? rotationAxis = null;
-		switch ( axis )
+		if ( direction == RotationEnum.Clockwise )
 		{
-			case RotationAxis.X: rotationAxis = new Vector3( x: 1, y: 0, z: 0 ); break;
-			case RotationAxis.Y: rotationAxis = new Vector3( x: 0, y: 1, z: 0 ); break;
-			case RotationAxis.Z: rotationAxis = new Vector3( x: 0, y: 0, z: 1 ); break;
+			switch ( axis )
+			{
+				case RotationAxis.X: rotationAxis = new Vector3( x: 1, y: 0, z: 0 ); break;
+				case RotationAxis.Y: rotationAxis = new Vector3( x: 0, y: 1, z: 0 ); break;
+				case RotationAxis.Z: rotationAxis = new Vector3( x: 0, y: 0, z: 1 ); break;
+			}
+		}
+		else
+		{
+			switch ( axis )
+			{
+				case RotationAxis.X: rotationAxis = new Vector3( x: -1, y: 0, z: 0 ); break;
+				case RotationAxis.Y: rotationAxis = new Vector3( x: 0, y: -1, z: 0 ); break;
+				case RotationAxis.Z: rotationAxis = new Vector3( x: 0, y: 0, z: -1 ); break;
+			}
 		}
 
 		if ( rotationAxis == null )
@@ -160,12 +205,12 @@ public class Cube : MonoBehaviour
 			yield break;
 		}
 
-		switch ( axis )
-		{
-			case RotationAxis.X: Graph.RotateX( RotationEnum.Clockwise ); break;
-			case RotationAxis.Y: Graph.RotateY( RotationEnum.Clockwise ); break;
-			//case RotationAxis.Z: Graph.RotateZ( RotationEnum.Clockwise ); break;
-        }
+		//switch ( axis )
+		//{
+		//	case RotationAxis.X: Graph.RotateX( direction ); break;
+		//	case RotationAxis.Y: Graph.RotateY( direction ); break;
+		//	case RotationAxis.Z: Graph.RotateZ( direction ); break;
+		//}
 		
 		IsRotating = true;
 		CenterTransform.rotation = Quaternion.identity;
@@ -180,7 +225,7 @@ public class Cube : MonoBehaviour
 		{
 			var angle = RotationCurve.Evaluate( progress );
 			CenterTransform.rotation = Quaternion.Euler( angle * rotationAxis.Value );
-			progress += Time.deltaTime * SpinSpeed;
+			progress += Time.deltaTime * speed;
 	
 			yield return null;
 		}
@@ -202,22 +247,44 @@ public class Cube : MonoBehaviour
 	
 	public void Reset()
 	{
-		DeathCount++;
+		StartCoroutine( ResetCoroutine() );
+	}
 
+	public void GoatReachedEnd()
+	{
+		Debug.Log( "You Win!!!" );
+	}
+
+	public IEnumerator ResetCoroutine()
+	{
+		DeathCount++;
 		HasStarted = false;
 
-		GoatCollider.GetComponent<TheGoat>().Reset();
+		// Reverse through each of the rotations the user has made until they're all gone.
+		reverseSound.Play();
+		while ( rotationHistory.Count > 0 )
+		{
+			yield return StartCoroutine( Rotate( rotationHistory.Pop(), RotationEnum.Counterclockwise, SpinSpeedReverse ) );
+		}
+		reverseSound.Stop();
 
+		// Just set positions and rotations back tro originals for good measure.
 		for ( int i = 0; i < QuadArray.Length; i ++ )
 		{
 			var quad = QuadArray[ i ];
 			quad.transform.position = originalQuadPositions[ i ];
 			quad.transform.rotation = originalQuadRotations[ i ];
 		}
+
+		HasFinished = false;
 	}
 
-	public void GoatReachedEnd()
+	public void MasterReset()
 	{
-		
+		if ( !IsRotating )
+		{
+			var goat = GoatCollider.GetComponent<TheGoat>();
+			StartCoroutine( goat.RewindWorld() );
+		}
 	}
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 
 public class Quad : MonoBehaviour
@@ -11,22 +9,32 @@ public class Quad : MonoBehaviour
 
 	private Cube Cube;
 
-	public void Start()
+	public void Configure()
 	{
 		Cube = FindObjectOfType<Cube>();
 
 		if ( Node == null ) return;
 
-		Transform startpoint = transform.FindChild( "Startpoint" );
-		if ( startpoint != null && Node.Type == NodeTypeEnum.Start )
+		if ( Node.Type == NodeTypeEnum.Start )
 		{
-			startpoint.gameObject.SetActive( true );
-		}
+			var go = Instantiate( Cube.StartPointPrefab ) as GameObject;
+			if ( go != null )
+			{
+				go.transform.parent = transform;
+				go.transform.localPosition = Vector3.zero;
+				go.transform.localEulerAngles = new Vector3( -90, 0, 0 );
+			}
 
-		Transform endpoint = transform.FindChild( "Endpoint" );
-		if ( endpoint != null && Node.Type == NodeTypeEnum.End )
+		}
+		else if ( Node.Type == NodeTypeEnum.End )
 		{
-			endpoint.gameObject.SetActive( true );
+			var go = Instantiate( Cube.EndPointPrefab ) as GameObject;
+			if ( go != null )
+			{
+				go.transform.parent = transform;
+				go.transform.localPosition = Vector3.zero;
+				go.transform.localEulerAngles = new Vector3( -90, 0, 0 );
+			}
 		}
 
 		Node.Quad = this;
