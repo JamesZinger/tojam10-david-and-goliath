@@ -78,7 +78,7 @@ public class TheGoat: MonoBehaviour
 		var startNode = cube.Graph.Nodes.Cast<Node>()
 			.Single( node => node.Type == NodeTypeEnum.Start );
 
-		transform.position = startNode.Quad.transform.position;
+		transform.position = startNode.Quad.transform.position + -startNode.Quad.transform.forward * 0.01f;
 
 		var meshCenter = GetComponentInChildren<MeshRenderer>().bounds.center;
 		var ray = new Ray( meshCenter, -meshCenter.normalized );
@@ -214,9 +214,10 @@ public class TheGoat: MonoBehaviour
 		
 			var downVector = -transform.up;
 
-			// Move and rotate to align with the normal of the quad.
+				// Move and rotate to align with the normal of the quad.
 			transform.position += downVector * 0.07f;
-			transform.rotation = Quaternion.LookRotation( downVector, hitInfo.normal );
+			transform.rotation = Quaternion.LookRotation( downVector, hitInfo.normal );//-hitInfo.collider.GetComponent<Quad>().transform.up );
+			
 			yield return new WaitForFixedUpdate();
 		}
 	}
