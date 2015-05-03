@@ -117,8 +117,7 @@ RectTransform:
 --- !u!114 &60372680
 MonoBehaviour:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 11458934, guid: 3c6225c340fba93499b254ad947b9916,
-    type: 2}
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 60372678}
   m_Enabled: 1
@@ -896,7 +895,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 856227262}
+  m_Father: {fileID: 856227263}
   m_RootOrder: 0
 --- !u!1001 &582116361
 Prefab:
@@ -1253,7 +1252,8 @@ GameObject:
   m_PrefabInternal: {fileID: 0}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 856227262}
+  - 224: {fileID: 856227263}
+  - 222: {fileID: 856227262}
   - 114: {fileID: 856227261}
   m_Layer: 0
   m_Name: Input Controller
@@ -1275,20 +1275,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   es: {fileID: 453189966}
---- !u!4 &856227262
-Transform:
+--- !u!222 &856227262
+CanvasRenderer:
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 458938, guid: 3c6225c340fba93499b254ad947b9916, type: 2}
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 856227260}
+--- !u!224 &856227263
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 856227260}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 538.534485, y: 273.616089, z: -1.28681254}
+  m_LocalPosition: {x: 0, y: 0, z: -1.28681254}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 578269795}
   - {fileID: 1421760905}
   m_Father: {fileID: 1172143081}
   m_RootOrder: 3
+  m_AnchorMin: {x: .5, y: .5}
+  m_AnchorMax: {x: .5, y: .5}
+  m_AnchoredPosition: {x: 538.534485, y: 273.616089}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: .5, y: .5}
 --- !u!1 &1065385733
 GameObject:
   m_ObjectHideFlags: 0
@@ -1463,7 +1474,7 @@ Transform:
   - {fileID: 1531491093}
   - {fileID: 1065385734}
   - {fileID: 453189967}
-  - {fileID: 856227262}
+  - {fileID: 856227263}
   - {fileID: 568350843}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -1707,7 +1718,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 856227262}
+  m_Father: {fileID: 856227263}
   m_RootOrder: 1
 --- !u!82 &1421760906
 AudioSource:
