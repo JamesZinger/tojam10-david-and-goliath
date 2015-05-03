@@ -15,6 +15,8 @@ public class Cube : MonoBehaviour
 	public Graph Graph;
 	public bool HasStarted;
 	public Quad[] QuadArray;
+	public GameObject DirectionPointer;
+	public GameObject QuadPointerCenter;
 
 	private Vector3[] originalQuadPositions;
 	private Quaternion[] originalQuadRotations;
@@ -192,7 +194,9 @@ public class Cube : MonoBehaviour
 
 		CenterTransform.rotation = Quaternion.identity;
 
+		yield return new WaitForSeconds( .1f );
 		IsRotating = false;
+		yield return null;
 		yield return null;
 	}
 	
@@ -210,5 +214,10 @@ public class Cube : MonoBehaviour
 			quad.transform.position = originalQuadPositions[ i ];
 			quad.transform.rotation = originalQuadRotations[ i ];
 		}
+	}
+
+	public void GoatReachedEnd()
+	{
+		
 	}
 }

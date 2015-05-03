@@ -12525,7 +12525,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 2.20000005, z: 2.20000005}
+  m_Size: {x: 1.19999003, y: 2.20000005, z: 2.20000005}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &6595310
 BoxCollider:
@@ -12537,7 +12537,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 2.20000005, z: 2.20000005}
+  m_Size: {x: 1.19990003, y: 2.20000005, z: 2.20000005}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &6595312
 BoxCollider:
@@ -12549,7 +12549,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 2.20000005, z: 2.20000005}
+  m_Size: {x: 1.19990003, y: 2.20000005, z: 2.20000005}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!82 &8256784
 AudioSource:
@@ -13708,6 +13708,8 @@ MonoBehaviour:
   - {fileID: 11432240}
   - {fileID: 11432238}
   - {fileID: 11432236}
+  DirectionPointer: {fileID: 157424, guid: 437c7de7db613c245915594275d6dab2, type: 2}
+  QuadPointerCenter: {fileID: 121256, guid: 3251104187849db4eab18f83f864e7e8, type: 2}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

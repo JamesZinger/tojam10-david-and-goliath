@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections;
+using System.Linq;
 
 public class Graph
 {
@@ -49,9 +50,24 @@ public class Graph
 
 	private void CreateTestPath()
 	{
+
+
 		// TODO Hardcode a path here until file loading works.
 		Nodes[ 0, 6 ].Type = NodeTypeEnum.Start;
 		Nodes[ 0, 5 ].Type = NodeTypeEnum.End;
+
+		Nodes[ 0, 6 ].MoveableDirections.Add( Node.Direction.up );
+		Nodes[ 1, 6 ].MoveableDirections.Add( Node.Direction.up );
+		Nodes[ 1, 6 ].MoveableDirections.Add( Node.Direction.down );
+		Nodes[ 2, 6 ].MoveableDirections.Add( Node.Direction.up );
+		Nodes[ 2, 6 ].MoveableDirections.Add( Node.Direction.left );
+		Nodes[ 2, 5 ].MoveableDirections.Add( Node.Direction.left );
+		Nodes[ 2, 5 ].MoveableDirections.Add( Node.Direction.right );
+		Nodes[ 2, 4 ].MoveableDirections.Add( Node.Direction.right );
+		Nodes[ 2, 4 ].MoveableDirections.Add( Node.Direction.up );
+		Nodes[ 1, 4 ].MoveableDirections.Add( Node.Direction.down );
+		Nodes[ 1, 4 ].MoveableDirections.Add( Node.Direction.up );
+		Nodes[ 0, 5 ].MoveableDirections.Add( Node.Direction.right );
 
 		Nodes[ 2, 6 ].AddNeighbor( Nodes[ 2, 5 ] );
 		Nodes[ 2, 5 ].AddNeighbor( Nodes[ 2, 4 ] );
