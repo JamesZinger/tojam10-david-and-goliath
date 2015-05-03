@@ -2917,7 +2917,6 @@ MonoBehaviour:
   - {fileID: 2091711005}
   - {fileID: 282176203}
   credits: {fileID: 1428706329}
-  howTo: {fileID: 173708129}
   levelSelect: {fileID: 1922084146}
 --- !u!4 &580260362
 Transform:
