@@ -9,7 +9,7 @@ public class Cube : MonoBehaviour
 	public int DeathCount;
 
 	public static string LevelString = "";
-	public string DefaultLevelString = "";
+	public string DefaultLevelString = "Level 1";
 	public Transform CenterTransform;
 	public AnimationCurve RotationCurve;
 	public float SpinSpeed;

@@ -4,59 +4,24 @@ using System.Collections.Generic;
 
 public class Graph
 {
+	#region Members
+
 	public Node[,] Nodes;
 
 	private static Dictionary<string, Func<Graph>> levelSelectionDictionary = new Dictionary<string, Func<Graph>>()
 	{
-		{ "Level 1", LevelOne }
+		{ "Level 1", Level1 },
+		{ "Level 4", Level4 }
 	};
+
+	#endregion
+
+	#region Constructor
 
 	public Graph( int rows, int columns )
 	{
 		Nodes = new Node[ rows, columns ];
 		ClearNodes();
-	}
-
-	#region Static methods
-
-	public static Graph LoadLevel( string levelName )
-	{
-		Graph graph = new Graph( 4, 8 );
-
-		var func = levelSelectionDictionary[ levelName ];
-
-		return func == null ? null : func();
-	}
-
-	private static Graph LevelOne()
-	{
-		Graph graph = new Graph( 4, 8 );
-
-		graph.Nodes[ 0, 6 ].Type = NodeTypeEnum.Start;
-		graph.Nodes[ 0, 5 ].Type = NodeTypeEnum.End;
-
-		graph.Nodes[ 0, 6 ].MoveableDirections.Add( Node.Direction.up );
-		graph.Nodes[ 1, 6 ].MoveableDirections.Add( Node.Direction.up );
-		graph.Nodes[ 1, 6 ].MoveableDirections.Add( Node.Direction.down );
-		graph.Nodes[ 2, 6 ].MoveableDirections.Add( Node.Direction.up );
-		graph.Nodes[ 2, 6 ].MoveableDirections.Add( Node.Direction.left );
-		graph.Nodes[ 2, 5 ].MoveableDirections.Add( Node.Direction.left );
-		graph.Nodes[ 2, 5 ].MoveableDirections.Add( Node.Direction.right );
-		graph.Nodes[ 2, 4 ].MoveableDirections.Add( Node.Direction.right );
-		graph.Nodes[ 2, 4 ].MoveableDirections.Add( Node.Direction.up );
-		graph.Nodes[ 1, 4 ].MoveableDirections.Add( Node.Direction.down );
-		graph.Nodes[ 1, 4 ].MoveableDirections.Add( Node.Direction.up );
-		graph.Nodes[ 0, 5 ].MoveableDirections.Add( Node.Direction.right );
-
-		graph.Nodes[ 2, 6 ].AddNeighbor( graph.Nodes[ 2, 5 ] );
-		graph.Nodes[ 2, 5 ].AddNeighbor( graph.Nodes[ 2, 4 ] );
-
-		return graph;
-	}
-
-	public static void SaveGraphToCsv( string csvPath )
-	{
-		// TODO Save Graph as CSV file.
 	}
 
 	#endregion
@@ -77,8 +42,6 @@ public class Graph
 
 	private void CreateTestPath()
 	{
-
-
 		// TODO Hardcode a path here until file loading works.
 		Nodes[ 0, 6 ].Type = NodeTypeEnum.Start;
 		Nodes[ 0, 5 ].Type = NodeTypeEnum.End;
@@ -114,10 +77,6 @@ public class Graph
 		}
 		return null;
 	}
-
-	#endregion
-
-	#region Rotations
 
 	public void RotateX( RotationEnum direction )
 	{
@@ -228,6 +187,77 @@ public class Graph
 		{
 			throw new NotImplementedException( "CCW rotation isn't in yet!" );
 		}
+	}
+
+	#endregion
+
+	#region Static methods
+
+	public static Graph LoadLevel( string levelName )
+	{
+		var levelSetupFunc = levelSelectionDictionary[ levelName ];
+		if ( levelSetupFunc == null )
+		{
+			return null;
+		}
+		return levelSetupFunc();
+	}
+
+	private static Graph Level1()
+	{
+		Graph graph = new Graph( 4, 8 );
+
+		graph.Nodes[ 0, 6 ].Type = NodeTypeEnum.Start;
+		graph.Nodes[ 0, 5 ].Type = NodeTypeEnum.End;
+
+		graph.Nodes[ 0, 6 ].MoveableDirections.Add( Node.Direction.up    );
+		graph.Nodes[ 1, 6 ].MoveableDirections.Add( Node.Direction.up    );
+		graph.Nodes[ 1, 6 ].MoveableDirections.Add( Node.Direction.down  );
+		graph.Nodes[ 2, 6 ].MoveableDirections.Add( Node.Direction.up    );
+		graph.Nodes[ 2, 6 ].MoveableDirections.Add( Node.Direction.left  );
+		graph.Nodes[ 2, 5 ].MoveableDirections.Add( Node.Direction.left  );
+		graph.Nodes[ 2, 5 ].MoveableDirections.Add( Node.Direction.right );
+		graph.Nodes[ 2, 4 ].MoveableDirections.Add( Node.Direction.right );
+		graph.Nodes[ 2, 4 ].MoveableDirections.Add( Node.Direction.up    );
+		graph.Nodes[ 1, 4 ].MoveableDirections.Add( Node.Direction.down  );
+		graph.Nodes[ 1, 4 ].MoveableDirections.Add( Node.Direction.up    );
+		graph.Nodes[ 0, 5 ].MoveableDirections.Add( Node.Direction.right );
+
+		graph.Nodes[ 2, 6 ].AddNeighbor( graph.Nodes[ 2, 5 ] );
+		graph.Nodes[ 2, 5 ].AddNeighbor( graph.Nodes[ 2, 4 ] );
+
+		return graph;
+	}
+
+	private static Graph Level4()
+	{
+		Graph graph = new Graph( 4, 8 );
+		
+		graph.Nodes[ 0, 6 ].Type = NodeTypeEnum.Start;
+		graph.Nodes[ 2, 3 ].Type = NodeTypeEnum.End;
+
+		graph.Nodes[ 2, 3 ].MoveableDirections.Add( Node.Direction.up    );
+		graph.Nodes[ 1, 3 ].MoveableDirections.Add( Node.Direction.down  );
+		graph.Nodes[ 1, 3 ].MoveableDirections.Add( Node.Direction.up    );
+		graph.Nodes[ 0, 2 ].MoveableDirections.Add( Node.Direction.right );
+		graph.Nodes[ 0, 2 ].MoveableDirections.Add( Node.Direction.left  );
+		graph.Nodes[ 0, 1 ].MoveableDirections.Add( Node.Direction.right );
+		graph.Nodes[ 0, 1 ].MoveableDirections.Add( Node.Direction.down  );
+		graph.Nodes[ 1, 1 ].MoveableDirections.Add( Node.Direction.up    );
+		graph.Nodes[ 1, 1 ].MoveableDirections.Add( Node.Direction.left  );
+		graph.Nodes[ 1, 0 ].MoveableDirections.Add( Node.Direction.right );
+		graph.Nodes[ 1, 0 ].MoveableDirections.Add( Node.Direction.left  );
+		graph.Nodes[ 1, 7 ].MoveableDirections.Add( Node.Direction.right );
+		graph.Nodes[ 1, 7 ].MoveableDirections.Add( Node.Direction.left  );
+		graph.Nodes[ 1, 6 ].MoveableDirections.Add( Node.Direction.right );
+		graph.Nodes[ 1, 6 ].MoveableDirections.Add( Node.Direction.left  );
+		graph.Nodes[ 1, 5 ].MoveableDirections.Add( Node.Direction.right );
+		graph.Nodes[ 1, 5 ].MoveableDirections.Add( Node.Direction.up    );
+		graph.Nodes[ 0, 5 ].MoveableDirections.Add( Node.Direction.up    );
+		graph.Nodes[ 0, 5 ].MoveableDirections.Add( Node.Direction.left  );
+		graph.Nodes[ 0, 6 ].MoveableDirections.Add( Node.Direction.right );
+
+		return graph;
 	}
 
 	#endregion
