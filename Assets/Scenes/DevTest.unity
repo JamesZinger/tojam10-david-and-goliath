@@ -330,6 +330,11 @@ Prefab:
       propertyPath: FUCKTHEGOAT
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11484512, guid: fd8d07a272487ea4194c6f57d31f8807, type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9167246b0d7feff40b213222bfc7b7c1,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fd8d07a272487ea4194c6f57d31f8807, type: 2}
   m_RootGameObject: {fileID: 542823207}
@@ -1374,7 +1379,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 2100000, guid: 7586d22f3874aa24ba62deceacef8847, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Sprite: {fileID: 21300000, guid: c5db6bd501d2ea145887919706aebfd4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9167246b0d7feff40b213222bfc7b7c1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
