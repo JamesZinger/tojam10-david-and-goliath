@@ -214,8 +214,8 @@ RectTransform:
   m_RootOrder: 4
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 255.199997, y: -20}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 60, y: -20}
+  m_SizeDelta: {x: 100, y: 30}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &31310833
 MonoBehaviour:
@@ -1728,6 +1728,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 903957047}
   m_GameObject: {fileID: 376419073}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+      objectReference: {fileID: 21300000, guid: 713682440ae7b3440a8d3e321d2d344e,
 --- !u!1 &446299798
 GameObject:
   m_ObjectHideFlags: 0
@@ -2673,6 +2674,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
+  credReturn: {fileID: 0}
 --- !u!1 &594725688
 GameObject:
   m_ObjectHideFlags: 0
@@ -3152,8 +3154,8 @@ RectTransform:
   m_RootOrder: 2
   m_AnchorMin: {x: 1, y: .5}
   m_AnchorMax: {x: 1, y: .5}
-  m_AnchoredPosition: {x: -103, y: 12}
-  m_SizeDelta: {x: 80, y: 30}
+  m_AnchoredPosition: {x: -180, y: -80}
+  m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &712762325
 MonoBehaviour:
@@ -3175,7 +3177,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: .960784316, g: .960784316, b: .960784316, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
     m_DisabledColor: {r: .784313738, g: .784313738, b: .784313738, a: .501960814}
     m_ColorMultiplier: 1
@@ -3221,8 +3223,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: f24ebad050704124dabb10b1c5835471, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -3795,8 +3797,8 @@ RectTransform:
   m_RootOrder: 1
   m_AnchorMin: {x: 1, y: .5}
   m_AnchorMax: {x: 1, y: .5}
-  m_AnchoredPosition: {x: -228, y: 12}
-  m_SizeDelta: {x: 80, y: 30}
+  m_AnchoredPosition: {x: -260, y: 0}
+  m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &841433190
 MonoBehaviour:
@@ -3818,7 +3820,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: .960784316, g: .960784316, b: .960784316, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
     m_DisabledColor: {r: .784313738, g: .784313738, b: .784313738, a: .501960814}
     m_ColorMultiplier: 1
@@ -3864,8 +3866,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 39f9f4b9da89bd441bbd96c38203f616, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -4819,8 +4821,8 @@ RectTransform:
   m_RootOrder: 5
   m_AnchorMin: {x: 1, y: .5}
   m_AnchorMax: {x: 1, y: .5}
-  m_AnchoredPosition: {x: -168, y: 62}
-  m_SizeDelta: {x: 80, y: 30}
+  m_AnchoredPosition: {x: -180, y: 80}
+  m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &999438047
 MonoBehaviour:
@@ -4842,7 +4844,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: .960784316, g: .960784316, b: .960784316, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
     m_DisabledColor: {r: .784313738, g: .784313738, b: .784313738, a: .501960814}
     m_ColorMultiplier: 1
@@ -4888,8 +4890,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 80132355f11f6944e863061c54028581, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -5253,7 +5255,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Start
+  m_Text: 
 --- !u!222 &1184717833
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6359,9 +6361,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Rotate Z
-
-'
+  m_Text: 
 --- !u!222 &1323271975
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6500,7 +6500,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Rotate X
+  m_Text: 
 --- !u!222 &1406839814
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6923,8 +6923,8 @@ RectTransform:
   m_RootOrder: 3
   m_AnchorMin: {x: 1, y: .5}
   m_AnchorMax: {x: 1, y: .5}
-  m_AnchoredPosition: {x: -168, y: -38}
-  m_SizeDelta: {x: 80, y: 30}
+  m_AnchoredPosition: {x: -100, y: 0}
+  m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1636753843
 MonoBehaviour:
@@ -6946,7 +6946,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: .960784316, g: .960784316, b: .960784316, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
     m_PressedColor: {r: .784313738, g: .784313738, b: .784313738, a: 1}
     m_DisabledColor: {r: .784313738, g: .784313738, b: .784313738, a: .501960814}
     m_ColorMultiplier: 1
@@ -6992,8 +6992,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: ba9f88d97d0b6884d88533780e9f51c5, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -7196,7 +7196,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Sprite: {fileID: 21300000, guid: 6b656b5c13b0acd42a5e79aa7847d4c4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 713682440ae7b3440a8d3e321d2d344e, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7991,9 +7991,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Rotate Y
-
-'
+  m_Text: 
 --- !u!222 &1913929166
 CanvasRenderer:
   m_ObjectHideFlags: 0
