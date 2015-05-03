@@ -51,11 +51,11 @@ public class InGameInput : MonoBehaviour {
 				Application.LoadLevel(0);
 			}
 			if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.Start) || Input.GetKeyDown(KeyCode.M)) {
-				UIcontrols.pauseMenu.gameObject.SetActive(true);
+				UIcontrols.pauseMenu.Toggle();
 				Time.timeScale = 0;
 			}
 			if(Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.Back) || Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.Start)|| Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.B)|| Input.GetKeyDown(KeyCode.Space)) {
-				UIcontrols.pauseMenu.gameObject.SetActive(false);
+				UIcontrols.pauseMenu.Toggle();
 				opSel = 0;
 				es.SetSelectedGameObject(UIcontrols.gameOptions[opSel].gameObject, new BaseEventData(es));
 				Time.timeScale = 1;

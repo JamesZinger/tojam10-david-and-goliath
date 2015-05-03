@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public class InGameUI : MonoBehaviour {
 
-	public Image pauseMenu;
+	public InGameMenuController pauseMenu;
 	public Image inGameHowTo;
 	public Image winScreen;
 	public Button[] gameOptions;
