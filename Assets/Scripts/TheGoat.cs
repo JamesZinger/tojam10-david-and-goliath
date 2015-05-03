@@ -27,6 +27,7 @@ public class TheGoat: MonoBehaviour
 	private Node.Direction currentDirection;
 	private Vector3 currentDirectionVector;
 	private Collider prevCenterHit;
+	private bool hasReachedEnd;
 
 	private AudioSource deathSound;
 	
@@ -134,6 +135,12 @@ public class TheGoat: MonoBehaviour
 				yield return null;
 				continue;
 			}
+			if ( hasReachedEnd )
+			{
+				yield return null;
+				continue;
+			}
+
 			// Check that a quad is under the goat
 			var ray = new Ray( transform.position + ( transform.up * 0.2f ), -transform.up );
 			Debug.DrawRay( ray.origin, ray.direction, Color.green );
@@ -218,6 +225,7 @@ public class TheGoat: MonoBehaviour
 		transform.position = StartPosition;
 		transform.rotation = StartRotation;
 		prevCenterHit = null;
+		hasReachedEnd = false;
 	}
 
 
@@ -255,15 +263,16 @@ public class TheGoat: MonoBehaviour
 		if ( sphereHits.Length == 1 && hits.Length == 3 )
 		{
 			var sphereHit = sphereHits.First();
-			
+
 			var quad = rayHitInfo.collider.GetComponent<Quad>();
-			foreach ( var d  in quad.Node.MoveableDirections )
+			foreach ( var d in quad.Node.MoveableDirections )
 			{
 				//Debug.Log( "Direction on Node [" + quad.NodeName + "] " + d );
 			}
 
 			var dotpPairs = quad.Node.MoveableDirections
-				.Select( d => {
+				.Select( d =>
+				{
 					Vector3 dirV = Vector3.zero;
 					switch ( d )
 					{
@@ -311,7 +320,7 @@ public class TheGoat: MonoBehaviour
 					prevCenterHit = sphereHit.collider;
 				}
 			}
-			
+
 
 			//currentDirectionVector = quad.transform.TransformDirection( currentDirectionVector );
 			////currentDirection = direction;
@@ -328,6 +337,16 @@ public class TheGoat: MonoBehaviour
 			//}
 
 			//transform.rotation = Quaternion.LookRotation( directionVector, quad.transform.up );
+		}
+		else if ( sphereHits.Length == 1 && hits.Length == 2 )
+		{
+			var quad = rayHitInfo.collider.GetComponent<Quad>();
+
+			if ( quad.Node.Type == NodeTypeEnum.End )
+			{
+				cube.GoatReachedEnd();
+				hasReachedEnd = true;
+			}
 		}
 		else
 		{
