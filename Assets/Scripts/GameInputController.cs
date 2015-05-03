@@ -10,8 +10,22 @@ public class GameInputController : MonoBehaviour
 	Cube cube;
 	private GameUIController UIcontrols;
 
+	private AudioSource onClick;
+	private AudioSource onBack;
+
 	void Start()
 	{
+		Transform t = transform.FindChild( "OnClick" );
+		if ( t != null )
+		{
+			onClick = t.audio;
+		}
+		t = transform.FindChild ("OnBack");
+		if (t != null) 
+		{
+			onBack = t.audio;
+		}
+
 		cube = FindObjectOfType<Cube>();
 		UIcontrols = FindObjectOfType<GameUIController>();
 		opSel = 0;
@@ -46,43 +60,29 @@ public class GameInputController : MonoBehaviour
 				es.SetSelectedGameObject(UIcontrols.Options[opSel].gameObject, new BaseEventData(es));
 			}
 			if ((opSel == 0 && Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A))|| (opSel == 0 && Input.GetKeyDown(KeyCode.A))) {
+				onClick.Play();
 				UIcontrols.menuOP.gameObject.SetActive (false);
 				UIcontrols.howTo.gameObject.SetActive(true);
 			}
 			else if ((opSel == 1 && Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A))|| (opSel == 1 && Input.GetKeyDown(KeyCode.A))) {
+				onClick.Play();
 				UIcontrols.menuOP.gameObject.SetActive (false);
 				UIcontrols.levelSelect.gameObject.SetActive(true);
 				return;
 			}
 			else if ((opSel == 2 && Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A))|| (opSel == 2 && Input.GetKeyDown(KeyCode.A))) {
+				onClick.Play();
 				UIcontrols.menuOP.gameObject.SetActive (false);
 				UIcontrols.credits.gameObject.SetActive(true);
 			}
 			else if ((opSel == 3 && Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A))|| (opSel == 3 && Input.GetKeyDown(KeyCode.A))) {
+				onClick.Play();
 				Application.Quit();
 			}
-			if(Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.Back) || Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.Start)|| Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.B)|| Input.GetKeyDown(KeyCode.Space)) {
-				UIcontrols.menuOP.gameObject.SetActive(false);
-				opSel = 0;
-				es.SetSelectedGameObject(UIcontrols.Options[opSel].gameObject, new BaseEventData(es));
-				Time.timeScale = 1;
-			}
-			return;
 		}
-		if (UIcontrols.menuOP.gameObject.activeSelf == false) {
-
-
-			
-		if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.Start) || Input.GetKeyDown(KeyCode.M)) {
-
-				UIcontrols.menuOP.gameObject.SetActive(true);
-				Time.timeScale = 0;
-			}
-			//cube.RotateY();
-		}
-
 		if (UIcontrols.howTo.gameObject.activeSelf == true) {
 			if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.B) || Input.GetKeyDown (KeyCode.Space)) {
+				onBack.Play();
 				UIcontrols.howTo.gameObject.SetActive (false);
 				UIcontrols.menuOP.gameObject.SetActive(true);
 				opSel = 0;
@@ -109,6 +109,7 @@ public class GameInputController : MonoBehaviour
 				es.SetSelectedGameObject(UIcontrols.levelOp[lvlSel].gameObject, new BaseEventData(es));
 			}
 			if ((lvlSel == 0 && Xbox360GamepadState.Instance.IsButtonDown(Xbox.Button.A)) || (lvlSel == 0 && Input.GetKeyDown(KeyCode.A))) {
+				onClick.Play();
 				Application.LoadLevel(1);
 			}
 			/*
@@ -122,6 +123,7 @@ public class GameInputController : MonoBehaviour
 				Application.LoadLevel(4);
 			}*/
 			if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.B) || Input.GetKeyDown (KeyCode.Space)) {
+				onBack.Play();
 				UIcontrols.levelSelect.gameObject.SetActive (false);
 				UIcontrols.menuOP.gameObject.SetActive(true);
 				opSel = 1;
@@ -132,6 +134,7 @@ public class GameInputController : MonoBehaviour
 
 		if (UIcontrols.credits.gameObject.activeSelf == true) {
 			if (Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.B) || Input.GetKeyDown (KeyCode.Space)) {
+				onBack.Play();
 				UIcontrols.credits.gameObject.SetActive (false);
 				UIcontrols.menuOP.gameObject.SetActive(true);
 				opSel = 2;
