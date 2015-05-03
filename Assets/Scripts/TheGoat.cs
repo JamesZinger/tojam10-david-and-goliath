@@ -8,6 +8,7 @@ using UnityEngine;
 public class TheGoat: MonoBehaviour
 {
 	public float MoveSpeed = 1;
+	public bool Disable;
 	
 	public Vector3 StartPosition { get; private set; }
 
@@ -137,6 +138,11 @@ public class TheGoat: MonoBehaviour
 
 		while ( true )
 		{
+			if ( Disable )
+			{
+				yield return new WaitForFixedUpdate();
+				continue;
+			}
 			if ( cube.IsRotating )
 			{
 				yield return new WaitForFixedUpdate();
