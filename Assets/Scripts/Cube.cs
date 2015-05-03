@@ -256,6 +256,7 @@ public class Cube : MonoBehaviour
 	public void GoatReachedEnd()
 	{
 		Debug.Log( "You Win!!!" );
+		HasFinished = true;
 	}
 
 	public IEnumerator ResetCoroutine()

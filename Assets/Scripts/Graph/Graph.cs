@@ -8,7 +8,7 @@ public class Graph
 
 	public Node[,] Nodes;
 
-	private static Dictionary<string, Func<Graph>> levelSelectionDictionary = new Dictionary<string, Func<Graph>>()
+	public static Dictionary<string, Func<Graph>> levelSelectionDictionary = new Dictionary<string, Func<Graph>>()
 	{
 		{ "Level 1", Level1 },
 		{ "Level 2", Level2 },
