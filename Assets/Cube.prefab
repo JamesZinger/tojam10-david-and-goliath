@@ -4359,6 +4359,7 @@ MonoBehaviour:
     m_PostInfinity: 2
   SpinSpeed: 1.02999997
   HasStarted: 1
+  SpinSpeedReverse: 3  HasStarted: 0
   QuadArray:
   - {fileID: 11432208}
   - {fileID: 11432210}

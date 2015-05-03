@@ -109,6 +109,21 @@ State:
   m_IKOnFeet: 0
   m_Mirror: 0
   m_Tag: 
+--- !u!1102 &110237996
+State:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: GoatMove 0
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Motions:
+  - {fileID: 7400000, guid: 8b511d89acabb694392d423c8bb307ec, type: 2}
+  m_ParentStateMachine: {fileID: 110794760}
+  m_Position: {x: 59, y: 65, z: 0}
+  m_IKOnFeet: 0
+  m_Mirror: 0
+  m_Tag: 
 --- !u!1102 &110294760
 State:
   m_ObjectHideFlags: 3
@@ -135,9 +150,14 @@ StateMachine:
   m_States:
   - {fileID: 110294760}
   - {fileID: 110229210}
+  - {fileID: 110237996}
   m_ChildStateMachine: []
   m_ChildStateMachinePosition: []
   m_OrderedTransitions:
+    data:
+      first: {fileID: 0}
+      second:
+      - {fileID: 110147950}
     data:
       first: {fileID: 110229210}
       second:
@@ -146,10 +166,6 @@ StateMachine:
       first: {fileID: 110294760}
       second:
       - {fileID: 110134042}
-    data:
-      first: {fileID: 0}
-      second:
-      - {fileID: 110147950}
   m_MotionSetCount: 1
   m_AnyStatePosition: {x: 36, y: -120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
