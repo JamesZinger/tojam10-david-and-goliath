@@ -54,7 +54,7 @@ public class Graph
 
 		// TODO Hardcode a path here until file loading works.
 		Nodes[ 0, 6 ].Type = NodeTypeEnum.Start;
-		Nodes[ 1, 5 ].Type = NodeTypeEnum.End;
+		Nodes[ 0, 5 ].Type = NodeTypeEnum.End;
 
 		Nodes[ 0, 6 ].MoveableDirections.Add( Node.Direction.up );
 		Nodes[ 1, 6 ].MoveableDirections.Add( Node.Direction.up );
