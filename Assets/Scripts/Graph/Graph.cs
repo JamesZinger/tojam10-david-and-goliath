@@ -8,7 +8,7 @@ public class Graph
 
 	public Node[,] Nodes;
 
-	private static Dictionary<string, Func<Graph>> levelSelectionDictionary = new Dictionary<string, Func<Graph>>()
+	public static Dictionary<string, Func<Graph>> levelSelectionDictionary = new Dictionary<string, Func<Graph>>()
 	{
 		{ "Level 1", Level1 },
 		{ "Level 2", Level2 },
@@ -355,10 +355,33 @@ public class Graph
 	{
 		Graph graph = new Graph( 4, 8 );
 
-		graph.Nodes[ 1, 4 ].Type = NodeTypeEnum.Start;
-		graph.Nodes[ 0, 1 ].Type = NodeTypeEnum.End;
-
-		// TODO
+		graph.Nodes[ 2, 3 ].Type = NodeTypeEnum.Start;
+		graph.Nodes[ 3, 2 ].Type = NodeTypeEnum.End;
+		
+		graph.Nodes[ 2, 3 ].MoveableDirections.Add( Node.Direction.right );
+		graph.Nodes[ 1, 7 ].MoveableDirections.Add( Node.Direction.right );
+		graph.Nodes[ 1, 7 ].MoveableDirections.Add( Node.Direction.left  );
+		graph.Nodes[ 1, 6 ].MoveableDirections.Add( Node.Direction.right );
+		graph.Nodes[ 1, 6 ].MoveableDirections.Add( Node.Direction.up    );
+		graph.Nodes[ 0, 6 ].MoveableDirections.Add( Node.Direction.right );
+		graph.Nodes[ 0, 6 ].MoveableDirections.Add( Node.Direction.up    );
+		graph.Nodes[ 2, 5 ].MoveableDirections.Add( Node.Direction.right );
+		graph.Nodes[ 2, 5 ].MoveableDirections.Add( Node.Direction.left  );
+		graph.Nodes[ 2, 4 ].MoveableDirections.Add( Node.Direction.right );
+		graph.Nodes[ 2, 4 ].MoveableDirections.Add( Node.Direction.up    );
+		graph.Nodes[ 1, 3 ].MoveableDirections.Add( Node.Direction.right );
+		graph.Nodes[ 1, 3 ].MoveableDirections.Add( Node.Direction.up    );
+		graph.Nodes[ 0, 2 ].MoveableDirections.Add( Node.Direction.right );
+		graph.Nodes[ 0, 2 ].MoveableDirections.Add( Node.Direction.down  );
+		graph.Nodes[ 1, 2 ].MoveableDirections.Add( Node.Direction.up    );
+		graph.Nodes[ 1, 2 ].MoveableDirections.Add( Node.Direction.left  );
+		graph.Nodes[ 2, 6 ].MoveableDirections.Add( Node.Direction.down  );
+		graph.Nodes[ 2, 6 ].MoveableDirections.Add( Node.Direction.left  );
+		graph.Nodes[ 3, 6 ].MoveableDirections.Add( Node.Direction.right );
+		graph.Nodes[ 3, 6 ].MoveableDirections.Add( Node.Direction.left  );
+		graph.Nodes[ 1, 5 ].MoveableDirections.Add( Node.Direction.right );
+		graph.Nodes[ 1, 5 ].MoveableDirections.Add( Node.Direction.down  );
+		graph.Nodes[ 3, 2 ].MoveableDirections.Add( Node.Direction.up    );
 
 		return graph;
 	}
