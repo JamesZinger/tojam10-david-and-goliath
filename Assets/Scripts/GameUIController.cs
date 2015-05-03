@@ -12,7 +12,6 @@ public class GameUIController : MonoBehaviour {
 	public Button[] levelOp;
 
 	public Image credits;
-	public Image howTo;
 	public Image levelSelect;
 	// Use this for initialization
 	void Start () {
