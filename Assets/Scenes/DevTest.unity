@@ -326,6 +326,10 @@ Prefab:
       propertyPath: Camera
       value: 
       objectReference: {fileID: 1227754551}
+    - target: {fileID: 11459680, guid: fd8d07a272487ea4194c6f57d31f8807, type: 2}
+      propertyPath: FUCKTHEGOAT
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: fd8d07a272487ea4194c6f57d31f8807, type: 2}
   m_RootGameObject: {fileID: 542823207}
@@ -1804,7 +1808,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DeathCount: 0
-  DefaultLevelString: Level 1
+  DefaultLevelString: Level 5
   CenterTransform: {fileID: 1229932949}
   RotationCurve:
     serializedVersion: 2
@@ -2234,6 +2238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MoveSpeed: 1
+  FUCKTHEGOAT: 1
   IsDeathCoroutineRunning: 0
 --- !u!4 &542823209
 Transform:
@@ -3856,7 +3861,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11474094, guid: bf9e057e5aab0de4f9d71e9d468e91aa, type: 2}
       propertyPath: DefaultLevelString
-      value: Level 1
+      value: Level 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: bf9e057e5aab0de4f9d71e9d468e91aa, type: 2}
