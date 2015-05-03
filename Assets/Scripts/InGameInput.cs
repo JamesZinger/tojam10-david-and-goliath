@@ -5,7 +5,6 @@ using UnityEngine;
 public class InGameInput : MonoBehaviour
 {
 	public EventSystem es;
-	private int opSel = 0;
 	
 	private AudioSource onClick;
 	private AudioSource onBack;
@@ -27,17 +26,59 @@ public class InGameInput : MonoBehaviour
 		{
 			onBack = t.audio;
 		}
-		var x = opSel;
 
 		cube = FindObjectOfType<Cube>();
 		UIcontrols = FindObjectOfType<InGameUI>();
-		opSel = 0;
  //		EventSystem.current.SetSelectedGameObject( UIcontrols.gameOptions[ opSel ].gameObject, new BaseEventData( EventSystem.current ) );
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		Xbox360GamepadState.Instance.UpdateState ();
+		if (cube.HasFinished == true) {
+			UIcontrols.winScreen.gameObject.SetActive(true);
+			if (UIcontrols.winScreen.gameObject.activeSelf)
+			{
+				Time.timeScale = 0;
+				// When menu is active the following is allowed
+				if (Xbox360GamepadState.Instance.AxisJustPastThreshold(Xbox.Axis.LAnalogX, 0.5f) || Input.GetKeyDown(KeyCode.D)) {
+					winSel +=1; // Increment the array by 1 as you move down the list
+					// This statement allows for returning back to top option once you reach the bottom of the list
+					if (UIcontrols.winOptions.Length == winSel)
+					{
+						// Sets the variable for the array back to 0 to continue moving down the list
+						winSel = 0;
+					}
+					// This line is what allows for the selection of buttons through key input and so on
+					es.SetSelectedGameObject(UIcontrols.winOptions[winSel].gameObject, new BaseEventData(es));
+				}
+				// This statement does the same as above but for upward action
+				if (Xbox360GamepadState.Instance.AxisJustPastThreshold(Xbox.Axis.LAnalogX, -0.5f) || Input.GetKeyDown(KeyCode.A)) {
+					winSel -=1;
+					if (winSel < 0)
+					{
+						winSel = 1;
+					}
+					es.SetSelectedGameObject(UIcontrols.winOptions[winSel].gameObject, new BaseEventData(es));
+				}
+				if((winSel == 0 && Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A)) || (winSel == 0 && Input.GetKeyDown(KeyCode.KeypadEnter))) {
+					onClick.Play();
+					Time.timeScale = 0;
+					UIcontrols.winScreen.gameObject.SetActive(false);
+					Application.LoadLevel(0);
+				}
+				if((winSel == 1 && Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A)) || (winSel == 1 && Input.GetKeyDown(KeyCode.KeypadEnter))) {
+					onClick.Play();
+					Time.timeScale = 0;
+					UIcontrols.winScreen.gameObject.SetActive(false);
+					var levelstring = Cube.LevelString;
+					var levelNum = levelstring[ levelstring.Length - 1 ];
+					Cube.LevelString = string.Format("Level {0}", levelNum ); 
+					Application.LoadLevel (1);
+				}
+			}
+			return;
+		}
 		//if (UIcontrols.pauseMenu.gameObject.activeSelf == true) {
 		//	// When menu is active the following is allowed
 		//	if (Xbox360GamepadState.Instance.AxisJustPastThreshold(Xbox.Axis.LAnalogY, -0.5f) || Input.GetKeyDown(KeyCode.S)) {
