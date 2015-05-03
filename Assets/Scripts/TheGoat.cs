@@ -139,17 +139,17 @@ public class TheGoat: MonoBehaviour
 		{
 			if ( cube.IsRotating )
 			{
-				yield return null;
+				yield return new WaitForFixedUpdate();
 				continue;
 			}
 			if ( IsDeathCoroutineRunning )
 			{
-				yield return null;
+				yield return new WaitForFixedUpdate();
 				continue;
 			}
 			if ( hasReachedEnd )
 			{
-				yield return null;
+				yield return new WaitForFixedUpdate();
 				continue;
 			}
 
@@ -169,7 +169,7 @@ public class TheGoat: MonoBehaviour
 			{
 				// then continue moving forward
 				NormalMovingBehaviour( hits [ 0 ] );
-				yield return null;
+				yield return new WaitForFixedUpdate();
 				continue;
 			}
 
@@ -211,7 +211,7 @@ public class TheGoat: MonoBehaviour
 			// Move and rotate to align with the normal of the quad.
 			transform.position += downVector * 0.07f;
 			transform.rotation = Quaternion.LookRotation( downVector, hitInfo.normal );
-			yield return null;
+			yield return new WaitForFixedUpdate();
 		}
 	}
 
@@ -287,20 +287,14 @@ public class TheGoat: MonoBehaviour
 					var quart = Quaternion.LookRotation( dirV, -quad.transform.forward );
 					return new KeyValuePair<float, Quaternion>( Quaternion.Dot( transform.rotation, quart ), quart );
 				} )
+				.Where( pair => Math.Abs( pair.Key ) > 0.1f  )
 				.ToArray();
 
 			var turns = dotpPairs
-				.Where( dotPair => dotPair.Key > 0.25f )
-				.Where( dotPair => dotPair.Key < 0.75f )
+				.Where( dotPair => Math.Abs( dotPair.Key ) > 0.25f )
+				.Where( dotPair => Math.Abs( dotPair.Key ) < 0.75f )
 				.ToArray();
-
-			var otherTurns = dotpPairs
-				.Where( dotpPair => dotpPair.Key < -0.25f )
-				.Where( dotpPair => dotpPair.Key > -0.75f )
-				.ToArray();
-
-			turns = turns.Concat( otherTurns ).ToArray();
-
+			
 			if ( turns.Length > 0 )
 			{
 				Debug.Log( "Goat is turning" );
@@ -313,6 +307,7 @@ public class TheGoat: MonoBehaviour
 			{
 				var straightLines = dotpPairs
 					.ToArray();
+
 				if ( straightLines.Length > 0 )
 				{
 					Debug.Log( "Goat is going straight" );
@@ -336,17 +331,19 @@ public class TheGoat: MonoBehaviour
 			{
 				var quad = rayHitInfo.collider.GetComponent<Quad>();
 				Debug.Log( "IS IT THE END" );
-				if ( quad.Node.Type == NodeTypeEnum.End )
+				switch ( quad.Node.Type )
 				{
-					Debug.Log( "YUP" );
-					cube.GoatReachedEnd();
-					hasReachedEnd = true;
-					return;
+					case NodeTypeEnum.End:
+						Debug.Log( "YUP" );
+						cube.GoatReachedEnd();
+						hasReachedEnd = true;
+						return;
+					case NodeTypeEnum.Start:
+						StartCoroutine( Die() );
+						return;
 				}
-				else
-				{
-					transform.position = rayHitInfo.collider.transform.position + transform.up * 0.01f;
-				}
+
+				transform.position = rayHitInfo.collider.transform.position + transform.up * 0.01f;
 			}
 			else
 			{
