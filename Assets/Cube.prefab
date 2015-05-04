@@ -4410,7 +4410,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84747cd089e743344b8c6140dc85c9eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DeathCount: 0
   DefaultLevelString: Level 6
   CenterTransform: {fileID: 495256}
   RotationCurve:
@@ -4431,7 +4430,6 @@ MonoBehaviour:
   SpinSpeed: 1.02999997
   SpinSpeedReverse: 3
   HasStarted: 0
-  HasFinished: 0
   QuadArray:
   - {fileID: 11432208}
   - {fileID: 11432210}

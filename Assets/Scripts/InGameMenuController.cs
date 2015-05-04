@@ -147,7 +147,8 @@ public class InGameMenuController : MonoBehaviour
 
 		if ( isExpanded && !( LevelSelection.activeSelf || CreditScreen.activeSelf ) )
 		{
-			if ( Xbox360GamepadState.Instance.AxisJustPastThreshold( Xbox.Axis.LAnalogY, -0.5f ) || Input.GetKeyDown( KeyCode.S ) )
+			if ( Xbox360GamepadState.Instance.AxisJustPastThreshold( Xbox.Axis.LAnalogY, -0.5f ) || 
+			    Input.GetKeyDown( KeyCode.S ) )
 			{
 				selectedIndex++;
 				if ( selectedIndex == children.Length ) selectedIndex = 0;
@@ -158,7 +159,8 @@ public class InGameMenuController : MonoBehaviour
 
 			}
 			// This statement does the same as above but for upward action
-			if ( Xbox360GamepadState.Instance.AxisJustPastThreshold( Xbox.Axis.LAnalogY, 0.5f ) || Input.GetKeyDown( KeyCode.W ) )
+			if ( Xbox360GamepadState.Instance.AxisJustPastThreshold( Xbox.Axis.LAnalogY, 0.5f ) || 
+			    Input.GetKeyDown( KeyCode.W ) )
 			{
 				selectedIndex--;
 				if ( selectedIndex == -1 ) selectedIndex = children.Length - 1;
@@ -167,12 +169,15 @@ public class InGameMenuController : MonoBehaviour
 					new BaseEventData( EventSystem.current ) );
 			}
 
-			if ( Xbox360GamepadState.Instance.IsButtonDown( Xbox.Button.Start ) || Input.GetKeyDown( KeyCode.M ) )
+			if ( Xbox360GamepadState.Instance.IsButtonDown( Xbox.Button.Start ) || 
+			    Input.GetKeyDown( KeyCode.M ) )
 			{
 				Toggle();
 			}
 
-			if ( Xbox360GamepadState.Instance.IsButtonDown( Xbox.Button.A ) || Input.GetKeyDown( KeyCode.A ) )
+			if ( Xbox360GamepadState.Instance.IsButtonDown( Xbox.Button.A ) || 
+			    Input.GetKeyDown( KeyCode.A ) || 
+			    Input.GetKeyDown(KeyCode.KeypadEnter))
 			{
 				if ( selectedIndex == 0 )
 				{
@@ -197,7 +202,9 @@ public class InGameMenuController : MonoBehaviour
 		}
 		else if ( !isExpanded )
 		{
-			if ( Xbox360GamepadState.Instance.IsButtonDown( Xbox.Button.Start ) || Input.GetKeyDown( KeyCode.M ) )
+			if ( Xbox360GamepadState.Instance.IsButtonDown( Xbox.Button.Start ) || 
+			    Input.GetKeyDown( KeyCode.M ) || 
+			    Input.GetKeyDown(KeyCode.KeypadEnter))
 			{
 				Toggle();
 			}

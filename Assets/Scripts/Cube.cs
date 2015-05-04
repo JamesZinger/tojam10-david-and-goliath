@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Cube : MonoBehaviour
 {
-	public int DeathCount;
+	public static int DeathCount;
 
 	public static string LevelString = "";
 	public string DefaultLevelString = "Level 1";
@@ -16,7 +16,7 @@ public class Cube : MonoBehaviour
 	public float SpinSpeedReverse;
 	public Graph Graph;
 	public bool HasStarted;
-	public bool HasFinished;
+	public static bool HasFinished;
 	public Quad[] QuadArray;
 	public GameObject DirectionPointer;
 	public GameObject QuadPointerCenter;

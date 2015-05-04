@@ -7,7 +7,7 @@ public class CreditController : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-		if ( ( Xbox360GamepadState.Instance.IsButtonDown( Xbox.Button.B ) ) || ( Input.GetKeyDown( KeyCode.Return ) ) )
+		if ( ( Xbox360GamepadState.Instance.IsButtonDown( Xbox.Button.B ) ) || ( Input.GetKeyDown( KeyCode.KeypadEnter ) ) )
 		{
 			FindObjectOfType<InGameMenuController>().TransitioningBack();
 			onClick.Play();
