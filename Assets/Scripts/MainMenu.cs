@@ -101,7 +101,7 @@ public class MainMenu : MonoBehaviour {
 				lvlSel -= 1;
 				if (lvlSel < 0)
 				{
-					lvlSel = 7;
+					lvlSel = 6;
 				}
 				es.SetSelectedGameObject(UIcontrols.levelOp[lvlSel].gameObject, new BaseEventData(es));
 			}

@@ -9,7 +9,7 @@ public class GameUIController : MonoBehaviour {
 	public Image menuOP;
 
 	public Button[] Options; // Make an array of button options
-	public Button[] winScreen;
+	public Button[] levelOp;
 	public Button credReturn;
 
 	public Image credits;
