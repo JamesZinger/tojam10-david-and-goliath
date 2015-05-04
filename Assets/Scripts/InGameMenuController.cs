@@ -176,8 +176,7 @@ public class InGameMenuController : MonoBehaviour
 			}
 
 			if ( Xbox360GamepadState.Instance.IsButtonDown( Xbox.Button.A ) || 
-			    Input.GetKeyDown( KeyCode.A ) || 
-			    Input.GetKeyDown(KeyCode.KeypadEnter))
+			    Input.GetKeyDown( KeyCode.A ))
 			{
 				if ( selectedIndex == 0 )
 				{
@@ -203,8 +202,7 @@ public class InGameMenuController : MonoBehaviour
 		else if ( !isExpanded )
 		{
 			if ( Xbox360GamepadState.Instance.IsButtonDown( Xbox.Button.Start ) || 
-			    Input.GetKeyDown( KeyCode.M ) || 
-			    Input.GetKeyDown(KeyCode.KeypadEnter))
+			    Input.GetKeyDown( KeyCode.M ))
 			{
 				Toggle();
 			}

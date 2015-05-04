@@ -47,8 +47,8 @@ public class Cube : MonoBehaviour
 	void Awake()
 	{
 		var stringLevelName = DefaultLevelString;
-		if ( LevelString.Length != 0 ) stringLevelName = LevelString;
-
+		if ( LevelString.Length != 0 ) 
+			stringLevelName = LevelString;
 		Graph = Graph.LoadLevel( stringLevelName );
 		HasStarted = false;
 	}
@@ -196,8 +196,7 @@ public class Cube : MonoBehaviour
 		{
 			var quadList = activeCollider.GetAllObjectsToMove();
 
-			transformArray = quadList.Select( o => o.transform )
-				.ToArray();
+			transformArray = quadList.Select( o => o.transform ).ToArray();
 
 			transformParentArray = transformArray.Select( t => t.parent ).ToArray();
 		}

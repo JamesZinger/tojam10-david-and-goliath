@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MainMenu : MonoBehaviour {
 
+	public static int numLvl;
+
 	public EventSystem es; // This is what allows for the events of selection options to take place
 	private int opSel = 0; // Variable for selecting through array
 	private int lvlSel = 0;
@@ -68,8 +70,9 @@ public class MainMenu : MonoBehaviour {
 			if ((opSel == 0 && Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A)) || 
 			    (opSel == 0 && Input.GetKeyDown(KeyCode.KeypadEnter)))
 			{
-				onClick.Play();;
-				Cube.LevelString = "level 1";
+				onClick.Play();
+				numLvl = 1;
+				Cube.LevelString = "Level 1";
 				Application.LoadLevel (1);
 				UIcontrols.menuOP.gameObject.SetActive (false);
 			}
@@ -117,31 +120,37 @@ public class MainMenu : MonoBehaviour {
 			}
 			if ((lvlSel == 0 && Xbox360GamepadState.Instance.IsButtonDown(Xbox.Button.A)) || (lvlSel == 0 && Input.GetKeyDown(KeyCode.KeypadEnter))) {
 				onClick.Play();
+				numLvl = 1;
 				Cube.LevelString = "Level 1";
 				Application.LoadLevel (1);
 			}
 			if ((lvlSel == 1 && Xbox360GamepadState.Instance.IsButtonDown(Xbox.Button.A)) || (lvlSel == 1 && Input.GetKeyDown(KeyCode.KeypadEnter))) {
 				onClick.Play();
+				numLvl = 2;
 				Cube.LevelString = "Level 2";
 				Application.LoadLevel (1);
 			}
 			if ((lvlSel == 2 && Xbox360GamepadState.Instance.IsButtonDown(Xbox.Button.A)) || (lvlSel == 2 && Input.GetKeyDown(KeyCode.KeypadEnter))) {
 				onClick.Play();
+				numLvl = 3;
 				Cube.LevelString = "Level 3";
 				Application.LoadLevel (1);
 			}
 			if ((lvlSel == 3 && Xbox360GamepadState.Instance.IsButtonDown(Xbox.Button.A)) || (lvlSel == 3 && Input.GetKeyDown(KeyCode.KeypadEnter))) {
 				onClick.Play();
+				numLvl = 4;
 				Cube.LevelString = "Level 4";
 				Application.LoadLevel (1);
 			}
 			if ((lvlSel == 4 && Xbox360GamepadState.Instance.IsButtonDown(Xbox.Button.A)) || (lvlSel == 4 && Input.GetKeyDown(KeyCode.KeypadEnter))) {
 				onClick.Play();
+				numLvl = 5;
 				Cube.LevelString = "Level 5";
 				Application.LoadLevel (1);
 			}
 			if ((lvlSel == 5 && Xbox360GamepadState.Instance.IsButtonDown(Xbox.Button.A)) || (lvlSel == 5 && Input.GetKeyDown(KeyCode.KeypadEnter))) {
 				onClick.Play();
+				numLvl = 6;
 				Cube.LevelString = "Level 6";
 				Application.LoadLevel (1);
 			}

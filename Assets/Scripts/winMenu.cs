@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 public class winMenu : MonoBehaviour {
-
+	
 	private int winSel = 0;
 	public Image phrase1;
 	public Image phrase2;
@@ -16,7 +16,7 @@ public class winMenu : MonoBehaviour {
 	void Start () {
 		UIcontrols = FindObjectOfType<InGameInput>();
 
-		tries.text = " " + Cube.DeathCount;
+		tries.text = " " + (Cube.DeathCount + 1);
 
 		if (Cube.DeathCount < 3)
 			phrase1.gameObject.SetActive (true);
@@ -60,23 +60,26 @@ public class winMenu : MonoBehaviour {
 			if((winSel == 0 && Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A)) ||
 				(winSel == 0 && Input.GetKeyDown(KeyCode.KeypadEnter))) 
 			{
-				onClick.Play();
 				Time.timeScale = 0;
-				Application.LoadLevel(0);
-				Cube.HasFinished = false;
 				UIcontrols.winMenu.gameObject.SetActive(false);
+				Cube.HasFinished = false;
+				Cube.DeathCount = 0;
+				onClick.Play();
+				Application.LoadLevel(0);
+				return;
 			}
 			if((winSel == 1 && Xbox360GamepadState.Instance.IsButtonDown (Xbox.Button.A)) ||
 				(winSel == 1 && Input.GetKeyDown(KeyCode.KeypadEnter))) 
 			{
+				Time.timeScale = 0;
+				MainMenu.numLvl++;
 				onClick.Play();
-				Time.timeScale = 0;;
-				var levelstring = Cube.LevelString;
-				var levelNum = levelstring[ levelstring.Length - 1 ];
-				Cube.LevelString = string.Format("Level {0}", levelNum ); 
-				Application.LoadLevel (1);
-				Cube.HasFinished = false;
 				UIcontrols.winMenu.gameObject.SetActive(false);
+				Cube.HasFinished = false;
+				Cube.DeathCount = 0;
+				Cube.LevelString = "Level " + MainMenu.numLvl; 
+				Application.LoadLevel (1);
+				return;
 			}
 		}
 	}
