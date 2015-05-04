@@ -77,9 +77,15 @@ public class winMenu : MonoBehaviour {
 				UIcontrols.winMenu.gameObject.SetActive(false);
 				Cube.HasFinished = false;
 				Cube.DeathCount = 0;
-				Cube.LevelString = "Level " + MainMenu.numLvl; 
-				Application.LoadLevel (1);
-				return;
+				var nextLevelNum = MainMenu.numLvl + 1;
+				if ( nextLevelNum == Graph.levelSelectionDictionary.Count )
+				{
+					Application.LoadLevel( 0 );
+					return;
+				}
+				Cube.LevelString = "Level " + ( MainMenu.numLvl + 1 );
+				Debug.Log( "Cube Level Name: " + Cube.LevelString );
+				Application.LoadLevel( 1 );
 			}
 		}
 	}

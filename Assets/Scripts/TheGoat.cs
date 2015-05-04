@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 [SelectionBase]
@@ -44,7 +45,7 @@ public class TheGoat: MonoBehaviour
 	void Awake()
 	{
 		//animator = GetComponentInChildren<Animator>();
-		layerMask = ~LayerMask.GetMask( "Rotaters", "Goat Ignored" );
+		layerMask = LayerMask.GetMask( "Quads" );
 		pathLayerMask = LayerMask.GetMask( "Paths" );
 		hasBSCoroutineFinished = true;
 	}
@@ -169,6 +170,7 @@ public class TheGoat: MonoBehaviour
 				.Where( hit => hit.normal.x > HitNormalThreshold )
 				.Where( hit => hit.normal.y > HitNormalThreshold )
 				.Where( hit => hit.normal.z > HitNormalThreshold )
+				.Where( hit => Mathf.Abs( Vector3.Dot( hit.normal, ray.direction ) ) > 0.25 )
 				.ToArray();
 
 			if ( hits.Length > 0 )
@@ -183,6 +185,7 @@ public class TheGoat: MonoBehaviour
 
 			// move the ray origin to father down the old ray to prepare for the sampling of each direction
 			ray.origin += transform.up * -0.5f;
+			ray.origin += transform.forward * 0.02f;
 			Vector3[] directions = {
 				transform.right,
 				-transform.right,
@@ -198,7 +201,7 @@ public class TheGoat: MonoBehaviour
 			for ( var i = 0; i < directions.Length; i++ )
 			{
 				ray.direction = directions[ i ];
-				// Debug.DrawRay( ray.origin, ray.direction, Color.red );
+				Debug.DrawRay( ray.origin, ray.direction, Color.red );
 				didHit = Physics.Raycast( ray, out hitInfo, 1f, layerMask );
 
 				if ( didHit )
@@ -208,9 +211,12 @@ public class TheGoat: MonoBehaviour
 			}
 			if ( !didHit )
 			{ 
+				Debug.Log( "Death due to no quads" );
 				yield return StartCoroutine( Die() );
 				continue;
 			}
+
+			Debug.Log( "Edge case" );
 		
 			var downVector = -transform.up;
 
@@ -254,10 +260,12 @@ public class TheGoat: MonoBehaviour
 		//var quad = rayHitInfo.collider.GetComponent<Quad>();
 
 		var ray = new Ray( transform.position + ( transform.up * 0.05f ), -transform.up );
+		Debug.DrawRay( ray.origin, ray.direction * 100, Color.blue );
 		var hits = Physics.RaycastAll( ray, 0.1f, pathLayerMask )
 			.Where( h => h.normal.x > HitNormalThreshold )
 			.Where( h => h.normal.y > HitNormalThreshold )
 			.Where( h => h.normal.z > HitNormalThreshold )
+			.Where( hit => Mathf.Abs( Vector3.Dot( hit.normal, ray.direction ) ) > 0.25 )
 			.ToArray();
 
 		var sphereHits = hits
@@ -305,7 +313,6 @@ public class TheGoat: MonoBehaviour
 			if ( turns.Length > 0 )
 			{
 				Debug.Log( "Goat is turning" );
-				Debug.Log( turns.First().Value.eulerAngles );
 				transform.rotation = turns.First().Value;
 				prevCenterHit = sphereHit.collider;
 			}
@@ -318,7 +325,6 @@ public class TheGoat: MonoBehaviour
 				if ( straightLines.Length > 0 )
 				{
 					Debug.Log( "Goat is going straight" );
-					transform.rotation = straightLines.First().Value;
 					prevCenterHit = sphereHit.collider;
 				}
 			}
@@ -327,7 +333,7 @@ public class TheGoat: MonoBehaviour
 		{
 			
 			
-			transform.position += transform.forward * Time.deltaTime * MoveSpeed;	
+			transform.position += transform.forward * Time.fixedDeltaTime * MoveSpeed;	
 		}
 		else if ( hits.Length == 0 )
 		{
@@ -354,6 +360,12 @@ public class TheGoat: MonoBehaviour
 			}
 			else
 			{
+				var ray2 = new Ray( transform.position + ( transform.up * 0.05f ) + ( -transform.forward * 0.05f ), -transform.up );
+				Debug.DrawRay( ray2.origin, ray2.direction * 100, Color.red );
+				if ( Physics.Raycast( ray2, 0.5f, pathLayerMask ) )
+				{
+					return;
+				}
 				StartCoroutine( Die() );
 				return;
 			}
@@ -362,7 +374,7 @@ public class TheGoat: MonoBehaviour
 		{
 
 			// for now just go forward.
-			transform.position += transform.forward * Time.deltaTime * MoveSpeed;
+			transform.position += transform.forward * Time.fixedDeltaTime * MoveSpeed;
 		}
 
 		if ( sphereHits.Length == 0 && hasBSCoroutineFinished && prevCenterHit != null )
