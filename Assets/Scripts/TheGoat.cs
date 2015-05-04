@@ -339,7 +339,7 @@ public class TheGoat: MonoBehaviour
 		{
 
 			var magnitude = ( rayHitInfo.collider.bounds.center - transform.position ).magnitude;
-
+			Debug.Log( "hit no paths" );
 			if ( magnitude < 0.1f )
 			{
 				var quad = rayHitInfo.collider.GetComponent<Quad>();
@@ -364,6 +364,7 @@ public class TheGoat: MonoBehaviour
 				Debug.DrawRay( ray2.origin, ray2.direction * 100, Color.red );
 				if ( Physics.Raycast( ray2, 0.5f, pathLayerMask ) )
 				{
+					transform.position += transform.forward * Time.fixedDeltaTime * MoveSpeed;
 					return;
 				}
 				StartCoroutine( Die() );
@@ -405,14 +406,20 @@ public class TheGoat: MonoBehaviour
 
 	public IEnumerator RewindWorld()
 	{
-	IsRewinding = true;
+		IsRewinding = true;
 		canvasAnimator.SetBool( "isDead", true );
 		yield return new WaitForSeconds( 1f );
 		yield return StartCoroutine( cube.ResetCoroutine() );
 		transform.position = StartPosition;
-		canvasAnimator.SetBool( "isDead", false );
 		Reset();
-		yield return new WaitForSeconds( 1f );
+		canvasAnimator.SetBool( "isDead", false );
+		while ( true )
+		{
+			var aniState = canvasAnimator.GetCurrentAnimatorStateInfo( 0 );
+			if ( aniState.IsName( "GoatDead" ) || aniState.IsName( "GoatMove" ) )
+				break;
+			yield return null;
+		}
 		IsRewinding = false;
 	}
 }
