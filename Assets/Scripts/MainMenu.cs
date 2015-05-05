@@ -11,22 +11,11 @@ public class MainMenu : MonoBehaviour {
 	private int lvlSel = 0;
 	private GameUIController UIcontrols;
 	
-	private AudioSource onClick;
-	private AudioSource onBack;
+	public AudioSource onClick;
+	public AudioSource onBack;
 
 	// Use this for initialization
 	void Start () {
-
-		Transform t = transform.FindChild( "OnClick" );
-		if ( t != null )
-		{
-			onClick = t.audio;
-		}
-		t = transform.FindChild ("OnBack");
-		if (t != null) 
-		{
-			onBack = t.audio;
-		}
 
 		UIcontrols = FindObjectOfType<GameUIController>();
 
