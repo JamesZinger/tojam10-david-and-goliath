@@ -148,7 +148,7 @@ public class InGameMenuController : MonoBehaviour
 		if ( isExpanded && !( LevelSelection.activeSelf || CreditScreen.activeSelf ) )
 		{
 			if ( Xbox360GamepadState.Instance.AxisJustPastThreshold( Xbox.Axis.LAnalogY, -0.5f ) || 
-			    Input.GetKeyDown( KeyCode.S ) )
+			    Input.GetKeyDown( KeyCode.D ) )
 			{
 				selectedIndex++;
 				if ( selectedIndex == children.Length ) selectedIndex = 0;
@@ -160,7 +160,7 @@ public class InGameMenuController : MonoBehaviour
 			}
 			// This statement does the same as above but for upward action
 			if ( Xbox360GamepadState.Instance.AxisJustPastThreshold( Xbox.Axis.LAnalogY, 0.5f ) || 
-			    Input.GetKeyDown( KeyCode.W ) )
+			    Input.GetKeyDown( KeyCode.A ) )
 			{
 				selectedIndex--;
 				if ( selectedIndex == -1 ) selectedIndex = children.Length - 1;
@@ -176,7 +176,7 @@ public class InGameMenuController : MonoBehaviour
 			}
 
 			if ( Xbox360GamepadState.Instance.IsButtonDown( Xbox.Button.A ) || 
-			    Input.GetKeyDown( KeyCode.A ))
+			    Input.GetKeyDown( KeyCode.KeypadEnter ))
 			{
 				if ( selectedIndex == 0 )
 				{
