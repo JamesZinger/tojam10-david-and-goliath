@@ -6,7 +6,6 @@ public class InGAMEMainMenuTouch : MonoBehaviour {
 	public GameObject LevelSelection;
 	public GameObject CreditScreen;
 	public GameObject WinScreen;
-	public GameObject InGameMenu;
 	public AudioSource onClick;
 
 	InGameMenuController MenuBar;
@@ -15,21 +14,18 @@ public class InGAMEMainMenuTouch : MonoBehaviour {
 	// **** InGame SelectScreen ****
 	public void InGameSelectScreen()
 	{
-		// TODO: Disable the MenuBar in the InGame Screen
 		LevelSelection.SetActive( true );
 	}
 	
 	// **** InGame Credits Screen ****
 	public void InGameCredits()
 	{
-		// TODO: Disable the MenuBar in the InGame Screen
 		CreditScreen.SetActive( true );
 	}
 
 	// **** Return to InGame Screen ****
 	public void InGameScreen()
 	{
-		// TODO: Enable the MenuBar in the InGame Screen I believe??
 		LevelSelection.SetActive (false);
 		CreditScreen.SetActive (false);
 	}
