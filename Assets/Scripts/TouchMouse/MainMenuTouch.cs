@@ -103,3 +103,4 @@ public class MainMenuTouch : MonoBehaviour {
 		UIcontrols.credits.gameObject.SetActive(false);
 	}
 }
+
