@@ -30,6 +30,10 @@ public class TheGoat: MonoBehaviour
 	private IEnumerator updateHandle;
 
 	
+	public event Action ArrivedAtEnd;
+	public event Action<GoatDeathTypeEnum> Died;
+
+	
 	public bool IsRewinding { get; private set; }
 	public Vector3 StartPosition { get; private set; }
 	public Quaternion StartRotation { get; private set; }
@@ -130,12 +134,16 @@ public class TheGoat: MonoBehaviour
 	}
 
 
-	IEnumerator Die()
+	IEnumerator Die( GoatDeathTypeEnum reason )
 	{
 		IsDeathCoroutineRunning = true;
  		Debug.Log( "Goat is dead" );
 		DeathSound.Play();
 		MoveSound.Stop();
+		if ( Died != null )
+		{
+			Died( reason );
+		}
 		yield return StartCoroutine( RewindWorld() );
 		IsDeathCoroutineRunning = false;
 	}
@@ -242,11 +250,15 @@ public class TheGoat: MonoBehaviour
 				{
 					case NodeTypeEnum.End:
 						Debug.Log( "YUP" );
+						if ( ArrivedAtEnd != null )
+						{
+							ArrivedAtEnd();
+						}
 						cube.GoatReachedEnd();
 						hasReachedEnd = true;
 						return;
 					case NodeTypeEnum.Start:
-						StartCoroutine( Die() );
+						StartCoroutine( Die( GoatDeathTypeEnum.ReversedToStart ) );
 						return;
 				}
 
@@ -261,7 +273,7 @@ public class TheGoat: MonoBehaviour
 					transform.position += transform.forward * Time.fixedDeltaTime * MoveSpeed;
 					return;
 				}
-				StartCoroutine( Die() );
+				StartCoroutine( Die( GoatDeathTypeEnum.RanOffPath ) );
 				return;
 			}
 		}
@@ -403,7 +415,7 @@ public class TheGoat: MonoBehaviour
 			if ( !didHit )
 			{ 
 				Debug.Log( "Death due to no quads" );
-				yield return StartCoroutine( Die() );
+				yield return StartCoroutine( Die( GoatDeathTypeEnum.RanOffEdge ) );
 				continue;
 			}
 

@@ -44,6 +44,7 @@ GameObject:
   - 92: {fileID: 9245424}
   - 124: {fileID: 12445424}
   - 81: {fileID: 8145424}
+  - 114: {fileID: 11492986}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -101,7 +102,7 @@ Transform:
   m_GameObject: {fileID: 145422}
   m_LocalRotation: {x: -.146446601, y: .853553414, z: -.353553414, w: -.353553355}
   m_LocalPosition: {x: 2, y: 2.79999995, z: 2}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: .99999994, y: 1, z: .99999994}
   m_Children:
   - {fileID: 445418}
   - {fileID: 445420}
@@ -207,7 +208,7 @@ AudioSource:
   m_GameObject: {fileID: 145418}
   m_Enabled: 1
   serializedVersion: 3
-  m_audioClip: {fileID: 8300000, guid: 25a533dd32a986142bd75b94de0d098f, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 666a8eb9d83eea243b035fb083bf6b65, type: 3}
   m_PlayOnAwake: 1
   m_Volume: .200000003
   m_Pitch: 1
@@ -322,6 +323,20 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 145422}
   m_Enabled: 1
+--- !u!114 &11492986
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 145422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 895ffe532b4166749ab9225dd015362e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsSendingAnalytics: 1
+  Cube: {fileID: 0}
+  Goat: {fileID: 0}
 --- !u!124 &12445424
 Behaviour:
   m_ObjectHideFlags: 1

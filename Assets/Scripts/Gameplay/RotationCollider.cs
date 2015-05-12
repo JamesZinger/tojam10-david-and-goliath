@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RotationCollider : MonoBehaviour
 {
-	public Cube.RotationAxis Axis;
+	public RotationAxis Axis;
 
 	private Cube Cube;
 	
