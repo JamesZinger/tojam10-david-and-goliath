@@ -589,7 +589,7 @@ AudioSource:
   m_GameObject: {fileID: 512769969}
   m_Enabled: 1
   serializedVersion: 3
-  m_audioClip: {fileID: 8300000, guid: 25a533dd32a986142bd75b94de0d098f, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 666a8eb9d83eea243b035fb083bf6b65, type: 3}
   m_PlayOnAwake: 1
   m_Volume: .200000003
   m_Pitch: 1
@@ -2802,6 +2802,7 @@ GameObject:
   - 92: {fileID: 2092635233}
   - 124: {fileID: 2092635232}
   - 81: {fileID: 2092635231}
+  - 114: {fileID: 2092635235}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2881,3 +2882,18 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: .0219999999
+--- !u!114 &2092635235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 11492986, guid: 1b5e53cdb3584584eac9f63a9027b274,
+    type: 2}
+  m_PrefabInternal: {fileID: 846897326}
+  m_GameObject: {fileID: 2092635229}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 895ffe532b4166749ab9225dd015362e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IsSendingAnalytics: 1
+  Cube: {fileID: 0}
+  Goat: {fileID: 0}

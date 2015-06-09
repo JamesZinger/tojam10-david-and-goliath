@@ -18,8 +18,10 @@ public class UnityAnalyticsIntegration : MonoBehaviour
 
 	#region Init/Finalize
 
-    void Start() 
-	{
+    void Start()
+    {
+        if ( Cube == null ) return;
+
 		// Create a new list to store rotations.
 		Rotations = new List<RotationAxis>();
 
@@ -38,6 +40,7 @@ public class UnityAnalyticsIntegration : MonoBehaviour
 
 	void OnDestroy()
 	{
+	    if ( Cube == null ) return;
 		// Disconnect the event handlers to prevent memory leaks.
 		Cube.Configured	  -= OnCubeConfigured;
 		Cube.Resetted	  -= OnCubeResetted;
